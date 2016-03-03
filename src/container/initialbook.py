@@ -5,6 +5,7 @@ from src.tools.db import DB
 from src.tools.extra_tools import ExtraTools
 from src.tools.match import Match
 from src.tools.type import Type
+from src.tools.debug import Debug
 
 
 class InitialBook(object):
@@ -59,16 +60,23 @@ class InitialBook(object):
                 info = self.catch_article_book_info(self.sql.info)
             else:
                 info = DB.cursor.execute(self.sql.info).fetchone()
+                print u"!!!!!!!info:" + str(info)
                 info = DB.wrap(Type.info_table[self.kind], info)
+                print u"!!!!!!!info:" + str(info)
         self.set_info(info)
+        # print u"catch_info中的info:" + str(info)
         return
 
     def catch_question_book_info(self, sql):
         info_list = DB.cursor.execute(self.sql.info).fetchall()
+        # Debug.logger.info(u"第1次的info_list是:" + str(info_list))
         info_list = [DB.wrap(Type.question, item) for item in info_list]
+        # Debug.logger.info(u"第2次的info_list是:" + str(info_list))
         info = {}
-        info['title'] = '_'.join([str(item['title']) for item in info_list])
+        info['title'] = '_'.join([str(item['title']) for item in info_list])   # 可以是多个问题, 多个id联系在一起
         info['id'] = '_'.join([str(item['question_id']) for item in info_list])
+        # Debug.logger.info(u"catch_question_book_info中的info['id']是什么???" + str(info['id']))
+        # Debug.logger.info(u"catch_question_book_info中的info:" + str(info))
         return info
 
     def catch_article_book_info(self, sql):
@@ -117,6 +125,9 @@ class InitialBook(object):
         question_list = [DB.wrap('question', x) for x in DB.get_result_list(self.sql.question)]
         answer_list = [DB.wrap('answer', x) for x in DB.get_result_list(self.sql.get_answer_sql())]
 
+        # Debug.logger.info(u"在__get_question_list中, question_list为:" + str(question_list))
+        # Debug.logger.info(u"在__get_question_list中, answer_list为:" + str(answer_list))
+
         def merge_answer_into_question():
             question_dict = {x['question_id']: {'question': x.copy(), 'answer_list': [], 'agree': 0} for x in
                              question_list}
@@ -143,6 +154,7 @@ class InitialBook(object):
 
     def __get_article_list(self):
         def add_property(article):
+            # Debug.logger.info(u"len(article['content']是???" + len(article['content']))
             article['char_count'] = len(article['content'])
             article['agree_count'] = article['agree']
             article['update_date'] = article['publish_date']
@@ -159,7 +171,10 @@ class InitialBook(object):
             self.epub.answer_count += article['answer_count']
             self.epub.agree_count += article['agree_count']
             self.epub.char_count += article['char_count']
-        self.epub.article_count = len(article_list)
+        self.epub.article_count = len(article_list)         # 所以说, 一个question是一个article
+        # Debug.logger.info(u"answer_count和article_count是什么鬼???")
+        # Debug.logger.info(u"answer_count:" + str(self.epub.answer_count))
+        # Debug.logger.info(u"article_count:" + str(self.epub.article_count))
         self.article_list = article_list
         return
 

@@ -1,0 +1,40 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+        <file alias="bold.png">iconmonstr/bold.png</file>
+        <file alias="bullet.png">iconmonstr/bullet.png</file>
+        <file alias="calender.png">iconmonstr/calender.png</file>
+        <file alias="copy.png">iconmonstr/copy.png</file>
+        <file alias="count.png">iconmonstr/count.png</file>
+        <file alias="cut.png">iconmonstr/cut.png</file>
+        <file alias="dedent.png">iconmonstr/dedent.png</file>
+        <file alias="download.png">iconmonstr/download.png</file>
+        <file alias="download1.png">iconmonstr/download1.png</file>
+        <file alias="find.png">iconmonstr/find.png</file>
+        <file alias="font.png">iconmonstr/font.png</file>
+        <file alias="font-color.png">iconmonstr/font-color.png</file>
+        <file alias="highlight.png">iconmonstr/highlight.png</file>
+        <file alias="icon.png">iconmonstr/icon.png</file>
+        <file alias="image.png">iconmonstr/image.png</file>
+        <file alias="indent.png">iconmonstr/indent.png</file>
+        <file alias="italic.png">iconmonstr/italic.png</file>
+        <file alias="new.png">iconmonstr/new.png</file>
+        <file alias="number.png">iconmonstr/number.png</file>
+        <file alias="open.png">iconmonstr/open.png</file>
+        <file alias="open2.png">iconmonstr/open2.png</file>
+        <file alias="open3.png">iconmonstr/open3.png</file>
+        <file alias="paste.png">iconmonstr/paste.png</file>
+        <file alias="preview.png">iconmonstr/preview.png</file>
+        <file alias="print.png">iconmonstr/print.png</file>
+        <file alias="redo.png">iconmonstr/redo.png</file>
+        <file alias="remove.png">iconmonstr/remove.png</file>
+        <file alias="save.png">iconmonstr/save.png</file>
+        <file alias="strike.png">iconmonstr/strike.png</file>
+        <file alias="subscript.png">iconmonstr/subscript.png</file>
+        <file alias="superscript.png">iconmonstr/superscript.png</file>
+        <file alias="table.png">iconmonstr/table.png</file>
+        <file alias="time.png">iconmonstr/time.png</file>
+        <file alias="underline.png">iconmonstr/underline.png</file>
+        <file alias="undo.png">iconmonstr/undo.png</file>
+
+</qresource>
+</RCC>

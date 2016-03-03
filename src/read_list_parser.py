@@ -37,11 +37,13 @@ class ReadListParser():
 
         command = remove_comment(command)
         command_list = split_command(command)
-
+        Debug.logger.info("#Debug:#command_list是:" + str(command_list))
         raw_task_list = []
         for command in command_list:
             raw_task = ReadListParser.parse_command(command)
             if raw_task:
+                print "raw_task dict?????"
+                Debug.print_dict((raw_task.spider).href)
                 raw_task_list.append(raw_task)
 
         task_package = ReadListParser.merge_task_list(raw_task_list)

@@ -18,7 +18,9 @@ class Path(object):
 
     html_pool_path = base_path + u'/知乎电子书临时资源库/知乎网页池'
     image_pool_path = base_path + u'/知乎电子书临时资源库/知乎图片池'
-    result_path = base_path + u'./知乎助手生成的电子书'
+    result_path = base_path + u'./知乎助手生成的电子书'    # TODO: . 好????
+
+    read_list_path = base_path + u'/ReadList.txt'
 
     @staticmethod
     def reset_path():
@@ -32,10 +34,7 @@ class Path(object):
 
     @staticmethod
     def get_pwd():
-        try:
-            path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-        except:
-            path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
         return path
 
     @staticmethod

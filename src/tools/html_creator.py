@@ -6,6 +6,7 @@ from src.tools.config import Config
 from src.tools.match import Match
 from src.tools.template_config import TemplateConfig
 from src.tools.type import Type
+from src.tools.debug import Debug
 
 
 class HtmlCreator(object):
@@ -45,6 +46,8 @@ class HtmlCreator(object):
             new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
                                           '../images/{}'.format(filename))
             new_image += '</img>'
+            print u"img是???" + str(img)
+            print u"new_image是???" + str(new_image)
             content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))
 
         return content
@@ -97,6 +100,7 @@ class HtmlCreator(object):
 
     def create_question(self, package, prefix=''):
         question = package['question']
+        # print (u"在create_question中, question是什么???" + str(question))
         answer_content = ''.join([self.create_answer(answer) for answer in package['answer_list']])
         title_info = self.wrap_title_info(**question)
         question['answer'] = answer_content
@@ -156,6 +160,7 @@ class HtmlCreator(object):
     def create_info_page(self, book):
         kind = book.kind
         info = book.info
+        Debug.logger.debug(u"在create_info_page中的info是??" + str(info))
         extend = self.wrap_front_page_info(kind, info)
         info.update(extend)
         result = {

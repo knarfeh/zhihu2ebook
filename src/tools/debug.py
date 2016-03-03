@@ -12,9 +12,9 @@ class Debug(object):
     """
     logger = logging.getLogger('main')  # 获取名为main的logger
     if Config.debug:
-        logger.setLevel(logging.DEBUG)  # debug模式
+        logger.setLevel(logging.DEBUG)  # debug模式, 显示 debug, info, warning, error, critical信息
     else:
-        logger.setLevel(logging.INFO)  # 发布时关闭log输出
+        logger.setLevel(logging.INFO)  # 发布时关闭log输出,只显示 info, warning, error, critical信息
 
     # 辅助函数
     @staticmethod

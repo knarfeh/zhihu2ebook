@@ -50,6 +50,10 @@ class PageWorker(object):
             return max_page
 
     def create_save_config(self):
+        u"""
+        key 即为表名
+        :return:
+        """
         config = {'Answer': self.answer_list, 'Question': self.question_list, }
         return config
 
@@ -73,6 +77,8 @@ class PageWorker(object):
         self.start_catch_info()
         self.start_create_work_list()
         self.start_worker()
+        print "answer_list是????:" + str(self.answer_list)
+        print "question_list是????:" + str(self.question_list)
         self.save()
         return
 
@@ -118,6 +124,7 @@ class PageWorker(object):
         parser = QuestionParser(content)
         self.question_list += parser.get_question_info_list()
         self.answer_list += parser.get_answer_list()
+
         return
 
     def start_worker(self):
@@ -143,11 +150,15 @@ class PageWorker(object):
         Control.control_center(argv, self.info_url_set)
         return
 
+
 class QuestionWorker(PageWorker):
     def parse_content(self, content):
         parser = QuestionParser(content)
+        print u"在QuestionWorker中"
         self.question_list += parser.get_question_info_list()
+        print u"question_list是:" + str(self.question_list)
         self.answer_list += parser.get_answer_list()
+        print u"answer_list是:" + str(self.answer_list)
         return
 
 
@@ -162,6 +173,7 @@ class AuthorWorker(PageWorker):
         if target_url in self.task_complete_set:
             return
         content = Http.get_content(target_url + '/answers?order_by=vote_num')
+        print u"target_url??????:" + str(target_url)
         if not content:
             return
         self.task_complete_set.add(target_url)
@@ -297,6 +309,9 @@ class TopicWorker(PageWorker):
 
 
 class ColumnWorker(PageWorker):
+    u"""
+    专栏没有Parser, 因为有api
+    """
     def catch_info(self, target_url):
         return
 

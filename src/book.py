@@ -10,6 +10,7 @@ from src.tools.match import Match
 from src.tools.path import Path
 from src.tools.template_config import TemplateConfig
 from src.tools.type import Type
+from src.tools.debug import Debug
 
 
 class Book(object):
@@ -18,9 +19,24 @@ class Book(object):
     """
 
     def __init__(self, raw_sql_book_list):
+        Debug.logger.info("raw_sql_book" + str(raw_sql_book_list))
         raw_book_list = [book.catch_data() for book in self.flatten(raw_sql_book_list)]
+        # raw_book_list是InitialBook对象的列表
+        Debug.logger.info(u"raw_book_list[0].kind是什么鬼?" + str(raw_book_list[0].kind))
+        Debug.logger.info(u"raw_book_list[0].epub.article_count是什么鬼?" + str(raw_book_list[0].epub.article_count))
+        Debug.logger.info(u"raw_book_list[0].epub.char_count是什么鬼?" + str(raw_book_list[0].epub.char_count))
+        Debug.logger.info(u"raw_book_list[0].epub.title是什么鬼?" + str(raw_book_list[0].epub.title))
+        Debug.logger.info(u"raw_book_list[0].epub.id是什么鬼?" + str(raw_book_list[0].epub.id))
+        Debug.logger.info(u"raw_book_list[0].epub.split_index是什么鬼?" + str(raw_book_list[0].epub.split_index))
+        Debug.logger.info(u"raw_book_list[0].epub.prefix:" + str(raw_book_list[0].epub.prefix))
+        Debug.logger.info(u"raw_book_list是什么????" + str(raw_book_list[0]))
+        # Debug.logger.info(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
+        Debug.logger.info(u"raw_book_list[0].page_list" + str(raw_book_list[0].page_list))
         book_list = self.volume_book(raw_book_list)
+        print u"执行前, book_list为:" + str(book_list)
         self.book_list = [self.create_book_package(book) for book in book_list]
+        print (u"执行后, book_list为:" + str(book_list))
+
         return
 
     @staticmethod
@@ -52,8 +68,10 @@ class Book(object):
         counter = 0
         book = []
         book_list = []
+        Debug.logger.info(u"raw_book_list的长度是???" + str(len(raw_book_list)))
         while len(raw_book_list):
             raw_book = raw_book_list.pop()
+            Debug.logger.info(u"取出数据之后, answer_count等于???" + str(raw_book.epub.answer_count))
             if not raw_book.epub.answer_count:
                 # 若书中没有答案则直接跳过
                 continue
@@ -82,10 +100,12 @@ class Book(object):
 
         page = creator.create_info_page(book)
         book.page_list.append(page)
+        Debug.logger.debug(u"有没有执行到这里???")
         for article in book.article_list:
             if book.kind in Type.article_type_list:
                 page = creator.create_article(article, index)
             else:
+                Debug.logger.debug(u"book.kind是question!!!")
                 page = creator.create_question(article, index)
             book.page_list.append(page)
         return book
@@ -95,6 +115,7 @@ class Book(object):
         epub_book_list = []
         image_container = ImageContainer()
         creator = HtmlCreator(image_container)
+        Debug.logger.debug("没????")
         for book in book_list:
             epub_book = self.book_to_html(book, index, creator)
             epub_book_list.append(epub_book)
@@ -115,6 +136,7 @@ class Book(object):
             # 否则会发生『rm -rf / 』的惨剧
             return
         Path.chdir(Path.base_path + u'/知乎电子书临时资源库/')
+        # print (u"title是???" + title)
         epub = Epub(title)
         html_tmp_path = Path.html_pool_path + u'/'
         image_tmp_path = Path.image_pool_path + u'/'

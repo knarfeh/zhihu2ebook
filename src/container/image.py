@@ -10,6 +10,10 @@ from src.tools.http import Http
 
 
 class ImageContainer(object):
+    u"""
+    根据href, 完成关于图片的各种操作, 包括md5, 下载图片等
+    """
+
     def __init__(self, save_path=''):
         self.save_path = save_path
         self.container = {}
@@ -44,7 +48,7 @@ class ImageContainer(object):
 
         if os.path.isfile(self.save_path + '/' + filename):
             return
-        Debug.print_in_single_line(u'开始下载图片{}'.format(href))
+        # Debug.print_in_single_line(u'开始下载图片{}'.format(href))
         content = Http.get_content(url=href, timeout=Config.timeout_download_picture)
         if not content:
             return

@@ -1,0 +1,17 @@
+{
+    "max_question": 100, 
+    "update_time": "2016-01-01", 
+    "max_try": 5, 
+    "sql_extend_answer_filter": "", 
+    "max_blog": 10, 
+    "picture_quality": 1, 
+    "account": "zhihu2ebook@hotmail.com", 
+    "max_answer": 600, 
+    "timeout_download_html": 5, 
+    "max_thread": 10, 
+    "timeout_download_picture": 10, 
+    "debug": false, 
+    "max_article": 600, 
+    "password": "Zhihu2Ebook", 
+    "remember_account": false
+}

@@ -5,7 +5,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 sys.setrecursionlimit(100000)  # 为BS解析知乎上的长答案增加递归深度限制
 
-from src.main import ZhihuHelp
+from src.main import EEBook
 
-helper = ZhihuHelp()
-helper.start()
+game = EEBook()
+game.begin()

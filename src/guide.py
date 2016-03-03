@@ -24,7 +24,8 @@ def set_account():
     print u'####################################'
     print u'#直接敲击回车则使用内置账号进行登陆#'
     print u'####################################'
-    account = raw_input()
+    # account = raw_input()
+    account = None
     if account:
         while not re.search(r'\w+@[\w\.]{3,}', account):
             print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'
@@ -49,7 +50,8 @@ def set_picture_quality():
     print u'输入2为高清模式，图片为知乎原图，清晰度最高，但电子书体积是标准模式的4倍，只有答案条目小于100条时才可以考虑使用'
     print u'请输入图片模式(0、1或2)，回车确认'
     try:
-        quality = int(raw_input())
+        # quality = int(raw_input())
+        quality = 1
     except ValueError as error:
         print error
         print u'数字转换错误。。。'

@@ -26,9 +26,9 @@ class AuthorInfo(ParserTools):
         return self.info
 
     def parse_info(self):
-        self.parse_base_info()
-        self.parse_detail_info()
-        self.parse_extra_info()
+        self.parse_base_info()          # id, id_hash, name, sign, logo, description, weibo, gender, profile_count
+        self.parse_detail_info()        # 用户赞同, 感谢, 被收藏数
+        self.parse_extra_info()         # 关注了:*人, 关注者, 关注的专栏, 关注的话题, 用户被浏览数
         return self.info
 
     def parse_base_info(self):
@@ -40,7 +40,7 @@ class AuthorInfo(ParserTools):
         self.parse_description()
         self.parse_weibo()
         self.parse_gender()
-        self.parse_profile_count()
+        self.parse_profile_count()      # 提问, 回答, 专栏, 公共编辑
         return
 
     def parse_name(self):

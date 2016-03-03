@@ -21,18 +21,18 @@ class SingleTask(object):
         return
 
 
-class TaskPackage():
+class TaskPackage(object):
     def __init__(self):
         self.work_list = {}
         self.book_list = {}
         return
 
     def add_task(self, single_task=SingleTask()):
-        if not single_task.kind in self.work_list:
+        if single_task.kind not in self.work_list:
             self.work_list[single_task.kind] = []
         self.work_list[single_task.kind].append(single_task.spider.href)
 
-        if not single_task.kind in self.book_list:
+        if single_task.kind not in self.book_list:
             self.book_list[single_task.kind] = []
         self.book_list[single_task.kind].append(single_task.book)
         return
@@ -50,9 +50,11 @@ class TaskPackage():
         book_list = self.book_list[Type.article]
         book = InitialBook()
         answer = [item.sql.answer for item in book_list]
+        # print u"book_list是???" + str(book_list[0])
         info = [item.sql.info for item in book_list]
         book.kind = Type.article
         book.sql.info = 'select * from Article where ({})'.format(' or '.join(info))
+        print u"book.sql.info:????" + str(book.sql.info)
         book.sql.answer = 'select * from Article where ({})'.format(' or '.join(answer))
         self.book_list[Type.article] = [book]
         return
@@ -60,9 +62,11 @@ class TaskPackage():
     def merge_question_book_list(self, book_type):
         book_list = self.book_list[book_type]
         book = InitialBook()
+        print u"book_list[0].sql.info是???" + str(book_list[0].sql.info)
         question = [item.sql.question for item in book_list]
         answer = [item.sql.answer for item in book_list]
         info = [item.sql.info for item in book_list]
+        print u"info是什么????:" + str(info)
         book.kind = book_type
         book.sql.info = 'select * from Question where ({})'.format(' or '.join(info))
         book.sql.question = 'select * from Question where ({})'.format(' or '.join(question))

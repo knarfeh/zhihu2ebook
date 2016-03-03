@@ -59,7 +59,9 @@ class Login():
             print u'登陆成功！'
             print u'登陆账号:', account
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
-            if raw_input() == 'yes':
+            # remenber_account = raw_input()
+            remenber_account = 'yes'
+            if remenber_account == 'yes':
                 Config.account, Config.password, Config.remember_account = account, password, True
                 print u'帐号密码已保存,可通过修改config.json修改设置'
             else:
@@ -90,6 +92,11 @@ class Login():
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
+        if platform.system() == "Darwin":
+            os.system(u'open "{}" &'.format(captcha_path).encode(sys.stdout.encoding))
+        else:
+            webbrowser.get().open_new_tab(u'file:///' + captcha_path)
+
         print u'如果不需要输入验证码可点按回车跳过此步'
         captcha = raw_input()
         return captcha

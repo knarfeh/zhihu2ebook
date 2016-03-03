@@ -10,7 +10,7 @@ class Path(object):
         base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
 
     config_path = base_path + u'/config.json'
-    db_path = base_path + u'/zhihuDB_173.db'
+    db_path = base_path + u'/zhihuDB_173.sqlite'
     sql_path = base_path + u'/db/zhihuhelp.sql'
 
     www_css = base_path + u'/www/css'
@@ -79,7 +79,7 @@ class Path(object):
         return os.path.basename(src)
 
     @staticmethod
-    def init_base_path():
+    def init_base_path():       # 这个有什么意义?如果是为了不需实例化就调用,那么 class 前面那段内容呢?
         try:
             base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
         except:
