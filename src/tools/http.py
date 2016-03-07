@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import os
 import traceback
 import urllib2
@@ -16,22 +17,16 @@ from src.tools.debug import Debug
 class Http(object):
     @staticmethod
     def get_content(url='', data=None, timeout=Config.timeout_download_html, extra_header={}):
-        u"""获取网页内容
+        u"""
+        获取网页内容
 
-        获取网页内容, 打开网页超过设定的超时时间则报错
-
-        参数:
-            url         一个字符串,待打开的网址
-            extraHeader 一个简单字典,需要添加的http头信息
-            data        需传输的数据,默认为空
-            timeout     int格式的秒数，打开网页超过这个时间将直接退出，停止等待
-        返回:
-            pageContent 打开成功时返回页面内容，字符串或二进制数据|失败则返回空字符串
-        报错:
-            IOError     当解压缩页面失败时报错
+        :param url: 需要打开的网页
+        :param data: 需要传输的数据, 默认是空
+        :param timeout: int 类型的秒数, 打开网页超过这个时间直接退出, 停止等待
+        :param extra_header: 字典, 需要添加的 http 头信息
+        :return: 打开成功: 返回页面内容, 字符串或二进制数据, 失败: 返回空字符串
+        :Exception: 解压缩页面失败时报错
         """
-        # UA还是得要啊。。。
-        # 没UA知乎分分钟只返回给你首页看- -
         header = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36', }
         header.update(extra_header)
@@ -46,14 +41,14 @@ class Http(object):
             response = urllib2.urlopen(request, timeout=timeout)
         except urllib2.HTTPError as error:
             Debug.logger.info(u'网页打开失败')
-            Debug.logger.info(u'失败页面:{}'.format(url))
-            Debug.logger.info(u'失败代码:{}'.format(error.code))
-            Debug.logger.info(u'失败原因:{}'.format(error.reason))
+            Debug.logger.info(u'失败页面: {}'.format(url))
+            Debug.logger.info(u'失败代码: {}'.format(error.code))
+            Debug.logger.info(u'失败原因: {}'.format(error.reason))
         except urllib2.URLError as error:
             Debug.logger.info(u'网络连接异常')
-            Debug.logger.info(u'异常页面:{}'.format(url))
+            Debug.logger.info(u'异常页面: {}'.format(url))
             Debug.logger.info(u'异常原因:{}'.format(error.reason))
-        except socket.timeout as error:
+        except socket.timeout:
             Debug.logger.info(u'打开网页超时')
             Debug.logger.info(u'超时页面:{}'.format(url))
         except socket.error:
@@ -75,7 +70,7 @@ class Http(object):
 
         try:
             content = response.read()
-        except socket.timeout as error:
+        except socket.timeout:
             Debug.logger.info(u'打开网页超时')
             Debug.logger.info(u'超时页面:{}'.format(url))
         except Exception:
@@ -100,6 +95,9 @@ class Http(object):
 
     @staticmethod
     def set_cookie(account=''):
+        if account == 'DontNeed':           # 如果不需要cookie, 一定要主动调用
+            return
+
         def load_cookie(cookieJar, cookie):
             filename = u'./theFileNameIsSoLongThatYouWontKnowWhatIsThat.txt'
             with open(filename, 'w') as f:

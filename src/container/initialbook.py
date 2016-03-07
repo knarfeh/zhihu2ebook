@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+
 from src.container.image import ImageContainer
 from src.tools.config import Config
 from src.tools.db import DB
-from src.tools.extra_tools import ExtraTools
 from src.tools.match import Match
 from src.tools.type import Type
 from src.tools.debug import Debug
@@ -14,6 +14,9 @@ class InitialBook(object):
             self.question = ''
             self.answer = ''
             self.info = ''
+            self.article = ''
+            self.info_extra = ''
+            self.article_extra = ''      # 用来扩展的????
             return
 
         def get_answer_sql(self):
@@ -34,6 +37,7 @@ class InitialBook(object):
 
     def __init__(self):
         self.kind = ''
+        self.author_id = 0                  # SinaBlog特有
         self.sql = InitialBook.Sql()
         self.epub = InitialBook.Epub()
         self.info = {}
@@ -45,16 +49,24 @@ class InitialBook(object):
     def catch_data(self):
         u"""
         从数据库中获取数据
+        :return:
         """
         self.catch_info()
-        self.get_article_list()
-        self.__sort()
+        self.get_article_list()         # 获取文章所有信息
+        if self.kind != Type.SinaBlog:
+            self.__sort()
         return self
 
     def catch_info(self):
+        u"""
+        获得博客的信息, 将info作为参数传给set_info
+        :return:
+        """
         info = {}
         if self.sql.info:
-            if self.kind in [Type.question, Type.answer]:
+            if self.kind == Type.SinaBlog:
+                info = self.catch_SinaBlog_book_info()
+            elif self.kind in [Type.question, Type.answer]:
                 info = self.catch_question_book_info(self.sql.info)
             elif self.kind == Type.article:
                 info = self.catch_article_book_info(self.sql.info)
@@ -64,8 +76,20 @@ class InitialBook(object):
                 info = DB.wrap(Type.info_table[self.kind], info)
                 print u"!!!!!!!info:" + str(info)
         self.set_info(info)
-        # print u"catch_info中的info:" + str(info)
         return
+
+    def catch_SinaBlog_book_info(self):
+        u"""
+
+        :param
+        :return: info
+        """
+        info_list = DB.cursor.execute(self.sql.info).fetchall()
+        info_list = [DB.wrap(Type.SinaBlog_Info, item) for item in info_list]
+        info = {}
+        info['creator_name'] = '_'.join([str(item['creator_name']) for item in info_list])  # 可以是多个博客组合在一起
+        info['creator_id'] = '_'.join([str(item['creator_id']) for item in info_list])
+        return info
 
     def catch_question_book_info(self, sql):
         info_list = DB.cursor.execute(self.sql.info).fetchall()
@@ -89,7 +113,14 @@ class InitialBook(object):
 
     def set_info(self, info):
         self.info.update(info)
-        if self.kind == Type.question:
+        if self.kind == Type.SinaBlog:              # 该博客所有的博文
+            self.epub.title = u'新浪博客_{}({})'.format(info['creator_name'], info['creator_id'])
+            print (u"self.epub.title没有设置???" + str(self.epub.title))
+            self.epub.id = info['creator_id']
+        elif self.kind == Type.SinaBlog_Article:    # 单篇博文 TODO
+            self.epub.title = u'新浪博客博文集锦({})'.format(info['title'])
+            self.epub.id = info['id']       # TODO
+        elif self.kind == Type.question:
             self.epub.title = u'知乎问题集锦({})'.format(info['title'])
             self.epub.id = info['id']
         elif self.kind == Type.answer:
@@ -114,7 +145,7 @@ class InitialBook(object):
         return
 
     def get_article_list(self):
-        if self.kind in Type.article_type_list:
+        if self.kind in Type.SinaBlog or self.kind in Type.article_type_list:
             article_list = self.__get_article_list()
         else:
             article_list = self.__get_question_list()
@@ -154,24 +185,35 @@ class InitialBook(object):
 
     def __get_article_list(self):
         def add_property(article):
-            # Debug.logger.info(u"len(article['content']是???" + len(article['content']))
             article['char_count'] = len(article['content'])
-            article['agree_count'] = article['agree']
-            article['update_date'] = article['publish_date']
             article['answer_count'] = 1
-            return article
+            if self.kind == Type.SinaBlog:
+                article['agree_count'] = "没有赞同数"     # article['agree']
+            else:
+                article['agree_count'] = article['agree']
 
-        article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
+            article['update_date'] = article['publish_date']
+
+            return article
+        if self.kind == Type.SinaBlog:
+            article_list = [DB.wrap(Type.SinaBlog_Article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
+        else:
+            article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         article_list = [add_property(x) for x in article_list]
         return article_list
 
     def set_article_list(self, article_list):
         self.clear_property()
-        for article in article_list:
-            self.epub.answer_count += article['answer_count']
-            self.epub.agree_count += article['agree_count']
-            self.epub.char_count += article['char_count']
-        self.epub.article_count = len(article_list)         # 所以说, 一个question是一个article
+        if self.kind == Type.SinaBlog:      # SinaBlog类型
+            for article in article_list:
+                self.epub.answer_count += article['answer_count']
+                self.epub.char_count += article['char_count']
+        else:                               # zhihu类型
+            for article in article_list:
+                self.epub.answer_count += article['answer_count']
+                self.epub.agree_count += article['agree_count']
+                self.epub.char_count += article['char_count']
+            self.epub.article_count = len(article_list)         # 所以说, 一个question是一个article
         # Debug.logger.info(u"answer_count和article_count是什么鬼???")
         # Debug.logger.info(u"answer_count:" + str(self.epub.answer_count))
         # Debug.logger.info(u"article_count:" + str(self.epub.article_count))

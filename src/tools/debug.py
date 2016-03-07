@@ -12,9 +12,9 @@ class Debug(object):
     """
     logger = logging.getLogger('main')  # 获取名为main的logger
     if Config.debug:
-        logger.setLevel(logging.DEBUG)  # debug模式, 显示 debug, info, warning, error, critical信息
+        logger.setLevel(logging.DEBUG)     # debug模式, 显示 debug, info, warning, error, critical 信息
     else:
-        logger.setLevel(logging.INFO)  # 发布时关闭log输出,只显示 info, warning, error, critical信息
+        logger.setLevel(logging.INFO)      # 发布时关闭log输出,只显示 info, warning, error, critical信息
 
     # 辅助函数
     @staticmethod
@@ -42,11 +42,10 @@ class Debug(object):
         except UnicodeEncodeError as error:
             Debug.logger.info(u'编码异常')
             Debug.logger.info(u'系统默认编码为：' + sys.getdefaultencoding())
-            # raise error
+            raise error
         return
 
     @staticmethod
     def print_config():
-        Config._sync()
-        Debug.print_dict(Config._config_store)
+        Debug.print_dict(Config.__dict__)
         return

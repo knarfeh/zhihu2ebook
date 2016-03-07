@@ -19,24 +19,26 @@ class Book(object):
     """
 
     def __init__(self, raw_sql_book_list):
-        Debug.logger.info("raw_sql_book" + str(raw_sql_book_list))
+        # Debug.logger.debug("raw_sql_book['SinaBlog'][0].sql.info:" + str(raw_sql_book_list['SinaBlog'][0].sql.info))
         raw_book_list = [book.catch_data() for book in self.flatten(raw_sql_book_list)]
         # raw_book_list是InitialBook对象的列表
-        Debug.logger.info(u"raw_book_list[0].kind是什么鬼?" + str(raw_book_list[0].kind))
-        Debug.logger.info(u"raw_book_list[0].epub.article_count是什么鬼?" + str(raw_book_list[0].epub.article_count))
-        Debug.logger.info(u"raw_book_list[0].epub.char_count是什么鬼?" + str(raw_book_list[0].epub.char_count))
-        Debug.logger.info(u"raw_book_list[0].epub.title是什么鬼?" + str(raw_book_list[0].epub.title))
-        Debug.logger.info(u"raw_book_list[0].epub.id是什么鬼?" + str(raw_book_list[0].epub.id))
-        Debug.logger.info(u"raw_book_list[0].epub.split_index是什么鬼?" + str(raw_book_list[0].epub.split_index))
-        Debug.logger.info(u"raw_book_list[0].epub.prefix:" + str(raw_book_list[0].epub.prefix))
-        Debug.logger.info(u"raw_book_list是什么????" + str(raw_book_list[0]))
-        # Debug.logger.info(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
-        Debug.logger.info(u"raw_book_list[0].page_list" + str(raw_book_list[0].page_list))
-        book_list = self.volume_book(raw_book_list)
-        print u"执行前, book_list为:" + str(book_list)
-        self.book_list = [self.create_book_package(book) for book in book_list]
-        print (u"执行后, book_list为:" + str(book_list))
+        Debug.logger.debug(u"raw_book_list[0].kind是什么鬼?" + str(raw_book_list[0].kind))
+        Debug.logger.debug(u"raw_book_list[0].epub.article_count是什么鬼?" + str(raw_book_list[0].epub.article_count))
+        Debug.logger.debug(u"raw_book_list[0].epub.char_count是什么鬼?" + str(raw_book_list[0].epub.char_count))
+        Debug.logger.debug(u"raw_book_list[0].epub.title是什么鬼?" + str(raw_book_list[0].epub.title))
+        Debug.logger.debug(u"raw_book_list[0].epub.id是什么鬼?" + str(raw_book_list[0].epub.id))
+        Debug.logger.debug(u"raw_book_list[0].epub.split_index是什么鬼?" + str(raw_book_list[0].epub.split_index))
+        Debug.logger.debug(u"raw_book_list[0].epub.prefix:" + str(raw_book_list[0].epub.prefix))
+        Debug.logger.debug(u"raw_book_list是什么????" + str(raw_book_list[0]))
+        # Debug.logger.debug(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
+        Debug.logger.debug(u"raw_book_list[0].page_list" + str(raw_book_list[0].page_list))
+        # Debug.logger.debug(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
 
+        book_list = self.volume_book(raw_book_list)
+        # Debug.logger.debug("book_list是??" + str(book_list))
+        # print u"执行前, book_list为:" + str(book_list)
+        self.book_list = [self.create_book_package(book) for book in book_list]
+        # print (u"执行后, book_list为:" + str(book_list))
         return
 
     @staticmethod
@@ -59,7 +61,7 @@ class Book(object):
                 raw_book.article_list = raw_book.article_list[1:]
                 article_list.append(article)
                 surplus -= article['answer_count']
-                raw_book.epub.answer_count -= article['answer_count']
+                raw_book.epub.answer_count -= article['answer_count']    # 文章数量
             book = copy.deepcopy(raw_book)
             book.set_article_list(article_list)
             book.epub.split_index = index
@@ -68,10 +70,8 @@ class Book(object):
         counter = 0
         book = []
         book_list = []
-        Debug.logger.info(u"raw_book_list的长度是???" + str(len(raw_book_list)))
         while len(raw_book_list):
             raw_book = raw_book_list.pop()
-            Debug.logger.info(u"取出数据之后, answer_count等于???" + str(raw_book.epub.answer_count))
             if not raw_book.epub.answer_count:
                 # 若书中没有答案则直接跳过
                 continue
@@ -100,10 +100,10 @@ class Book(object):
 
         page = creator.create_info_page(book)
         book.page_list.append(page)
-        Debug.logger.debug(u"有没有执行到这里???")
+        # print u'article_list???' + str(book.article_list)
         for article in book.article_list:
-            if book.kind in Type.article_type_list:
-                page = creator.create_article(article, index)
+            if book.kind in Type.SinaBlog or book.kind in Type.article_type_list:
+                page = creator.create_article(article, index, recipe=book.kind)
             else:
                 Debug.logger.debug(u"book.kind是question!!!")
                 page = creator.create_question(article, index)
@@ -111,11 +111,15 @@ class Book(object):
         return book
 
     def create_book_package(self, book_list):
+        u"""
+
+        :param book_list:
+        :return: HtmlBookPackage()
+        """
         index = 0
         epub_book_list = []
         image_container = ImageContainer()
         creator = HtmlCreator(image_container)
-        Debug.logger.debug("没????")
         for book in book_list:
             epub_book = self.book_to_html(book, index, creator)
             epub_book_list.append(epub_book)
@@ -131,25 +135,30 @@ class Book(object):
         book_package.image_container.set_save_path(Path.image_pool_path)
         book_package.image_container.start_download()
         title = book_package.get_title()
+        Debug.logger.debug(u"电子书的名称是???" + str(title))
         if not title:
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧
             return
-        Path.chdir(Path.base_path + u'/知乎电子书临时资源库/')
+        Path.chdir(Path.base_path + u'/电子书临时资源库')
         # print (u"title是???" + title)
         epub = Epub(title)
         html_tmp_path = Path.html_pool_path + u'/'
         image_tmp_path = Path.image_pool_path + u'/'
-        epub.set_creator(u'ZhihuHelp1.7.0')
+        epub.set_creator(u'EEBookV0-1')
         epub.set_book_id()
         epub.set_output_path(Path.result_path)
         epub.add_css(Path.base_path + u'/www/css/markdown.css')
         epub.add_css(Path.base_path + u'/www/css/customer.css')
         epub.add_css(Path.base_path + u'/www/css/normalize.css')
+        epub.add_css(Path.base_path + u'/www/css/bootstrap.css')
+        epub.add_css(Path.base_path + u'/www/css/article.css')    # TODO: 来自新浪,需要精简
         for book in book_package.book_list:
             page = book.page_list[0]
             with open(html_tmp_path + page.filename, u'w') as html:
                 html.write(page.content)
+            if '_' in page.title:
+                page.title = ''.join(page.title.split('_')[1:])  # 删除章节前缀
             epub.create_chapter(html_tmp_path + page.filename, page.title)
             for page in book.page_list[1:]:
                 with open(html_tmp_path + page.filename, u'w') as html:
@@ -185,6 +194,7 @@ class Book(object):
         Path.copy(Path.www_css + u'/customer.css', u'./customer.css')
         Path.copy(Path.www_css + u'/markdown.css', u'./markdown.css')
         Path.copy(Path.www_css + u'/normalize.css', u'./normalize.css')
+        Path.copy(Path.www_css + u'/article.css', u'./article.css')         # TODO: 需要精简
         Path.reset_path()
         return
 

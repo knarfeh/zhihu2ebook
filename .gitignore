@@ -1,7 +1,6 @@
 /config.json
 /.idea/dataSources.local.xml
 /.idea/workspace.xml
-/.idea/ZhihuHelp__Python.iml
 #################
 ## Eclipse
 #################
@@ -72,14 +71,12 @@ build/
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.tmp_proj
 *.log
 *.vspscc
 *.vssscc
 .builds
 *.pidb
-*.log
 *.scc
 
 # Visual C++ cache files
@@ -191,13 +188,10 @@ $RECYCLE.BIN/
 ## Python
 #############
 
-*.py[co]
-
 # Packages
 *.egg
 *.egg-info
 dist/
-build/
 eggs/
 parts/
 var/
@@ -219,32 +213,17 @@ pip-log.txt
 .mr.developer.cfg
 
 #Mine
-ReadList.txt
-misc.xml
-*.db
 *.ini
-zhihuhelp1.7.0/我是登陆知乎时的验证码.gif
-.idea/workspace.xml
 我是登陆知乎时的验证码.gif
+.idea/
 
 *.jpg
 
-*.xml
-
-*.xhtml
-
-*.css
-
 *.epub
 
-知乎电子书临时资源库/知乎问题集锦(天天写业务代码的程序员，怎么成为技术大牛，开始写技术代码？)/mimetype
+电子书临时资源库/
+生成的电子书/
 
 *.opf
 
 *.ncx
-
-*.html
-
-*.iml
-
-*.iml

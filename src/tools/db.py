@@ -5,7 +5,7 @@ from src.tools.type import Type
 
 class DB(object):
     u"""
-    用于存放常用的sql代码
+    存放常用的 SQL 代码
     """
     cursor = None
     conn = None
@@ -13,7 +13,7 @@ class DB(object):
     @staticmethod
     def set_conn(conn):
         DB.conn = conn
-        DB.conn.text_factory = str
+        DB.conn.text_factory = str     # 将text返回为bytestrings
         DB.cursor = conn.cursor()
         return
 
@@ -30,9 +30,9 @@ class DB(object):
         sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
                                                                               columns=','.join(data.keys()),
                                                                               items=(',?' * len(data.keys()))[1:])
-        Debug.logger.info(sql)
+        # Debug.logger.debug(sql)
         DB.cursor.execute(sql, tuple(data.values()))
-        Debug.logger.info("tuple????" + str(tuple(data.values())))
+        # Debug.logger.info("tuple?????" + str(tuple(data.values())))
         return
 
     @staticmethod
@@ -55,8 +55,19 @@ class DB(object):
     def wrap(kind, result=()):
         u"""
         将s筛选出的列表按SQL名组装为字典对象
+        :param kind:
+        :param result:
+        :return:
         """
         template = {
+            Type.SinaBlog_Info: (
+                'creator_id', 'creator_hash', 'creator_name', 'creator_sign',
+                'creator_logo', 'description', 'article_num', 'follower'
+            ),
+            Type.SinaBlog_Article: (                # 这里把article_id 和author_id对换一下,不然会出错???TODO
+                'article_id', 'author_hash', 'author_name', 'author_sign',
+                'author_id', 'href', 'title', 'content', 'comment', 'publish_date'
+            ),
             Type.answer: (
             'author_id', 'author_sign', 'author_logo', 'author_name', 'agree', 'content', 'question_id', 'answer_id',
             'commit_date', 'edit_date', 'comment', 'no_record_flag', 'href',),

@@ -18,17 +18,19 @@ class HtmlCreator(object):
         self.image_container = image_container
         return
 
-    def fix_image(self, content):
+    def fix_image(self, content, recipe):
         content = Match.fix_html(content)
         for img in re.findall(r'<img[^>]*', content):
-            # fix img
-            if img[-1] == '/':
-                img = img[:-1]
-            img += '>'
+            if recipe is not Type.SinaBlog:
+                # fix img
+                if img[-1] == '/':
+                    img = img[:-1]
 
+            img += '>'
             src = re.search(r'(?<=src=").*?(?=")', img)
             if not src:
                 new_image = img + '</img>'
+                print u"if not src"
                 content = content.replace(img, new_image)
                 continue
             else:
@@ -43,11 +45,15 @@ class HtmlCreator(object):
             else:
                 filename = ''
             new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
-            new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
+
+            if recipe == Type.SinaBlog:
+                # 硬编码, 可以优化?写到fix_html函数中
+                new_image = new_image.replace('http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif',\
                                           '../images/{}'.format(filename))
-            new_image += '</img>'
-            print u"img是???" + str(img)
-            print u"new_image是???" + str(new_image)
+            else:
+                new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
+                                          '../images/{}'.format(filename))
+                new_image += '</img>'
             content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))
 
         return content
@@ -117,9 +123,11 @@ class HtmlCreator(object):
         page.title = question['title']
         return page
 
-    def create_article(self, article, prefix=''):
+    def create_article(self, article, prefix='', recipe=None):
         article['edit_date'] = article['publish_date']
         article['description'] = ''
+        article['agree'] = 'wu'
+        # article['title_image'] = 'wu'
         result = {
             'answer': self.create_answer(article),
             'question': self.get_template('info', 'title').format(**article)
@@ -131,14 +139,17 @@ class HtmlCreator(object):
         }
         content = self.get_template('content', 'base').format(**result)
         page = Page()
-        page.content = self.fix_image(content)
+        page.content = self.fix_image(content, recipe)
         page.filename = str(prefix) + '_' + str(article['article_id']) + '.xhtml'
         page.title = article['title']
         return page
 
     def wrap_front_page_info(self, kind, info):
         result = {}
-        if kind == Type.answer:
+        if kind == Type.SinaBlog:
+            result['title'] = u'新浪博客集锦'
+            result['description'] = u'TODO'
+        elif kind == Type.answer:
             result['title'] = u'知乎回答集锦'
             result['description'] = u''
         elif kind == Type.question:
@@ -160,7 +171,6 @@ class HtmlCreator(object):
     def create_info_page(self, book):
         kind = book.kind
         info = book.info
-        Debug.logger.debug(u"在create_info_page中的info是??" + str(info))
         extend = self.wrap_front_page_info(kind, info)
         info.update(extend)
         result = {
@@ -174,7 +184,7 @@ class HtmlCreator(object):
         }
         content = self.get_template('content', 'base').format(**result)
         page = Page()
-        page.content = self.fix_image(content)
+        page.content = self.fix_image(content, recipe=book.kind)
         page.filename = str(book.epub.prefix) + '_' + 'info.xhtml'
         page.title = book.epub.title
         if book.epub.split_index:

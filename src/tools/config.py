@@ -10,9 +10,12 @@ class Config(object):
     用于储存、获取设置值、全局变量值
     """
     # 全局变量
-    update_time = '2016-01-02'  # 更新日期
+    update_time = '2016-03-07'  # 更新日期
 
     debug = True
+
+    need_account = False        # 是否需要账号密码
+    login_with_previously_config = True  # 是否通过之前的登陆记录进行登陆
 
     account = 'zhihu2ebook@hotmail.com'  # 默认账号密码
     password = 'Zhihu2Ebook'  #
@@ -34,13 +37,13 @@ class Config(object):
     timeout_download_html = 5
     sql_extend_answer_filter = ''  # 附加到answer_sql语句后，用于对answer进行进一步的筛选（示例: and(agree > 5) ）
 
-    _config_store = {}
-
     @staticmethod
     def _save():
-        Config._sync()
         with open(Path.config_path, 'w') as f:
-            json.dump(Config._config_store, f, indent=4)
+            data = dict((
+                (key, Config.__dict__[key]) for key in Config.__dict__ if '_' not in key[:2]
+            ))
+            json.dump(data, f, indent=4)
         return
 
     @staticmethod
@@ -49,13 +52,10 @@ class Config(object):
             return
         with open(Path.config_path) as f:
             config = json.load(f)
+            if not config.get('remember_account'):
+                # 当选择不记住密码时，跳过读取，使用默认设置
+                # 不考虑用户强行在配置文件中把account改成空的情况
+                return
         for (key, value) in config.items():
             setattr(Config, key, value)
-        return
-
-    @staticmethod
-    def _sync():
-        for attr in Config.__dict__:
-            if '_' not in attr[:2]:
-                Config._config_store[attr] = Config.__dict__[attr]
         return

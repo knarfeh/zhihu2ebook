@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import cookielib
 import os
+import sys
+import platform
+import webbrowser
 import json
 import urllib2
 
@@ -14,7 +17,7 @@ from src.tools.match import Match
 from src.tools.path import Path
 
 
-class Login():
+class Login(object):
     def __init__(self):
         self.cookieJar = cookielib.LWPCookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
@@ -59,7 +62,7 @@ class Login():
             print u'登陆成功！'
             print u'登陆账号:', account
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
-            # remenber_account = raw_input()
+            # remenber_account = raw_input()      # TODO, 当然是默认记住密码
             remenber_account = 'yes'
             if remenber_account == 'yes':
                 Config.account, Config.password, Config.remember_account = account, password, True
@@ -69,6 +72,7 @@ class Login():
                 print u'跳过保存环节，进入下一流程'
             Config._save()
             cookie = self.get_cookie()
+            DB.execute('delete from LoginRecord')  # 登陆成功后清除数据库中原有的登录记录，避免下次登陆时取到旧记录
             data = {}
             data['account'] = account
             data['password'] = password
@@ -86,6 +90,8 @@ class Login():
     def get_captcha():
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
+
+
         with open(captcha_path, 'wb') as image:
             image.write(content)
         print u'请输入您所看到的验证码'

@@ -29,7 +29,7 @@ class Epub(object):
     def init_index(self):
         # 目录先放图片文件夹里
         open(EpubPath.style_path + u'/index.xhtml', 'w')
-        self.add_html(EpubPath.style_path + u'/index.xhtml', u'目录')
+        self.add_index_html(EpubPath.style_path + u'/index.xhtml', u'目录')
         return
 
     def write_index(self):
@@ -49,13 +49,22 @@ class Epub(object):
         EpubPath.set_output_path(output_path)
         return
 
-    def add_html(self, src, title):
+    def add_index_html(self, src, title):
         Path.copy(src, EpubPath.html_path)
         filename = Path.get_filename(src)
         new_src = u'html/' + filename
         resource_id = self.opf.add_html(new_src)
-        self.directory.add_html(new_src, title)
         self.toc.add_item(resource_id, new_src, title)
+        return
+
+    def add_html(self, src, title):
+        u"""
+            add_index为add_html不需要添加文件时的特殊情况
+        """
+        self.add_index_html(src, title)
+        filename = Path.get_filename(src)
+        new_src = u'html/' + filename
+        self.directory.add_html(new_src, title)
         return
 
     def add_css(self, src):

@@ -63,9 +63,19 @@ class ImageContainer(object):
         return
 
     def create_image(self, href):
+        u"""
+
+        :param href:
+        :return: {'filename': md5编码的文件名, 'href': href}
+        """
         image = {'filename': self.create_filename(href), 'href': href}
         return image
 
     def create_filename(self, href):
+        u"""
+        根据 href 创建md5编码之后的文件名
+        :param href:
+        :return:
+        """
         filename = ExtraTools.md5(href) + '.jpg'
         return filename

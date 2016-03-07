@@ -19,11 +19,25 @@ class Type(object):
     question_answer_type_list = ['answer', 'question']
     article_type_list = ['article', 'column', ]
     question_type_list = ['answer', 'question', 'author', 'collection', 'topic', ]
-    type_list = question_type_list + article_type_list  # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了）
+
+    # SinaBlog
+    SinaBlog_Article = 'SinaBlog_Article'       # 类型是单篇的文章
+    SinaBlog = 'SinaBlog'                       # 类型是文章的集锦
+
+    SinaBlog_Info = 'SinaBlog_Info'             # 新浪博客的一些基本信息,如作者id
+
+    SinaBlog_article_type_list = ['SinaBlog']
+
+    SinaBlog_type_list = ['SinaBlog', 'SinaBlogAuthor']
+
+    # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了） TODO how's that?
+    type_list = question_type_list + article_type_list + SinaBlog_type_list
     info_table = {
         column: column_info,
         author: author_info,
         collection: collection_info,
         topic: topic_info,
+
+        'SinaBlog_Info': SinaBlog_Info
     }
     pass
