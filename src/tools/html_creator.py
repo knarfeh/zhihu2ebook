@@ -30,7 +30,6 @@ class HtmlCreator(object):
             src = re.search(r'(?<=src=").*?(?=")', img)
             if not src:
                 new_image = img + '</img>'
-                print u"if not src"
                 content = content.replace(img, new_image)
                 continue
             else:
@@ -46,7 +45,12 @@ class HtmlCreator(object):
                 filename = ''
             new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
 
-            if recipe == Type.SinaBlog:
+            if recipe == Type.jianshu:
+                new_image = new_image.replace('data-original-src', 'temppicsr')
+                new_image = new_image.replace('src', 'falsesrc')
+                new_image = new_image.replace('temppicsr', 'src')    # 应该有更好的方式, 暂时先这样写
+                new_image += '</img>'
+            elif recipe == Type.SinaBlog:
                 # 硬编码, 可以优化?写到fix_html函数中
                 new_image = new_image.replace('http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif',\
                                           '../images/{}'.format(filename))
@@ -146,7 +150,10 @@ class HtmlCreator(object):
 
     def wrap_front_page_info(self, kind, info):
         result = {}
-        if kind == Type.SinaBlog:
+        if kind == Type.jianshu:
+            result['title'] = u'简书文章集锦'
+            result['description'] = u'TODO'
+        elif kind == Type.SinaBlog:
             result['title'] = u'新浪博客集锦'
             result['description'] = u'TODO'
         elif kind == Type.answer:

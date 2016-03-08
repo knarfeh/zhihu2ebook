@@ -30,7 +30,7 @@ class Control(object):
         try:
             Control.thread_pool.map(**argv)
         except Exception:
-            # 按照惯例，报错全部pass掉
-            # 等用户反馈了再开debug查吧
+            # 报错全部pass掉
+            # 等用户反馈了再开debug查
             pass
         return

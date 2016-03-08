@@ -22,16 +22,16 @@ class Book(object):
         # Debug.logger.debug("raw_sql_book['SinaBlog'][0].sql.info:" + str(raw_sql_book_list['SinaBlog'][0].sql.info))
         raw_book_list = [book.catch_data() for book in self.flatten(raw_sql_book_list)]
         # raw_book_list是InitialBook对象的列表
-        Debug.logger.debug(u"raw_book_list[0].kind是什么鬼?" + str(raw_book_list[0].kind))
-        Debug.logger.debug(u"raw_book_list[0].epub.article_count是什么鬼?" + str(raw_book_list[0].epub.article_count))
-        Debug.logger.debug(u"raw_book_list[0].epub.char_count是什么鬼?" + str(raw_book_list[0].epub.char_count))
-        Debug.logger.debug(u"raw_book_list[0].epub.title是什么鬼?" + str(raw_book_list[0].epub.title))
-        Debug.logger.debug(u"raw_book_list[0].epub.id是什么鬼?" + str(raw_book_list[0].epub.id))
-        Debug.logger.debug(u"raw_book_list[0].epub.split_index是什么鬼?" + str(raw_book_list[0].epub.split_index))
-        Debug.logger.debug(u"raw_book_list[0].epub.prefix:" + str(raw_book_list[0].epub.prefix))
-        Debug.logger.debug(u"raw_book_list是什么????" + str(raw_book_list[0]))
+        # Debug.logger.debug(u"raw_book_list[0].kind是什么鬼?" + str(raw_book_list[0].kind))
+        # Debug.logger.debug(u"raw_book_list[0].epub.article_count是什么鬼?" + str(raw_book_list[0].epub.article_count))
+        # Debug.logger.debug(u"raw_book_list[0].epub.char_count是什么鬼?" + str(raw_book_list[0].epub.char_count))
+        # Debug.logger.debug(u"raw_book_list[0].epub.title是什么鬼?" + str(raw_book_list[0].epub.title))
+        # Debug.logger.debug(u"raw_book_list[0].epub.id是什么鬼?" + str(raw_book_list[0].epub.id))
+        # Debug.logger.debug(u"raw_book_list[0].epub.split_index是什么鬼?" + str(raw_book_list[0].epub.split_index))
+        # Debug.logger.debug(u"raw_book_list[0].epub.prefix:" + str(raw_book_list[0].epub.prefix))
+        # Debug.logger.debug(u"raw_book_list是什么????" + str(raw_book_list[0]))
         # Debug.logger.debug(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
-        Debug.logger.debug(u"raw_book_list[0].page_list" + str(raw_book_list[0].page_list))
+        # Debug.logger.debug(u"raw_book_list[0].page_list" + str(raw_book_list[0].page_list))
         # Debug.logger.debug(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
 
         book_list = self.volume_book(raw_book_list)
@@ -103,7 +103,7 @@ class Book(object):
         book.page_list.append(page)
         # print u'article_list???' + str(book.article_list)
         for article in book.article_list:
-            if book.kind in Type.SinaBlog or book.kind in Type.article_type_list:
+            if book.kind in Type.SinaBlog or book.kind in Type.jianshu:
                 page = creator.create_article(article, index, recipe=book.kind)
             else:
                 Debug.logger.debug(u"book.kind是question!!!")

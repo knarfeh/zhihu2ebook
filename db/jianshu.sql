@@ -26,3 +26,10 @@ CREATE TABLE jianshu_article (
   PRIMARY KEY (article_id)
 );
 
+CREATE TABLE LoginRecord (
+  account    VARCHAR(255)   DEFAULT '',
+  password   VARCHAR(255)   DEFAULT '',
+  recordDate DATE           DEFAULT '2000-01-01',
+  cookieStr  VARCHAR(50000) DEFAULT '',
+  PRIMARY KEY (account)
+);

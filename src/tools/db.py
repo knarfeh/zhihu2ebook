@@ -60,6 +60,16 @@ class DB(object):
         :return:
         """
         template = {
+            # jianshu
+            Type.jianshu_info: (
+                'creator_id', 'creator_hash', 'creator_name', 'creator_sign',
+                'creator_logo', 'description', 'article_num', 'follower'
+            ),
+            Type.jianshu_article: (                # 这里把article_id 和author_id对换一下,不然会出错???TODO
+                'article_id', 'author_hash', 'author_name', 'author_sign',
+                'author_id', 'href', 'title', 'content', 'comment', 'publish_date'
+            ),
+            # SinaBlog
             Type.SinaBlog_Info: (
                 'creator_id', 'creator_hash', 'creator_name', 'creator_sign',
                 'creator_logo', 'description', 'article_num', 'follower'

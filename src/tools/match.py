@@ -66,8 +66,25 @@ class Match(object):
         for item in re.findall(r'\<noscript\>.*?\</noscript\>', content, re.S):
             content = content.replace(item, '')
 
-
         return content
+
+    @staticmethod
+    def jianshu(content=''):
+        u"""
+
+        :param content: jianshu个人主页的地址
+        :return: re.match object
+        """
+        return re.search(r'(?<=jianshu\.com/users/)(?P<jianshu_id>[^/\n\r]*)(/latest_articles)', content)
+
+    @staticmethod
+    def jianshu_article_id(content=''):
+        u"""
+
+        :param content:
+        :return:
+        """
+        return re.search(r'(?<=www\.jianshu\.com/p/)(?P<jianshu_article_id>[^/\n\r\']*)()', content)
 
     @staticmethod
     def SinaBlog(content=''):

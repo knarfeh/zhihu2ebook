@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.container.initialbook import InitialBook
+
 from src.tools.type import Type
 from src.container.initialbook import InitialBook
 
@@ -11,7 +11,7 @@ class Spider(object):
 
 class SingleTask(object):
     u"""
-    任务信息应当以对象属性的方式进行存储，用字典存的话记不住
+    任务信息以对象属性方式进行存储
     """
 
     def __init__(self):
@@ -22,6 +22,10 @@ class SingleTask(object):
 
 
 class TaskPackage(object):
+    u"""
+    work_list: kind->single_task.href_index
+    book_list: kind->single_task.book
+    """
     def __init__(self):
         self.work_list = {}
         self.book_list = {}
@@ -38,15 +42,30 @@ class TaskPackage(object):
         return
 
     def get_task(self):
+        if Type.jianshu in self.book_list:
+            self.merge_jianshu_article_book_list(Type.jianshu)
+        if Type.SinaBlog in self.book_list:
+            self.merge_SinaBlog_article_book_list(Type.SinaBlog)
         if Type.answer in self.book_list:
             self.merge_question_book_list(book_type=Type.answer)
         if Type.question in self.book_list:
             self.merge_question_book_list(book_type=Type.question)
         if Type.article in self.book_list:
             self.merge_article_book_list()
-        if Type.SinaBlog in self.book_list:
-            self.merge_SinaBlog_article_book_list(Type.SinaBlog)
         return self
+
+    def merge_jianshu_article_book_list(self, book_type):
+        book_list = self.book_list[Type.jianshu]
+        book = InitialBook()
+        info_extra = [item.sql.info_extra for item in book_list]
+        article_extra = [item.sql.article_extra for item in book_list]
+        book.kind = book_type
+        book.author_id = book_list[0].author_id
+        book.sql.info = 'select * from jianshu_info where ({})'.format(' or '.join(info_extra))
+        book.sql.article = 'select * from jianshu_article where ({})'.format(' or '.join(article_extra))
+        book.sql.answer = 'select * from jianshu_article where ({})'.format(' or '.join(article_extra))
+        self.book_list[book_type] = [book]
+        return
 
     def merge_article_book_list(self):
         book_list = self.book_list[Type.article]

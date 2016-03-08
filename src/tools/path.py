@@ -7,7 +7,7 @@ import locale
 class Path(object):
     u"""
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数
-    # """
+    """
     base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
 
     @staticmethod
@@ -93,7 +93,11 @@ class Path(object):
         Path.www_css = Path.base_path + u'/www/css'
         Path.www_image = Path.base_path + u'/www/images'
 
-        if recipe_kind == 'zhihu':
+        if recipe_kind == 'jianshu':
+            Path.config_path = Path.base_path + u'/jianshu_config.json'
+            Path.db_path = Path.base_path + u'/db/jianshu_db_002.sqlite'
+            Path.sql_path = Path.base_path + u'/db/jianshu.sql'
+        elif recipe_kind == 'zhihu':
             Path.config_path = Path.base_path + u'/zhihu_config.json'
             Path.db_path = Path.base_path + u'/db/zhihuDB_173.sqlite'
             Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'

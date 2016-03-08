@@ -226,6 +226,6 @@ pip-log.txt
 
 *.opf
 
-*.ncx
-
 *.pyc
+
+*.ncx

@@ -28,7 +28,7 @@ class Type(object):
 
     SinaBlog_article_type_list = ['SinaBlog']
 
-    SinaBlog_type_list = ['SinaBlog', 'SinaBlogAuthor']
+    SinaBlog_type_list = ['SinaBlog', ]         # 删除了SinaBlogAuthor
 
     # jianshu    # TODO, 目前只有latest_articles一种, 还可以写collections, notebook等等
     jianshu_article = 'jianshu_article'     # 类型是单篇的文章   TODO

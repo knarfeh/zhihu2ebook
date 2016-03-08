@@ -31,5 +31,6 @@ class TemplateConfig(object):
     front_page_answer_uri = front_page_info_template_path + u'/answer.html'
     front_page_article_uri = front_page_info_template_path + u'/article.html'
     front_page_SinaBlog_uri = front_page_info_template_path + u'/sinablog.html'
+    front_page_jianshu_uri = front_page_info_template_path + u'/jianshu.html'
 
     front_page_base_uri = front_page_template_path + u'/base.html'
