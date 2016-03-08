@@ -118,7 +118,7 @@ class HtmlCreator(object):
 
         content = self.get_template('content', 'base').format(**result)
         page = Page()
-        page.content = self.fix_image(content)
+        page.content = self.fix_image(content, recipe="zhihu")
         page.filename = str(prefix) + '_' + str(question['question_id']) + '.xhtml'
         page.title = question['title']
         return page

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
 import shutil
+import locale
 
 
 class Path(object):
     u"""
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数
     # """
-    base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))  # 初始地址,不含分隔符
+    base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
 
     @staticmethod
     def reset_path():
@@ -29,10 +29,7 @@ class Path(object):
         u"""
         :return: 绝对路径
         """
-        try:
-            path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-        except:
-            path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
         return path
 
     @staticmethod
@@ -91,29 +88,22 @@ class Path(object):
         初始化路径,不需要实例化 Path 就能执行
         :return:
         """
-        try:
-            Path.base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-        except:
-            Path.base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+        Path.base_path = Path.get_pwd()
 
         Path.www_css = Path.base_path + u'/www/css'
-        Path.www_image = Path.base_path + u'/www/image'
+        Path.www_image = Path.base_path + u'/www/images'
 
         if recipe_kind == 'zhihu':
             Path.config_path = Path.base_path + u'/zhihu_config.json'
             Path.db_path = Path.base_path + u'/db/zhihuDB_173.sqlite'
             Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
-
-            Path.html_pool_path = Path.base_path + u'/电子书临时资源库/网页池'
-            Path.image_pool_path = Path.base_path + u'/电子书临时资源库/图片池'
-
-        if recipe_kind == 'SinaBlog':
+        elif recipe_kind == 'SinaBlog':
             Path.config_path = Path.base_path + u'/SinaBlog_config.json'
             Path.db_path = Path.base_path + u'/db/SinaBlog_db_001.sqlite'
             Path.sql_path = Path.base_path + u'/db/SinaBlog.sql'
 
-            Path.html_pool_path = Path.base_path + u'/电子书临时资源库/网页池'
-            Path.image_pool_path = Path.base_path + u'/电子书临时资源库/图片池'
+        Path.html_pool_path = Path.base_path + u'/电子书临时资源库/网页池'
+        Path.image_pool_path = Path.base_path + u'/电子书临时资源库/图片池'
         Path.result_path = Path.base_path + u'/生成的电子书'
         return
 
