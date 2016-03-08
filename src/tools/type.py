@@ -30,6 +30,8 @@ class Type(object):
 
     SinaBlog_type_list = ['SinaBlog', 'SinaBlogAuthor']
 
+    # jianshu
+
     # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了） TODO how's that?
     type_list = question_type_list + article_type_list + SinaBlog_type_list
     info_table = {
