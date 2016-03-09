@@ -94,15 +94,15 @@ class Path(object):
         Path.www_image = Path.base_path + u'/www/images'
 
         if recipe_kind == 'jianshu':
-            Path.config_path = Path.base_path + u'/jianshu_config.json'
+            Path.config_path = Path.base_path + u'/config/jianshu_config.json'
             Path.db_path = Path.base_path + u'/db/jianshu_db_002.sqlite'
             Path.sql_path = Path.base_path + u'/db/jianshu.sql'
         elif recipe_kind == 'zhihu':
-            Path.config_path = Path.base_path + u'/zhihu_config.json'
+            Path.config_path = Path.base_path + u'/config/zhihu_config.json'
             Path.db_path = Path.base_path + u'/db/zhihuDB_173.sqlite'
             Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
         elif recipe_kind == 'SinaBlog':
-            Path.config_path = Path.base_path + u'/SinaBlog_config.json'
+            Path.config_path = Path.base_path + u'/config/SinaBlog_config.json'
             Path.db_path = Path.base_path + u'/db/SinaBlog_db_001.sqlite'
             Path.sql_path = Path.base_path + u'/db/SinaBlog.sql'
 

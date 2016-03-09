@@ -7,7 +7,7 @@ import locale
 class Path(object):
     base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))  # 初始地址,不含分隔符
 
-    config_path = base_path + u'/zhihu_config.json'
+    config_path = base_path + u'/config/zhihu_config.json'
     db_path = base_path + u'/db/zhihuDB_173.sqlite'
     sql_path = base_path + u'/db/zhihuhelp.sql'
 
@@ -78,7 +78,7 @@ class Path(object):
     @staticmethod
     def init_base_path():
         Path.base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
-        Path.config_path = Path.base_path + u'/zhihu_config.json'
+        Path.config_path = Path.base_path + u'/config/zhihu_config.json'
         Path.db_path = Path.base_path + u'/db/zhihuDB_173.sqlite'
         Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
 

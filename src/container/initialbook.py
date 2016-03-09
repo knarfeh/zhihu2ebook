@@ -74,9 +74,7 @@ class InitialBook(object):
                 info = self.catch_article_book_info(self.sql.info)
             else:
                 info = DB.cursor.execute(self.sql.info).fetchone()
-                print u"!!!!!!!info:" + str(info)
                 info = DB.wrap(Type.info_table[self.kind], info)
-                print u"!!!!!!!info:" + str(info)
         self.set_info(info)
         return
 

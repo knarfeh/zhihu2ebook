@@ -2,7 +2,7 @@
 from .tools.epub_config import EpubConfig
 from .tools.epub_path import EpubPath
 
-from .zhihuhelp_tools.path import Path
+from src.tools.path import Path
 
 
 class INF(object):
