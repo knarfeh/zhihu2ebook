@@ -12,7 +12,7 @@ from src.gui.dialogs.scheduler_ui import Ui_Dialog
 
 from src.web.feeds.recipes.model import RecipeModel
 
-from src.lib.epub.zhihuhelp_tools.path import Path
+from src.tools.path import Path
 
 
 class SchedulerDialog(QDialog, Ui_Dialog):

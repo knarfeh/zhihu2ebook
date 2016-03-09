@@ -153,7 +153,7 @@ class Book(object):
         epub.add_css(Path.base_path + u'/www/css/customer.css')
         epub.add_css(Path.base_path + u'/www/css/normalize.css')
         epub.add_css(Path.base_path + u'/www/css/bootstrap.css')
-        epub.add_css(Path.base_path + u'/www/css/article.css')    # TODO: 来自新浪,需要精简
+        # epub.add_css(Path.base_path + u'/www/css/article.css')    # TODO: 来自新浪,需要精简
         for book in book_package.book_list:
             page = book.page_list[0]
             with open(html_tmp_path + page.filename, u'w') as html:
@@ -195,7 +195,7 @@ class Book(object):
         Path.copy(Path.www_css + u'/customer.css', u'./customer.css')
         Path.copy(Path.www_css + u'/markdown.css', u'./markdown.css')
         Path.copy(Path.www_css + u'/normalize.css', u'./normalize.css')
-        Path.copy(Path.www_css + u'/article.css', u'./article.css')         # TODO: 需要精简
+        # Path.copy(Path.www_css + u'/article.css', u'./article.css')         # TODO: 需要精简
         Path.reset_path()
         return
 

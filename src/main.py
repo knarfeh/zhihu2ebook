@@ -54,12 +54,7 @@ class EEBook(object):
         程序运行的主函数
         :return:
         """
-        print Config.debug
-        if Config.debug is not True:         # 不是debug的时候才检查更新
-            print "Config debug is not True, check update......"
-            self.check_update()
-        else:
-            Debug.logger.info(u"#Debug模式#: 不检查更新")
+        Debug.logger.debug(u"#Debug模式#: 不检查更新")
         self.init_config()
         Debug.logger.info(u"开始读取ReadList.txt的内容")
         with open('./ReadList.txt', 'r') as read_list:
@@ -78,9 +73,9 @@ class EEBook(object):
         Debug.logger.info(u"对记录 {} 进行分析".format(command))
         task_package = ReadListParser.get_task(command)  # 分析命令
 
-        # if not task_package.is_work_list_empty():
-        #     worker_factory(task_package.work_list)  # 执行抓取程序
-        #     Debug.logger.info(u"网页信息抓取完毕")
+        if not task_package.is_work_list_empty():
+            worker_factory(task_package.work_list)  # 执行抓取程序
+            Debug.logger.info(u"网页信息抓取完毕")
 
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始从数据库中生成电子书")

@@ -233,7 +233,6 @@ class ReadListParser():
                   'SinaBlog': parse_SinaBlog,
                   'jianshu': parse_jianshu,
                   'unknown': parse_error, }
-        print u"raw_command???" + str(raw_command)
         kind = detect(raw_command)
 
         return parser[kind](raw_command)

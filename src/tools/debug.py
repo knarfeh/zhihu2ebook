@@ -10,7 +10,15 @@ class Debug(object):
     u"""
     打印日志
     """
+    handler = logging.StreamHandler()    # 实例化handler
+    fmt = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'
+
+    formatter = logging.Formatter(fmt)
+    handler.setFormatter(formatter)
+
     logger = logging.getLogger('main')  # 获取名为main的logger
+    logger.addHandler(handler)
+
     if Config.debug:
         logger.setLevel(logging.DEBUG)     # debug模式, 显示 debug, info, warning, error, critical 信息
     else:
