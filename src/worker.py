@@ -184,7 +184,6 @@ class AuthorWorker(PageWorker):
         if target_url in self.task_complete_set:
             return
         content = Http.get_content(target_url + '/answers?order_by=vote_num')
-        print u"target_url??????:" + str(target_url)
         if not content:
             return
         self.task_complete_set.add(target_url)

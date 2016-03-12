@@ -24,8 +24,8 @@ def set_account():
     print u'####################################'
     print u'#直接敲击回车则使用内置账号进行登陆#'
     print u'####################################'
-    # account = raw_input()
-    account = None
+    account = raw_input()
+    # account = None
     if account:
         while not re.search(r'\w+@[\w\.]{3,}', account):
             print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'

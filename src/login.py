@@ -18,7 +18,7 @@ from src.tools.path import Path
 
 
 class Login(object):
-    def __init__(self):
+    def __init__(self, recipe_kind):
         self.cookieJar = cookielib.LWPCookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
         urllib2.install_opener(self.opener)
@@ -61,12 +61,13 @@ class Login(object):
         if response['r'] == 0:
             print u'登陆成功！'
             print u'登陆账号:', account
-            print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
+            # print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
             # remenber_account = raw_input()      # TODO, 当然是默认记住密码
             remenber_account = 'yes'
             if remenber_account == 'yes':
-                Config.account, Config.password, Config.remember_account = account, password, True
-                print u'帐号密码已保存,可通过修改config.json修改设置'
+                # Config.account, Config.password, Config.remember_account = account, password, True
+                # print u'帐号密码已保存,可通过修改config.json修改设置'
+                pass
             else:
                 Config.account, Config.password, Config.remember_account = '', '', False
                 print u'跳过保存环节，进入下一流程'
@@ -103,9 +104,9 @@ class Login(object):
         else:
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
 
-        print u'如果不需要输入验证码可点按回车跳过此步'
-        captcha = raw_input()
-        return captcha
+        # print u'如果不需要输入验证码可点按回车跳过此步'
+        # captcha = raw_input()
+        # return captcha
 
     def start(self):
         guide.hello_world()

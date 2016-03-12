@@ -5,8 +5,9 @@ from PyQt4 import QtGui, QtCore
 
 HORIZONTAL_HEADERS = (u"website", u"type")
 
+
 class recipe_class(object):
-    """
+    u"""
     a trivial custom data object
     """
     def __init__(self, url, type, lang):
@@ -18,10 +19,10 @@ class recipe_class(object):
         return "website -- %s" % self.url
 
 class TreeItem(object):
-    '''
+    u"""
     a python object used to return row/column data, and keep note of
     it's parents and/or children
-    '''
+    """
     def __init__(self, recipe, header, parentItem):
         self.recipe = recipe
         self.parentItem = parentItem
@@ -38,10 +39,10 @@ class TreeItem(object):
         return len(self.childItems)
 
     def columnCount(self):
-        return 2
+        return 2            # TODO 解决硬编码的问题
 
     def data(self, column):
-        if self.recipe == None:
+        if self.recipe is None:
             if column == 0:
                 return QtCore.QVariant(self.header)
             if column == 1:
@@ -63,19 +64,19 @@ class TreeItem(object):
 
 
 class RecipeModel(QtCore.QAbstractItemModel):
-    '''
+    u"""
     a model to display a few names, ordered by sex
-    '''
+    """
     def __init__(self, parent=None):
         super(RecipeModel, self).__init__(parent)
         self.recipe = []
-        for url, type, lang in (("zhihu.com", u"问题, 答案, 专栏", u"Chinese"),
-        ("jianshu.com", u"Blogs", u"Chinese"), ("blog.sina.com", u"博客", u"English")):
+        for url, type, lang in (("zhihu", u"问题, 答案, 专栏", u"Chinese"),
+        ("jianshu", u"Blogs", u"Chinese"), ("SinaBlog", u"博客", u"Chinese")):
             recipe = recipe_class(url, type, lang)
             self.recipe.append(recipe)
 
         self.rootItem = TreeItem(None, "ALL", None)
-        self.parents = {0 : self.rootItem}
+        self.parents = {0: self.rootItem}
         self.setupModelData()
 
     def columnCount(self, recipe=None):

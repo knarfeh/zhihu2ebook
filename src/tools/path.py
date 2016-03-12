@@ -9,6 +9,15 @@ class Path(object):
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数
     """
     base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
+    # try:
+    #     base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
+    # except:
+    #     base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
+
+    # base_path = os.path.split(os.path.realpath(__file__))[0]
+
+    print u"哪一个先执行???" + str(base_path)
+    read_list_path = base_path + '/ReadList.txt'
 
     @staticmethod
     def reset_path():
@@ -89,6 +98,7 @@ class Path(object):
         :return:
         """
         Path.base_path = Path.get_pwd()
+        print u"从get_pwd()中获得的base_path" + str(Path.base_path)
 
         Path.www_css = Path.base_path + u'/www/css'
         Path.www_image = Path.base_path + u'/www/images'
@@ -125,3 +135,5 @@ class Path(object):
     @staticmethod
     def is_file(path):
         return os.path.isfile(path)
+
+
