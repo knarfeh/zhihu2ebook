@@ -5,7 +5,7 @@ import os   # 添加系统路径
 reload(sys)
 base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
 
-print base_path
+# print base_path
 sys.path.append(base_path + '/src/lib')
 
 sys.setdefaultencoding('utf-8')

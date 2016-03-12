@@ -57,13 +57,18 @@ def SinaBlog_article_content(content=''):
 
 
 
+from src.tools.path import Path
 
-article_body = soup.find('div', class_='articalContent')
-if not article_body:
-    print (u"博文内容没有找到")
-article_body = str(article_body)
+path = Path()
+print path.base_path
 
-print article_body
+
+# article_body = soup.find('div', class_='articalContent')
+# if not article_body:
+#     print (u"博文内容没有找到")
+# article_body = str(article_body)
+#
+# print article_body
 
 # lindex = article_body.find('<div class="articalTitle"')
 # rindex = article_body.find('<!-- 正文结束 -->')

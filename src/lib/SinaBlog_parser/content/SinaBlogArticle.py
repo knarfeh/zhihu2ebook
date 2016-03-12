@@ -11,13 +11,6 @@ class SinaBlogArticle(ParserTools):
             pass
         self.set_dom(dom)
         self.info = {}
-        # self.body = self.dom.find('div', class_='SG_conn')
-
-        # if dom:
-        #     self.body = dom.find('div', class_='SG_conn', id='module_920')
-        #     if self.body:
-        #         content = self.get_tag_content(self.body)
-        #         self.content = BeautifulSoup(Match.fix_html(content), 'lxml')
         return
 
     def set_dom(self, dom):
@@ -27,7 +20,6 @@ class SinaBlogArticle(ParserTools):
 
     def get_info(self):
         answer_info = self.parse_info()
-        # TODO
         return answer_info
 
     def parse_info(self):
@@ -116,8 +108,8 @@ class SinaBlogArticle(ParserTools):
         if not article_title:
             Debug.logger.debug(u"没有找到博文标题")
             return
-        # 标题里如果出现&会出错, 应该有更好的做法
-        self.info['title'] = article_title.replace('&', '&amp;')
+        # 标题里如果出现&,<<这样的符号会出错
+        self.info['title'] = article_title.replace('&', '&amp;').replace('<<', "《").replace('>>', "》")
 
 
 

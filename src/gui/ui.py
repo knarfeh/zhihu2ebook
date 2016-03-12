@@ -10,6 +10,7 @@ from PyQt4.QtCore import Qt
 
 from src.tools.debug import Debug
 from src.gui.dialogs.scheduler import SchedulerDialog
+from src.gui.dialogs.download import DownloadDialog
 from src.web.feeds.recipes.model import RecipeModel
 from src.gui.library import LibraryTableWidget, insert_library
 from src.gui.bookview import BookView
@@ -39,7 +40,6 @@ class MainWindow(QtGui.QMainWindow):
         self.filename = ""
 
         self.init_UI()
-
 
     def init_UI(self):
         self.init_toolbar()
@@ -188,12 +188,12 @@ class MainWindow(QtGui.QMainWindow):
         制作电子书
         :return:
         """
-        Schedule = QtGui.QDialog()
-        ui = SchedulerDialog(RecipeModel())        # TODO: 将任务交给jobs模块,
+        download = QtGui.QDialog()
+        ui = DownloadDialog(RecipeModel())        # TODO: 将任务交给jobs模块,
 
         ui.exec_()
 
-        del Schedule
+        del download
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

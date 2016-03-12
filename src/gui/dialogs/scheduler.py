@@ -64,7 +64,8 @@ class SchedulerDialog(QDialog, Ui_Dialog):
     def download_button_clicked(self):
 
         # web_id = self.recipes.model.data(1, QtCore.Qt.UserRole)    # TODO: 获得选中的recipes
-        web_id = self.row_clicked(self.recipes.currentIndex())    # TODO: 获得网站类型, 貌似没有什么用,可以删去
+        web_id = self.row_clicked(self.recipes.currentIndex())
+        print "web_id"
 
         readlist_content = self.plainTextEdit.toPlainText()
 
@@ -78,10 +79,10 @@ class SchedulerDialog(QDialog, Ui_Dialog):
 
         ReadList_object.close()
 
-        from src.main import ZhihuHelp     # TODO: 整合其他的网站类型
+        from src.main import EEBook     # TODO: 整合其他的网站类型
 
-        zhihu_crawler = ZhihuHelp()
-        zhihu_crawler.start()
+        game = EEBook(recipe_kind='zhihu')
+        game.begin()
 
 
 if __name__ == "__main__":
