@@ -3,33 +3,34 @@
 
 from PyQt4 import QtGui, QtCore
 
-HORIZONTAL_HEADERS = (u"website", u"type")
+HORIZONTAL_HEADERS = (u"website", u"info")
 
 
-class recipe_class(object):
+class Recipes(object):
     u"""
-    a trivial custom data object
+
     """
-    def __init__(self, url, type, lang):
+    def __init__(self, url, recipe_info, lang):
         self.url = url
-        self.type = type
+        self.recipe_info = recipe_info
         self.lang = lang
 
     def __repr__(self):
-        return "website -- %s" % self.url
+        return "%s" % self.url
+
 
 class TreeItem(object):
     u"""
     a python object used to return row/column data, and keep note of
     it's parents and/or children
     """
-    def __init__(self, recipe, header, parentItem):
+    def __init__(self, recipe, header, parent_item):
         self.recipe = recipe
-        self.parentItem = parentItem
+        self.parent_item = parent_item
         self.header = header
         self.childItems = []
 
-    def appendChild(self, item):
+    def append_child(self, item):
         self.childItems.append(item)
 
     def child(self, row):
@@ -46,20 +47,20 @@ class TreeItem(object):
             if column == 0:
                 return QtCore.QVariant(self.header)
             if column == 1:
-                return QtCore.QVariant("")
+                return QtCore.QVariant("??????")
         else:
             if column == 0:
                 return QtCore.QVariant(self.recipe.url)
             if column == 1:
-                return QtCore.QVariant(self.recipe.type)
+                return QtCore.QVariant(self.recipe.recipe_info)
         return QtCore.QVariant()
 
     def parent(self):
-        return self.parentItem
+        return self.parent_item
 
     def row(self):
-        if self.parentItem:
-            return self.parentItem.childItems.index(self)
+        if self.parent_item:
+            return self.parent_item.childItems.index(self)
         return 0
 
 
@@ -70,10 +71,13 @@ class RecipeModel(QtCore.QAbstractItemModel):
     def __init__(self, parent=None):
         super(RecipeModel, self).__init__(parent)
         self.recipe = []
-        for url, type, lang in (("zhihu", u"问题, 答案, 专栏", u"Chinese"),
-        ("jianshu", u"Blogs", u"Chinese"), ("SinaBlog", u"博客", u"Chinese")):
-            recipe = recipe_class(url, type, lang)
-            self.recipe.append(recipe)
+        for url, recipe_info, lang in (
+                ("zhihu", u"问题, 答案, 专栏", u"Chinese"),
+                ("jianshu", u"Blogs", u"Chinese"),
+                ("SinaBlog", u"博客", u"Chinese")
+        ):
+            recipe_item = Recipes(url, recipe_info, lang)
+            self.recipe.append(recipe_item)
 
         self.rootItem = TreeItem(None, "ALL", None)
         self.parents = {0: self.rootItem}
@@ -113,11 +117,11 @@ class RecipeModel(QtCore.QAbstractItemModel):
             return QtCore.QModelIndex()
 
         if not parent.isValid():
-            parentItem = self.rootItem
+            parent_item = self.rootItem
         else:
-            parentItem = parent.internalPointer()
+            parent_item = parent.internalPointer()
 
-        childItem = parentItem.child(row)
+        childItem = parent_item.child(row)
         if childItem:
             return self.createIndex(row, column, childItem)
         else:
@@ -131,65 +135,70 @@ class RecipeModel(QtCore.QAbstractItemModel):
         if not childItem:
             return QtCore.QModelIndex()
 
-        parentItem = childItem.parent()
+        parent_item = childItem.parent()
 
-        if parentItem == self.rootItem:
+        if parent_item == self.rootItem:
             return QtCore.QModelIndex()
 
-        return self.createIndex(parentItem.row(), 0, parentItem)
+        return self.createIndex(parent_item.row(), 0, parent_item)
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         if parent.column() > 0:
             return 0
         if not parent.isValid():
-            p_Item = self.rootItem
+            p_item = self.rootItem
         else:
-            p_Item = parent.internalPointer()
-        return p_Item.childCount()
+            p_item = parent.internalPointer()
+        return p_item.childCount()
+
 
     def setupModelData(self):
         for item in self.recipe:
-            type = item.lang
+            lang = item.lang
 
-            if not self.parents.has_key(type):
-                newparent = TreeItem(None, type, self.rootItem)
-                self.rootItem.appendChild(newparent)
+            if lang not in self.parents:
+                new_parent = TreeItem(None, lang, self.rootItem)
+                self.rootItem.append_child(new_parent)
 
-                self.parents[type] = newparent
+                self.parents[lang] = new_parent
 
-            parentItem = self.parents[type]
-            newItem = TreeItem(item, "", parentItem)
-            parentItem.appendChild(newItem)
+            parent_item = self.parents[lang]
+            newItem = TreeItem(item, "", parent_item)
+            parent_item.append_child(newItem)
 
-    def searchModel(self, recipe):
-        '''
+    def search_model(self, recipe):
+        u"""
         get the modelIndex for a given appointment
-        '''
-        def searchNode(node):
-            '''
-            a function called recursively, looking at all nodes beneath node
-            '''
+        :param recipe:
+        :return:
+        """
+        def search_node(node):
+            u"""
+             a function called recursively, looking at all nodes beneath node
+            :param node:
+            :return:
+            """
             for child in node.childItems:
                 if recipe == child.recipe:
                     index = self.createIndex(child.row(), 0, child)
                     return index
 
                 if child.childCount() > 0:
-                    result = searchNode(child)
-                    if result:
-                        return result
+                    child_result = search_node(child)
+                    if child_result:
+                        return child_result
 
-        retarg = searchNode(self.parents[0])
-        print retarg
-        return retarg
+        result = search_node(self.parents[0])
+        print result
+        return result
 
-    def find_GivenName(self, url):
+    def find_given_name(self, url):
         app = None
         for item in self.recipe:
             if item.url == url:
                 app = item
                 break
-        if app != None:
-            index = self.searchModel(app)
-            return (True, index)
-        return (False, None)
+        if app is not None:
+            index = self.search_model(app)
+            return True, index
+        return False, None

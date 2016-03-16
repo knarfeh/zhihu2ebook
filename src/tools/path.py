@@ -16,7 +16,6 @@ class Path(object):
 
     # base_path = os.path.split(os.path.realpath(__file__))[0]
 
-    print u"哪一个先执行???" + str(base_path)
     read_list_path = base_path + '/ReadList.txt'
 
     @staticmethod
@@ -112,6 +111,7 @@ class Path(object):
             Path.db_path = Path.base_path + u'/db/zhihuDB_173.sqlite'
             Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
         elif recipe_kind == 'SinaBlog':
+            print u""
             Path.config_path = Path.base_path + u'/config/SinaBlog_config.json'
             Path.db_path = Path.base_path + u'/db/SinaBlog_db_001.sqlite'
             Path.sql_path = Path.base_path + u'/db/SinaBlog.sql'
