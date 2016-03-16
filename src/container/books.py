@@ -11,7 +11,7 @@ from BeautifulSoup import BeautifulStoneSoup
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
 
-from constants import LIBRARY_DIR    # it's ok
+from src.constants import LIBRARY_DIR    # it's ok
 # LIBRARY_DIR = os.path.abspath('.') + os.sep
 
 # print LIBRARY_DIR
@@ -29,6 +29,14 @@ class Book(object):
     _FILE = LIBRARY_DIR + '%s.epub'
 
     def __init__(self, book_id=None):
+        self.tags = 'EEBook'
+        self.title = ''
+        self.author = ''
+        self.date = ''
+        self.size = ''
+        self.rating = ''
+        self.publisher = ''
+        self.published = ''
         if book_id:
             self.open(book_id)
 

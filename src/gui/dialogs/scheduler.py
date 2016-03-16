@@ -7,9 +7,7 @@ from PyQt4 import QtCore
 
 from PyQt4.QtCore import Qt
 
-
-from src.gui.dialogs.scheduler_ui import Ui_Dialog
-
+from src.gui.dialogs.ui_scheduler import Ui_Dialog
 from src.web.feeds.recipes.model import RecipeModel
 
 from src.tools.path import Path

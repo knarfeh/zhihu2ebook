@@ -13,7 +13,7 @@ sys.setrecursionlimit(100000)  # 为BS解析知乎上的长答案增加递归深
 
 from src.main import EEBook
 
-game = EEBook(recipe_kind='zhihu')
+game = EEBook(recipe_kind='SinaBlog')
 game.begin()
 
 
