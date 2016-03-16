@@ -36,7 +36,7 @@ class Ui_Dialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 540, 718))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 525, 718))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_5.setMargin(0)
@@ -210,4 +210,3 @@ class Ui_Dialog(object):
         self.download_all_button.setToolTip(_translate("Dialog", "Download all scheduled news sources at once", None))
         self.download_all_button.setText(_translate("Dialog", "Download &all scheduled", None))
 
-import images_rc

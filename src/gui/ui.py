@@ -8,7 +8,7 @@ import subprocess
 
 from PyQt4 import QtGui
 from PyQt4.QtGui import (QMainWindow, QDockWidget, QFileDialog, QTableWidgetItem,
-                         QAction, QKeySequence, QTableWidget)
+                         QAction, QKeySequence, QTableWidget, QMessageBox, QMenu, QCursor)
 from PyQt4.QtCore import Qt, SIGNAL, QSettings, QVariant, QSize, QPoint, QTimer, QFile
 
 from src.tools.debug import Debug
@@ -19,13 +19,11 @@ from src.gui.library import LibraryTableWidget, insert_library, get_library, rem
 from src.gui.bookview import BookView
 
 from src.container.books import Book
-from src.constants import LIBRARY_DIR
+from src.constants import *
 from src.resources import qrc_resources
 
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
-
-print u"在ui2.py中, parentdir是????" + str(parentdir)
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -42,18 +40,18 @@ class MainWindow(QtGui.QMainWindow):
         self.book_view = BookView()
         # ###########actions############################
         self.addBookAction = self.create_action(
-            u"添加Epub格式的电子书?????", self.add_book, QKeySequence.Open,
+            u"添加EPub格式的电子书?????", self.add_book, QKeySequence.Open,
             QtGui.QIcon(":/open3.png"), u"从文件系统中添加"
         )
         # TODO: 切图标
         self.removeAction = self.create_action(
             u"移除Epub格式的电子书", self.remove_book, None,
-            QtGui.QIcon(":/remove.png"), u"移除Epub格式电子书"
+            QtGui.QIcon(":/remove.png"), u"移除EPub格式电子书"
         )
         # TODO: 切图标
         self.downloadAction = self.create_action(
-            u"制作Epub格式电子书", self.make_book, None,
-            QtGui.QIcon(":/download.png"), u"制作Epub格式电子书"
+            u"制作EPub格式电子书", self.make_book, None,
+            QtGui.QIcon(":/download.png"), u"制作EPub格式电子书"
         )
         # TODO: 阅读电子书的图标
         self.readAction = self.create_action(
@@ -61,14 +59,39 @@ class MainWindow(QtGui.QMainWindow):
             QtGui.QIcon(":/preview.png"), u"阅读电子书"
         )
         self.toolbarAction = self.create_action(
-            "Toggle Toolbar", self.toggle_toolbar
+            u"切换工具栏", self.toggle_toolbar
         )
         self.statusbarAction = self.create_action(
-            "Toggle statusbar", self.toggle_statusbar
+            u"切换状态栏", self.toggle_statusbar
         )
         self.aboutAction = self.create_action(
-            "EE-Book Help", None, None, None, None,
+            u"帮助", None, None, None, None,
         )
+        self.setViewerAction = self.create_action(
+            u"设置EPub阅读器", self.set_viewer, None,
+            None, u"设置默认的电子书阅读器"
+        )
+        self.open_with_build_in_action = self.create_action(
+            u"用软件自带EPub阅读器打开", self.view_book_with_build_in, None,
+            None, None
+        )
+
+        self.open_with_os_action = self.create_action(
+            u"用系统默认EPub阅读器打开", self.view_book_with_os, None,
+            None, None
+        )
+
+        # ContextMenu
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.showContextMenu)
+
+        self.contextMenu = QMenu(self)
+        self.add_actions(self.contextMenu, (self.open_with_build_in_action, self.open_with_os_action))
+        # self.open_with_os_action = self.contextMenu.addAction(u'用软件自带EPub阅读器打开')
+        # self.open_with_build_in_action = self.contextMenu.addAction(u'用系统默认EPub阅读器打开')
+        # self.open_with_os_action = self.contextMenu.addAction(u'用软件自带EPub阅读器打开')
+
+
         # ###########toolbar############################
         self.toolbar = self.addToolBar("&Options")
         self.add_actions(self.toolbar, (self.addBookAction, self.removeAction,
@@ -80,8 +103,11 @@ class MainWindow(QtGui.QMainWindow):
         self.editBook = self.menu_bar.addMenu("&Books")
         self.add_actions(self.editBook, (self.addBookAction, self.removeAction))
 
-        self.view = self.menu_bar.addMenu("&View")
-        self.add_actions(self.view, (self.toolbarAction, self.statusbarAction))
+        self.viewMenu = self.menu_bar.addMenu("&View")
+        self.add_actions(self.viewMenu, (self.toolbarAction, self.statusbarAction))
+
+        self.settingMenu = self.menu_bar.addMenu("&setting")
+        self.add_actions(self.settingMenu, (self.setViewerAction, ))
 
         self.helpMenu = self.menu_bar.addMenu("&Help")
         self.add_actions(self.helpMenu, (self.aboutAction, ))
@@ -112,13 +138,21 @@ class MainWindow(QtGui.QMainWindow):
         self.update_library()
         self.create_connections()
 
+    def showContextMenu(self, pos):
+        u"""
+        右键点击时调用的函数
+        """
+        # 菜单显示前，将它移动到鼠标点击的位置
+        self.contextMenu.exec_(QCursor.pos())      # 在鼠标位置显示
+
     def update_library(self):
         self.library = get_library()
 
         self.library_table.clear()
         self.library_table.setStyleSheet("selection-background-color: blue")  # 设置选中背景色
         self.library_table.setRowCount(len(self.library['books']))
-        self.library_table.setHorizontalHeaderLabels(["Title", "Authors"])
+        self.library_table.setColumnCount(3)    # TODO: 改掉硬编码??
+        self.library_table.setHorizontalHeaderLabels(['Title', 'Authors', 'Tags'])
 
         self.library_table.setAlternatingRowColors(True)
         self.library_table.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -126,7 +160,7 @@ class MainWindow(QtGui.QMainWindow):
         self.library_table.setSelectionMode(QTableWidget.SingleSelection)
 
         for i, book in enumerate(self.library['books']):
-            for j, cell in enumerate((book['title'], book['author'])):
+            for j, cell in enumerate((book['title'], book['author'], book['tags'])):
                 print str(i) + str(j) + str(cell)
                 item = QTableWidgetItem(cell)
                 item.setTextAlignment(Qt.AlignCenter)
@@ -216,11 +250,6 @@ class MainWindow(QtGui.QMainWindow):
         insert_library(book)
         self.update_library()
 
-        # if self.filename:
-        #     TODO 用默认的电子书阅读器打开epub电子书
-            # os.system(u'/Applications/calibre.app/Contents/calibre-debug.app/Contents/MacOS/calibre-debug -w "{}"'.
-            #           format(self.filename).encode(sys.stdout.encoding))
-
     def remove_book(self):
         u"""
         移除电子书
@@ -238,17 +267,16 @@ class MainWindow(QtGui.QMainWindow):
         :return:
         """
         download = QtGui.QDialog()
-        ui = DownloadDialog(RecipeModel())        # TODO: 将任务交给jobs模块,
+        ui = DownloadDialog(RecipeModel(), self.book_view)        # TODO: 将任务交给jobs模块,
 
         ui.exec_()
+        self.update_library()
 
         del download
 
     def create_connections(self):
-        # self.library_table.connect(self, SIGNAL("itemDoubleClicked(QTableWidgetItem *)"), self.view_book)
         self.library_table.itemDoubleClicked.connect(self.view_book)
         self.library_table.itemClicked.connect(self.row_clicked)
-        # self.library_table.connect(self, SIGNAL("itemClicked(QTableWidgetItem *)"), self.row_clicked)
 
     def row_clicked(self):
         current = self.library_table.currentRow()
@@ -262,21 +290,45 @@ class MainWindow(QtGui.QMainWindow):
         :return:
         """
         if not self.library_table.isItemSelected(self.library_table.currentItem()):
-            QtGui.QMessageBox.information(self, u"Error", u"请选定要打开的电子书")
+            QMessageBox.information(self, u"Error", u"请选定要打开的电子书")
             return
 
-        book_id = self.library['books'][self.library_table.currentRow()]['book_id']
-
-        print str(book_id)
-
         if self.read_method_build_in:     # 判断是否用软件内置的EPub阅读器打开
-            self.book_view.load_book(book_id)
-            self.book_view.show()
+            self.view_book_with_build_in()
         else:
-            epub_path = LIBRARY_DIR + '%s.epub' % book_id
-            print epub_path     # 进行平台的判断,
-            subprocess.call(["open", epub_path])
+            self.view_book_with_os()
 
+    def view_book_with_build_in(self):
+        book_id = self.library['books'][self.library_table.currentRow()]['book_id']
+        self.book_view.load_book(book_id)
+        self.book_view.show()
+
+    def view_book_with_os(self):
+        book_id = self.library['books'][self.library_table.currentRow()]['book_id']
+        epub_path = LIBRARY_DIR + '%s.epub' % book_id
+        if isosx:
+            subprocess.call(["open", epub_path])
+        elif iswindows:
+            os.startfile(file)    # TODO: 需要测试
+        elif islinux:
+            subprocess.call(["xdg-open", file])    # TODO: 需要测试
+
+    def set_viewer(self):
+        u"""
+        设置默认的EPub阅读器
+        :return:
+        """
+        if self.read_method_build_in:
+            read_method_info = u"系统默认的EPub格式阅读器"
+        else:
+            read_method_info = u"软件内置的EPub格式阅读器"
+        question_info = u"""
+        现在设定的EPub阅读器是 %s, 目前软件自带的EPub阅读器正在开发中, 还比较简陋, 但可以用来预览(如果没有系统装EPub格式阅读器), 点击确定进行切换, 点击取消不切换
+        """ % read_method_info
+        clicked = QMessageBox.question(self, "设置EPub阅读器", question_info,
+                                       QMessageBox.Ok | QMessageBox.Cancel, QMessageBox.Ok)
+        if clicked:
+            self.read_method_build_in = not self.read_method_build_in
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

@@ -165,7 +165,7 @@ class InitialBook(object):
         return
 
     def get_article_list(self):
-        if self.kind in Type.SinaBlog or self.kind in Type.jianshu:
+        if self.kind in Type.article_type_list:
             article_list = self.__get_article_list()
         else:
             article_list = self.__get_question_list()
@@ -284,6 +284,7 @@ class HtmlBookPackage(object):
         return
 
     def get_title(self):
+        print u"get_title中book_list是?????" + str(self.book_list)
         title = '_'.join([book.epub.title for book in self.book_list])
         title = Match.fix_filename(title)  # 移除特殊字符
         return title

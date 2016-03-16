@@ -4,7 +4,7 @@ import webbrowser
 
 from PyQt4.QtGui import (QWidget, QPushButton, QHBoxLayout, QVBoxLayout,
                          QListWidget, QLabel, QSplitter, QMessageBox,
-                         QProgressDialog)
+                         QProgressDialog, QMainWindow)
 from PyQt4.QtWebKit import QWebView, QWebPage
 from PyQt4.QtCore import SIGNAL
 
@@ -12,7 +12,7 @@ from src.container.books import Book
 from src.gui.library import insert_library
 
 
-class BookView(QSplitter):
+class BookView(QSplitter, QMainWindow):
 
     def __init__(self, parent=None):
         super(BookView, self).__init__(parent=parent)
@@ -43,7 +43,6 @@ class BookView(QSplitter):
 
         self.addWidget(self.web_view)
         self.addWidget(widget)
-
 
     def create_connections(self):
         chlist = self.chapter_list

@@ -1,16 +1,4 @@
-# from future_builtins import map
-
-__license__   = 'GPL v3'
-__copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
-__docformat__ = 'restructuredtext en'
-__appname__   = u'calibre'
-numeric_version = (2, 51, 0)
-__version__   = u'.'.join(map(unicode, numeric_version))
-__author__    = u"Kovid Goyal <kovid@kovidgoyal.net>"
-
-'''
-Various run time constants.
-'''
+# -*- coding: utf-8 -*-
 
 import sys
 import locale
@@ -19,25 +7,31 @@ import os
 import importlib
 import collections
 
+__license__ = 'GPL v3'
+__copyright__ = '2016, Frank He knarfeh@outlook.com'
+__docformat__ = 'restructuredtext en'
+__appname__ = u'EE-Book'
+numeric_version = (0, 0, 1)
+__version__ = u'.'.join(map(unicode, numeric_version))
+__author__ = u"Frank he <knarfeh@outlook.com>"
+
+"""
+Various run time constants.
+"""
 
 _plat = sys.platform.lower()
 iswindows = 'win32' in _plat or 'win64' in _plat
-isosx     = 'darwin' in _plat
-isnewosx  = isosx and getattr(sys, 'new_app_bundle', False)
+isosx = 'darwin' in _plat
+isnewosx = isosx and getattr(sys, 'new_app_bundle', False)
 isfreebsd = 'freebsd' in _plat
 isnetbsd = 'netbsd' in _plat
 isdragonflybsd = 'dragonfly' in _plat
 isbsd = isfreebsd or isnetbsd or isdragonflybsd
-islinux   = not(iswindows or isosx or isbsd)
-isfrozen  = hasattr(sys, 'frozen')
+islinux = not(iswindows or isosx or isbsd)
+isfrozen = hasattr(sys, 'frozen')
 isunix = isosx or islinux
-isportable = os.environ.get('CALIBRE_PORTABLE_BUILD', None) is not None
-ispy3 = sys.version_info.major > 2
 isxp = iswindows and sys.getwindowsversion().major < 6
 is64bit = sys.maxsize > (1 << 32)
-isworker = 'CALIBRE_WORKER' in os.environ or 'CALIBRE_SIMPLE_WORKER' in os.environ
-if isworker:
-    os.environ.pop('CALIBRE_FORCE_ANSI', None)
 
 try:
     preferred_encoding = locale.getpreferredencoding()
@@ -45,14 +39,9 @@ try:
 except:
     preferred_encoding = 'utf-8'
 
-win32event = importlib.import_module('win32event') if iswindows else None
-winerror   = importlib.import_module('winerror') if iswindows else None
-win32api   = importlib.import_module('win32api') if iswindows else None
-fcntl      = None if iswindows else importlib.import_module('fcntl')
-
 # #############################################################
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-
+EPUBSTOR_DIR = os.path.dirname(os.path.dirname(__file__)) + '/生成的电子书'
 LIBRARY_DIR = os.path.join(PROJECT_DIR, 'bookdata') + os.sep
 
 if not os.path.exists(LIBRARY_DIR):
@@ -65,6 +54,8 @@ if not os.path.exists(LIBRARY):
 # #############################################################
 
 _osx_ver = None
+
+
 def get_osx_version():
     global _osx_ver
     if _osx_ver is None:
@@ -94,189 +85,13 @@ else:
     except:
         filesystem_encoding = 'utf-8'
 
-
 DEBUG = False
+
 
 def debug():
     global DEBUG
     DEBUG = True
 
-_cache_dir = None
-
-def _get_cache_dir():
-    confcache = os.path.join(config_dir, u'caches')
-    if isportable:
-        return confcache
-    if 'CALIBRE_CACHE_DIRECTORY' in os.environ:
-        return os.path.abspath(os.environ['CALIBRE_CACHE_DIRECTORY'])
-
-    if iswindows:
-        w = plugins['winutil'][0]
-        try:
-            candidate = os.path.join(w.special_folder_path(w.CSIDL_LOCAL_APPDATA), u'%s-cache'%__appname__)
-        except ValueError:
-            return confcache
-    elif isosx:
-        candidate = os.path.join(os.path.expanduser(u'~/Library/Caches'), __appname__)
-    else:
-        candidate = os.environ.get('XDG_CACHE_HOME', u'~/.cache')
-        candidate = os.path.join(os.path.expanduser(candidate),
-                                    __appname__)
-        if isinstance(candidate, bytes):
-            try:
-                candidate = candidate.decode(filesystem_encoding)
-            except ValueError:
-                candidate = confcache
-    if not os.path.exists(candidate):
-        try:
-            os.makedirs(candidate)
-        except:
-            candidate = confcache
-    return candidate
-
-def cache_dir():
-    global _cache_dir
-    if _cache_dir is None:
-        _cache_dir = _get_cache_dir()
-    return _cache_dir
-
-# plugins {{{
-
-class Plugins(collections.Mapping):
-
-    def __init__(self):
-        self._plugins = {}
-        plugins = [
-                'pictureflow',
-                'lzx',
-                'msdes',
-                'magick',
-                'podofo',
-                'cPalmdoc',
-                'progress_indicator',
-                'chmlib',
-                'chm_extra',
-                'icu',
-                'speedup',
-                'monotonic',
-                'zlib2',
-                'html',
-                'freetype',
-                'unrar',
-                'qt_hack',
-                '_regex',
-                'hunspell',
-                '_patiencediff_c',
-                'bzzdec',
-                'matcher',
-                'tokenizer',
-                'certgen',
-                'dukpy',
-                'lzma_binding',
-            ]
-        if iswindows:
-            plugins.extend(['winutil', 'wpd', 'winfonts'])
-        if isosx:
-            plugins.append('usbobserver')
-        if islinux or isosx:
-            plugins.append('libusb')
-            plugins.append('libmtp')
-        self.plugins = frozenset(plugins)
-
-    def load_plugin(self, name):
-        if name in self._plugins:
-            return
-        sys.path.insert(0, sys.extensions_location)
-        try:
-            del sys.modules[name]
-        except KeyError:
-            pass
-        try:
-            p, err = importlib.import_module(name), ''
-        except Exception as err:
-            p = None
-            err = str(err)
-        self._plugins[name] = (p, err)
-        sys.path.remove(sys.extensions_location)
-
-    def __iter__(self):
-        return iter(self.plugins)
-
-    def __len__(self):
-        return len(self.plugins)
-
-    def __contains__(self, name):
-        return name in self.plugins
-
-    def __getitem__(self, name):
-        if name not in self.plugins:
-            raise KeyError('No plugin named %r'%name)
-        self.load_plugin(name)
-        return self._plugins[name]
-
-
-plugins = None
-if plugins is None:
-    plugins = Plugins()
-# }}}
-
-# config_dir {{{
-
-CONFIG_DIR_MODE = 0700
-
-if 'CALIBRE_CONFIG_DIRECTORY' in os.environ:
-    config_dir = os.path.abspath(os.environ['CALIBRE_CONFIG_DIRECTORY'])
-elif iswindows:
-    if plugins['winutil'][0] is None:
-        raise Exception(plugins['winutil'][1])
-    try:
-        config_dir = plugins['winutil'][0].special_folder_path(plugins['winutil'][0].CSIDL_APPDATA)
-    except ValueError:
-        config_dir = None
-    if not config_dir or not os.access(config_dir, os.W_OK|os.X_OK):
-        config_dir = os.path.expanduser('~')
-    config_dir = os.path.join(config_dir, 'calibre')
-elif isosx:
-    config_dir = os.path.expanduser('~/Library/Preferences/calibre')
-else:
-    bdir = os.path.abspath(os.path.expanduser(os.environ.get('XDG_CONFIG_HOME', '~/.config')))
-    config_dir = os.path.join(bdir, 'calibre')
-    try:
-        os.makedirs(config_dir, mode=CONFIG_DIR_MODE)
-    except:
-        pass
-    if not os.path.exists(config_dir) or \
-            not os.access(config_dir, os.W_OK) or not \
-            os.access(config_dir, os.X_OK):
-        print 'No write acces to', config_dir, 'using a temporary dir instead'
-        import tempfile, atexit
-        config_dir = tempfile.mkdtemp(prefix='calibre-config-')
-        def cleanup_cdir():
-            try:
-                import shutil
-                shutil.rmtree(config_dir)
-            except:
-                pass
-        atexit.register(cleanup_cdir)
-# }}}
-
-def get_version():
-    '''Return version string for display to user '''
-    dv = os.environ.get('CALIBRE_DEVELOP_FROM', None)
-    v = __version__
-    if numeric_version[-1] == 0:
-        v = v[:-2]
-    if getattr(sys, 'frozen', False) and dv and os.path.abspath(dv) in sys.path:
-        v += '*'
-    if iswindows and is64bit:
-        v += ' [64bit]'
-
-    return v
-
-def get_portable_base():
-    'Return path to the directory that contains calibre-portable.exe or None'
-    if isportable:
-        return os.path.dirname(os.path.dirname(os.environ['CALIBRE_PORTABLE_BUILD']))
 
 def get_unicode_windows_env_var(name):
     import ctypes
@@ -288,12 +103,13 @@ def get_unicode_windows_env_var(name):
     ctypes.windll.kernel32.GetEnvironmentVariableW(name, buf, n)
     return buf.value
 
+
 def get_windows_username():
-    '''
+    """
     Return the user name of the currently loggen in user as a unicode string.
     Note that usernames on windows are case insensitive, the case of the value
     returned depends on what the user typed into the login box at login time.
-    '''
+    """
     import ctypes
     try:
         advapi32 = ctypes.windll.advapi32
@@ -308,6 +124,7 @@ def get_windows_username():
 
     return get_unicode_windows_env_var(u'USERNAME')
 
+
 def get_windows_temp_path():
     import ctypes
     n = ctypes.windll.kernel32.GetTempPathW(0, None)
@@ -317,6 +134,7 @@ def get_windows_temp_path():
     ctypes.windll.kernel32.GetTempPathW(n, buf)
     ans = buf.value
     return ans if ans else None
+
 
 def get_windows_user_locale_name():
     import ctypes

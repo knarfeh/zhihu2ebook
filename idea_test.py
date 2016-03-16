@@ -13,7 +13,9 @@ href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(SinaBlog_autho
 
 article_href = 'http://blog.sina.com.cn/s/blog_5f34b1e601010fxd.html'
 
-html = urllib2.urlopen(article_href)
+leetcode_problems = 'https://leetcode.com/problemset/algorithms/#Difficulty'
+
+html = urllib2.urlopen(leetcode_problems)
 content = html.read()
 
 # print "content内容:" + content
@@ -57,10 +59,11 @@ def SinaBlog_article_content(content=''):
 
 
 
-from src.tools.path import Path
 
-path = Path()
-print path.base_path
+# from src.tools.path import Path
+#
+# path = Path()
+# print path.base_path
 
 
 # article_body = soup.find('div', class_='articalContent')
