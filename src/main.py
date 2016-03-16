@@ -29,17 +29,20 @@ class EEBook(object):
         return
 
     @staticmethod
-    def init_config():
-        login = Login()
+    def init_config(recipe_kind):
+        if recipe_kind == 'zhihu':      # TODO: 改掉硬编码
+            login = Login(recipe_kind='zhihu')
+        else:
+            return
         if Config.remember_account:
             print u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量)'
             print u'按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
-            if raw_input():
-                login.start()
+            # if raw_input():
+            # login.start()
             # Config.picture_quality = guide.set_picture_quality()
             Config.picture_quality = 1
             # else:
-            #     Http.set_cookie()
+            Http.set_cookie()
         else:
             login.start()
             # Config.picture_quality = guide.set_picture_quality()
@@ -55,15 +58,17 @@ class EEBook(object):
         :return:
         """
         Debug.logger.debug(u"#Debug模式#: 不检查更新")
-        self.init_config()
+        self.init_config(recipe_kind=self.recipe_kind)
         Debug.logger.info(u"开始读取ReadList.txt的内容")
+        bookfiles = []
         with open('./ReadList.txt', 'r') as read_list:
             counter = 1
             for line in read_list:
                 line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
-                self.create_book(line, counter)
+                file_name = self.create_book(line, counter)
+                bookfiles.append(file_name)
                 counter += 1
-        return
+        return u','.join(bookfiles)
 
     @staticmethod
     def create_book(command, counter):
@@ -79,9 +84,15 @@ class EEBook(object):
 
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始从数据库中生成电子书")
+            print u"生成电子书的时候????" + str(task_package.book_list)
             book = Book(task_package.book_list)
-            book.create()
-        return
+            file_name_set = book.create()
+
+        file_name_set2list = list(file_name_set)
+        print u"file_name_set2list?????" + str(file_name_set2list)
+        file_name = '-'.join(file_name_set2list[0:3])
+
+        return file_name
 
     @staticmethod
     def init_database():

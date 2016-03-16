@@ -4,12 +4,12 @@
 import sys
 
 from PyQt4.QtGui import QApplication
-
 from src.gui.ui import MainWindow
 
 
 reload(sys)
 sys.setdefaultencoding('utf8')
+
 
 def main():
     app = QApplication(sys.argv)

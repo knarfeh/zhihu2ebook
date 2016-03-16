@@ -19,6 +19,7 @@ class Book(object):
     """
 
     def __init__(self, raw_sql_book_list):
+        print u"raw_sql_book_list是" + str(raw_sql_book_list)
         # Debug.logger.debug("raw_sql_book['SinaBlog'][0].sql.info:" + str(raw_sql_book_list['SinaBlog'][0].sql.info))
         raw_book_list = [book.catch_data() for book in self.flatten(raw_sql_book_list)]
         # raw_book_list是InitialBook对象的列表
@@ -33,12 +34,12 @@ class Book(object):
         # Debug.logger.debug(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
         # Debug.logger.debug(u"raw_book_list[0].page_list" + str(raw_book_list[0].page_list))
         # Debug.logger.debug(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
-
+        print u"raw_book_list是???" + str(raw_book_list)
         book_list = self.volume_book(raw_book_list)
         # Debug.logger.debug("book_list是??" + str(book_list))
-        # print u"执行前, book_list为:" + str(book_list)
+        print u"执行前, book_list为:" + str(book_list)
         self.book_list = [self.create_book_package(book) for book in book_list]
-        # print (u"执行后, book_list为:" + str(book_list))
+        print (u"执行后, book_list为:" + str(book_list))
         return
 
     @staticmethod
@@ -103,7 +104,7 @@ class Book(object):
         book.page_list.append(page)
         # print u'article_list???' + str(book.article_list)
         for article in book.article_list:
-            if book.kind in Type.SinaBlog or book.kind in Type.jianshu:
+            if book.kind in Type.article_type_list:
                 page = creator.create_article(article, index, recipe=book.kind)
             else:
                 Debug.logger.debug(u"book.kind是question!!!")
@@ -197,10 +198,17 @@ class Book(object):
         Path.copy(Path.www_css + u'/normalize.css', u'./normalize.css')
         # Path.copy(Path.www_css + u'/article.css', u'./article.css')         # TODO: 需要精简
         Path.reset_path()
-        return
+        return title
 
     def create(self):
+        u"""
+
+        :return: 返回的制作完成的书籍的set
+        """
+        titles = set()
         for book_package in self.book_list:
             self.create_book(book_package)
-            self.create_single_html_book(book_package)
-        return
+            title = self.create_single_html_book(book_package)
+            print u"在create函数中??????" + str(title)
+            titles.add(title)
+        return titles
