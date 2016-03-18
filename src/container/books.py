@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import division
 
 import os
 import sys
@@ -8,6 +9,7 @@ import zipfile
 from lxml import etree
 
 from BeautifulSoup import BeautifulStoneSoup
+
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
 
@@ -58,6 +60,11 @@ class Book(object):
             self.book_id = book_id
         if not self.book_id:
             raise Exception('Book id not set')
+
+        self.size = os.path.getsize(self._FILE % self.book_id)
+        sz_mult = 1.0/(1024**2)
+        result = u'%.1f' % (self.size * sz_mult)
+        self.size = u'<0.1' if result == u'0.0' else result
 
         self.f = zipfile.ZipFile(self._FILE % self.book_id, 'r')
         soup = BeautifulStoneSoup(self.f.read('META-INF/container.xml'))

@@ -19,27 +19,9 @@ class Book(object):
     """
 
     def __init__(self, raw_sql_book_list):
-        print u"raw_sql_book_list是" + str(raw_sql_book_list)
-        # Debug.logger.debug("raw_sql_book['SinaBlog'][0].sql.info:" + str(raw_sql_book_list['SinaBlog'][0].sql.info))
         raw_book_list = [book.catch_data() for book in self.flatten(raw_sql_book_list)]
-        # raw_book_list是InitialBook对象的列表
-        # Debug.logger.debug(u"raw_book_list[0].kind是什么鬼?" + str(raw_book_list[0].kind))
-        # Debug.logger.debug(u"raw_book_list[0].epub.article_count是什么鬼?" + str(raw_book_list[0].epub.article_count))
-        # Debug.logger.debug(u"raw_book_list[0].epub.char_count是什么鬼?" + str(raw_book_list[0].epub.char_count))
-        # Debug.logger.debug(u"raw_book_list[0].epub.title是什么鬼?" + str(raw_book_list[0].epub.title))
-        # Debug.logger.debug(u"raw_book_list[0].epub.id是什么鬼?" + str(raw_book_list[0].epub.id))
-        # Debug.logger.debug(u"raw_book_list[0].epub.split_index是什么鬼?" + str(raw_book_list[0].epub.split_index))
-        # Debug.logger.debug(u"raw_book_list[0].epub.prefix:" + str(raw_book_list[0].epub.prefix))
-        # Debug.logger.debug(u"raw_book_list是什么????" + str(raw_book_list[0]))
-        # Debug.logger.debug(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
-        # Debug.logger.debug(u"raw_book_list[0].page_list" + str(raw_book_list[0].page_list))
-        # Debug.logger.debug(u"raw_book_list[0].article_list" + str(raw_book_list[0].article_list))
-        print u"raw_book_list是???" + str(raw_book_list)
         book_list = self.volume_book(raw_book_list)
-        # Debug.logger.debug("book_list是??" + str(book_list))
-        print u"执行前, book_list为:" + str(book_list)
         self.book_list = [self.create_book_package(book) for book in book_list]
-        print (u"执行后, book_list为:" + str(book_list))
         return
 
     @staticmethod
@@ -102,12 +84,10 @@ class Book(object):
 
         page = creator.create_info_page(book)
         book.page_list.append(page)
-        # print u'article_list???' + str(book.article_list)
         for article in book.article_list:
             if book.kind in Type.article_type_list:
                 page = creator.create_article(article, index, recipe=book.kind)
             else:
-                Debug.logger.debug(u"book.kind是question!!!")
                 page = creator.create_question(article, index)
             book.page_list.append(page)
         return book
@@ -137,7 +117,7 @@ class Book(object):
         book_package.image_container.set_save_path(Path.image_pool_path)
         book_package.image_container.start_download()
         title = book_package.get_title()
-        Debug.logger.debug(u"电子书的名称是???" + str(title))
+        Debug.logger.debug(u"电子书的名称是:" + str(title))
         if not title:
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧
@@ -209,6 +189,5 @@ class Book(object):
         for book_package in self.book_list:
             self.create_book(book_package)
             title = self.create_single_html_book(book_package)
-            print u"在create函数中??????" + str(title)
             titles.add(title)
         return titles

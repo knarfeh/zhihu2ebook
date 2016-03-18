@@ -97,7 +97,6 @@ class Path(object):
         :return:
         """
         Path.base_path = Path.get_pwd()
-        print u"从get_pwd()中获得的base_path" + str(Path.base_path)
 
         Path.www_css = Path.base_path + u'/www/css'
         Path.www_image = Path.base_path + u'/www/images'

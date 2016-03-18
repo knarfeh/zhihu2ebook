@@ -104,12 +104,8 @@ class Login(object):
         else:
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
 
-        # print u'如果不需要输入验证码可点按回车跳过此步'
-        # captcha = raw_input()
-        # return captcha
 
     def start(self):
-        guide.hello_world()
         account, password = guide.set_account()
         captcha = ''
         while not self.login(account, password, captcha):

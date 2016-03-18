@@ -110,7 +110,6 @@ class HtmlCreator(object):
 
     def create_question(self, package, prefix=''):
         question = package['question']
-        # print (u"在create_question中, question是什么???" + str(question))
         answer_content = ''.join([self.create_answer(answer) for answer in package['answer_list']])
         title_info = self.wrap_title_info(**question)
         question['answer'] = answer_content
@@ -130,8 +129,8 @@ class HtmlCreator(object):
     def create_article(self, article, prefix='', recipe=None):
         article['edit_date'] = article['publish_date']
         article['description'] = ''
-        article['agree'] = 'wu'
-        # article['title_image'] = 'wu'
+        if recipe in ['jianshu', 'SinaBlog']:       # TODO: 改掉硬编码
+            article['agree'] = '无'
         result = {
             'answer': self.create_answer(article),
             'question': self.get_template('info', 'title').format(**article)
@@ -152,10 +151,10 @@ class HtmlCreator(object):
         result = {}
         if kind == Type.jianshu:
             result['title'] = u'简书文章集锦'
-            result['description'] = u'TODO'
+            result['description'] = u''   # TODO: description
         elif kind == Type.SinaBlog:
             result['title'] = u'新浪博客集锦'
-            result['description'] = u'TODO'
+            result['description'] = u''
         elif kind == Type.answer:
             result['title'] = u'知乎回答集锦'
             result['description'] = u''
