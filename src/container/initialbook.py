@@ -128,14 +128,12 @@ class InitialBook(object):
         self.info.update(info)
         if self.kind == Type.jianshu:              # 该博客所有的博文
             self.epub.title = u'简书_{}({})'.format(info['creator_name'], info['creator_id'])
-            print (u"self.epub.title没有设置???" + str(self.epub.title))
             self.epub.id = info['creator_id']
         elif self.kind == Type.jianshu_article:    # 单篇博文 TODO
             self.epub.title = u'简书博文集锦({})'.format(info['title'])
             self.epub.id = info['id']       # TODO
         elif self.kind == Type.SinaBlog:              # 该博客所有的博文
             self.epub.title = u'新浪博客_{}({})'.format(info['creator_name'], info['creator_id'])
-            print (u"self.epub.title没有设置???" + str(self.epub.title))
             self.epub.id = info['creator_id']
         elif self.kind == Type.SinaBlog_Article:    # 新浪单篇博文 TODO
             self.epub.title = u'新浪博客博文集锦({})'.format(info['title'])
@@ -284,7 +282,6 @@ class HtmlBookPackage(object):
         return
 
     def get_title(self):
-        print u"get_title中book_list是?????" + str(self.book_list)
         title = '_'.join([book.epub.title for book in self.book_list])
         title = Match.fix_filename(title)  # 移除特殊字符
         return title

@@ -22,6 +22,7 @@ CREATE TABLE jianshu_article (
   title        VARCHAR(2000) NOT NULL    DEFAULT '',
   content      longtext      NOT NULL    DEFAULT '',
   comment      INT(20)       NOT NULL    DEFAULT 0,
+  agree        VARCHAR(20)       NOT NULL    DEFAULT '无',
   publish_date DATE          NOT NULL    DEFAULT '2000-01-01',
   PRIMARY KEY (article_id)
 );

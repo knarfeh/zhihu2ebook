@@ -55,6 +55,7 @@ if not os.path.exists(LIBRARY):
 
 _osx_ver = None
 
+ISOTIMEFORMAT = '%Y-%m-%d %X'
 
 def get_osx_version():
     global _osx_ver

@@ -231,3 +231,5 @@ pip-log.txt
 *.ncx
 
 *.sqlite
+
+idea_test.py

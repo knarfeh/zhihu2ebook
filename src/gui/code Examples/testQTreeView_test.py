@@ -219,7 +219,7 @@ if __name__ == "__main__":
     model = treeModel()
     dialog = QtGui.QDialog()
 
-    dialog.setMinimumSize(300,150)
+    dialog.setMinimumSize(300, 150)
     layout = QtGui.QVBoxLayout(dialog)
 
     tv = QtGui.QTreeView(dialog)

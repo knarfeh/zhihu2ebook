@@ -1,20 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
+import shutil
+import time
 
 from src.container.books import Book
 from src.gui.library import insert_library
 from PyQt4.Qt import QDialog, pyqtSignal, QProgressDialog
 from PyQt4 import QtCore, QtGui
 
-from PyQt4.QtCore import Qt, QThread, QTextCodec
+from PyQt4.QtCore import Qt, QThread, QTextCodec, QSettings, QVariant, QSize, QPoint
 from src.gui.dialogs.ui_download import Ui_Dialog
 from src.web.feeds.recipes.model import RecipeModel
 
 from src.tools.path import Path
 from src.login import Login
 from src.main import EEBook
-from src.constants import EPUBSTOR_DIR
+from src.constants import EPUBSTOR_DIR, LIBRARY_DIR, ISOTIMEFORMAT
+
 
 QTextCodec.setCodecForTr(QTextCodec.codecForName("utf8"))
 
@@ -24,6 +27,7 @@ class DownloadDialog(QDialog, Ui_Dialog):
 
     def __init__(self, recipe_model, book_view, parent=None):
         QDialog.__init__(self, parent)
+        self.now_url = ''
 
         self.book_view = book_view
 
@@ -43,12 +47,16 @@ class DownloadDialog(QDialog, Ui_Dialog):
         self.detail_box.setVisible(False)
 
         self.recipes.setFocus(Qt.OtherFocusReason)
-        self.recipes.setModel(recipe_model)
+        self.recipes.setModel(self.recipe_model)
         self.recipes.setAlternatingRowColors(True)
+        self.recipes.setHeaderHidden(False)
 
         self.show_password.stateChanged[int].connect(self.set_pw_echo_mode)
         self.download_button.clicked.connect(self.download_button_clicked)
         self.login_button.clicked.connect(self.login_button_clicked)
+
+        self.setWindowTitle("Download")
+
 
         QtCore.QObject.connect(self.recipes, QtCore.SIGNAL("clicked (QModelIndex)"), self.row_clicked)
 
@@ -61,40 +69,44 @@ class DownloadDialog(QDialog, Ui_Dialog):
         :return:
         """
         url = str(self.recipes.model().data(index, QtCore.Qt.UserRole))
-        print u"哪一行被选中了???" + str(url)
+        self.now_url = url
 
         self.detail_box.setVisible(True)
         if url == 'zhihu':          # TODO: 改掉硬编码, 这里的信息(是否需要登录)应该用xml或数据库记录
-            print u"setVisible????"
+            self.detail_box.setVisible(True)
             self.account.setVisible(True)
             self.blurb.setText('''
             <p>
             <b>%(title)s</b><br>
-            %(cb)s %(author)s<br/>
+            %(cb)s<br/>
             %(description)s
             </p>
             ''' % dict(title='zhihu', cb='Created by: YaoZeyuan',
-                     author='author', description=u'如果需要爬取私人收藏夹,请先登录'))
+                     description=u'https://github.com/YaoZeyuan/ZhihuHelp <br/>第一次使用,请登录! '))
         elif url == 'jianshu':
+            self.detail_box.setVisible(True)
             self.account.setVisible(False)
             self.blurb.setText('''
             <p>
             <b>%(title)s</b><br>
-            %(cb)s %(author)s<br/>
+            %(cb)s <br/>
             %(description)s
             </p>
             ''' % dict(title='jianshu', cb='Created by: Frank',
-                     author='author', description=u'https://github.com/knarfeh/jianshu2e-book'))
+                     description=u'https://github.com/knarfeh/jianshu2e-book'))
         elif url == 'SinaBlog':
+            self.detail_box.setVisible(True)
             self.account.setVisible(False)
             self.blurb.setText('''
             <p>
             <b>%(title)s</b><br>
-            %(cb)s %(author)s<br/>
+            %(cb)s <br/>
             %(description)s
             </p>
             ''' % dict(title='SinaBlog', cb='Created by: Frank',
-                     author='author', description=u'https://github.com/knarfeh/SinaBlog2e-book'))
+                     description=u'https://github.com/knarfeh/SinaBlog2e-book'))
+        else:
+            self.detail_box.setVisible(False)
         return self.recipes.model().data(index, QtCore.Qt.UserRole)
 
     def initialize_detail_box(self,):
@@ -120,22 +132,22 @@ class DownloadDialog(QDialog, Ui_Dialog):
         QtGui.QMessageBox.information(self, u"登陆成功", u"恭喜, 登陆成功, 登陆信息已经保存")
 
     def download_button_clicked(self):
+        tags = str(self.custom_tags.text())
 
         # url_id = self.recipes.model.data(1, QtCore.Qt.UserRole)    # TODO: 获得选中的recipes
         url_id = str(self.row_clicked(self.recipes.currentIndex()))
 
-        if url_id is None:
+        if url_id == 'None':
             QtGui.QMessageBox.information(self, u"Error", u"选择需要爬取的网站!")
             return
 
         readlist_content = self.plainTextEdit.toPlainText()
 
-        if readlist_content is None:
+        if readlist_content == '':
             QtGui.QMessageBox.information(self, u"Error", u"请在文本框中输入网址")
+            return
 
-        print u"readlist_content???" + str(readlist_content)
         read_list_path = Path.read_list_path
-        print u"read_list_path???" + read_list_path
 
         readList_file = open(read_list_path, 'w')
         readList_file.write(readlist_content)
@@ -165,23 +177,29 @@ class DownloadDialog(QDialog, Ui_Dialog):
                 QtGui.QMessageBox.information(self, u"Error", u"电子书制作失败, 请重新操作")
                 return
 
-            filename = game.begin()
+            try:
+                filename = game.begin()      # TODO: 一次只能生成一本书
+            except TypeError:
+                QtGui.QMessageBox.information(self, u"Error", u"第一次使用请登录")
+                progress_dlg.close()
+                return
             progress_dlg.close()
-            QtGui.QMessageBox.information(self, u"Error", u"电子书"+str(filename)+u"制作成功")
 
-            file_path = EPUBSTOR_DIR + '/' + filename
+            info_filename = ','.join(filename)
+            QtGui.QMessageBox.information(self, u"Error", u"电子书"+str(info_filename)+u"制作成功")
 
-            file_name = os.path.basename(str(file_path))
-            book_id = file_name.split('.epub')[0]
-            book = Book(book_id)
-            insert_library(book)
-
+            for item in filename:
+                file_path = EPUBSTOR_DIR + '/' + item
+                shutil.copy(str(file_path+'.epub'), LIBRARY_DIR)
+                file_name = os.path.basename(str(file_path))
+                book_id = file_name.split('.epub')[0]
+                book = Book(str(book_id))
+                book.date = time.strftime(ISOTIMEFORMAT, time.localtime())
+                book.tags = tags.replace(' ', '')
+                book.tags += ','+str(self.now_url)
+                if self.add_title_tag.isChecked():
+                    book.tags += ','+str(book.title)
+                insert_library(book)
             return
 
 
-if __name__ == "__main__":
-    from PyQt4.Qt import QApplication
-    app = QApplication([])
-    d = DownloadDialog(RecipeModel())
-    d.exec_()
-    del app
