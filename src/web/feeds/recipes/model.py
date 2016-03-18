@@ -47,7 +47,7 @@ class TreeItem(object):
             if column == 0:
                 return QtCore.QVariant(self.header)
             if column == 1:
-                return QtCore.QVariant("??????")
+                return QtCore.QVariant("")
         else:
             if column == 0:
                 return QtCore.QVariant(self.recipe.url)
@@ -66,14 +66,14 @@ class TreeItem(object):
 
 class RecipeModel(QtCore.QAbstractItemModel):
     u"""
-    a model to display a few names, ordered by sex
+    a model to display a few names
     """
     def __init__(self, parent=None):
         super(RecipeModel, self).__init__(parent)
         self.recipe = []
         for url, recipe_info, lang in (
                 ("zhihu", u"问题, 答案, 专栏", u"Chinese"),
-                ("jianshu", u"Blogs", u"Chinese"),
+                ("jianshu", u"文章", u"Chinese"),
                 ("SinaBlog", u"博客", u"Chinese")
         ):
             recipe_item = Recipes(url, recipe_info, lang)
@@ -151,7 +151,6 @@ class RecipeModel(QtCore.QAbstractItemModel):
             p_item = parent.internalPointer()
         return p_item.childCount()
 
-
     def setupModelData(self):
         for item in self.recipe:
             lang = item.lang
@@ -189,7 +188,6 @@ class RecipeModel(QtCore.QAbstractItemModel):
                         return child_result
 
         result = search_node(self.parents[0])
-        print result
         return result
 
     def find_given_name(self, url):
@@ -202,3 +200,4 @@ class RecipeModel(QtCore.QAbstractItemModel):
             index = self.search_model(app)
             return True, index
         return False, None
+

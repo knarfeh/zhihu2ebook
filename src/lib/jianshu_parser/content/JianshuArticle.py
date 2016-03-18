@@ -44,7 +44,7 @@ class JianshuArticle(ParserTools):
         Debug.logger.debug(u"parse_creator_id中, creator_id为:" + str(author_id))
         self.info['author_id'] = author_id
 
-    def parse_author_name(self):        # 这部分也没有必要???
+    def parse_author_name(self):        # TODO: 这部分也没有必要
         author_name = str(self.dom.find("a", class_="author-name").span.get_text())
         if not author_name:
             Debug.logger.info(u"没有找到文章作者名称")

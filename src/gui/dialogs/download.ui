@@ -49,8 +49,8 @@
     <rect>
      <x>331</x>
      <y>10</y>
-     <width>591</width>
-     <height>583</height>
+     <width>581</width>
+     <height>577</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -64,7 +64,7 @@
      <item>
       <widget class="QLabel" name="blurb">
        <property name="text">
-        <string>blurb</string>
+        <string/>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -301,7 +301,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <spacer name="horizontalSpacer_5">
          <property name="orientation">
@@ -309,7 +309,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>318</width>
+           <width>388</width>
            <height>20</height>
           </size>
          </property>
@@ -329,7 +329,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>88</width>
+           <width>28</width>
            <height>20</height>
           </size>
          </property>
