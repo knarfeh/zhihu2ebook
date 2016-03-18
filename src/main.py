@@ -55,7 +55,7 @@ class EEBook(object):
     def begin(self):
         u"""
         程序运行的主函数
-        :return:
+        :return: book file 的列表
         """
         Debug.logger.debug(u"#Debug模式#: 不检查更新")
         self.init_config(recipe_kind=self.recipe_kind)
@@ -68,7 +68,7 @@ class EEBook(object):
                 file_name = self.create_book(line, counter)
                 bookfiles.append(file_name)
                 counter += 1
-        return u','.join(bookfiles)
+        return bookfiles
 
     @staticmethod
     def create_book(command, counter):
@@ -84,12 +84,10 @@ class EEBook(object):
 
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始从数据库中生成电子书")
-            print u"生成电子书的时候????" + str(task_package.book_list)
             book = Book(task_package.book_list)
             file_name_set = book.create()
 
         file_name_set2list = list(file_name_set)
-        print u"file_name_set2list?????" + str(file_name_set2list)
         file_name = '-'.join(file_name_set2list[0:3])
 
         return file_name
@@ -99,7 +97,7 @@ class EEBook(object):
         if Path.is_file(Path.db_path):
             DB.set_conn(sqlite3.connect(Path.db_path))
         else:
-            print u"db_path???" + Path.db_path
+            Debug.logger.debug(u"db_path:" + Path.db_path)
             DB.set_conn(sqlite3.connect(Path.db_path))
             # 没有数据库, 新建一个出来
             with open(Path.sql_path) as sql_script:

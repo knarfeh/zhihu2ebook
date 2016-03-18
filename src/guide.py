@@ -4,20 +4,6 @@ import re
 from src.tools.config import Config
 
 
-def hello_world():
-    print u'您好，欢迎使用知乎助手'
-    print u''
-    print u''
-    print u'本版内置了公共账号『孟晴雪』，默认使用内置账号进行登陆'
-    print u''
-    print u''
-    print u'全部代码均已开源，github地址:https://github.com/YaoZeyuan/ZhihuHelp__Python'
-    print u'Tips：只有在获取私人收藏夹的内容时，助手才需要使用您的账号登陆，日常使用时直接用内置账号登陆即可'
-    print u'现在开始登陆流程，请根据提示输入您的账号密码'
-    print u''
-    print u''
-    return
-
 
 def set_account():
     print u'请输入您的知乎注册邮箱，回车确认'

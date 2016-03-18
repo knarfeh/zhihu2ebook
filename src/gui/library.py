@@ -25,7 +25,7 @@ def insert_library(book):
     book.open()
     lib['books'].append({
         'book_id': book.book_id, 'title': book.title, 'author': book.author,
-        'tags': book.tags
+        'tags': book.tags, 'date': book.date, 'size': book.size
     })
     with open(LIBRARY, 'w') as f:
         json.dump(lib, f, indent=4)
@@ -48,7 +48,7 @@ class LibraryTableWidget(QTableWidget):
         super(LibraryTableWidget, self).__init__(parent=None)
         self.book_view = book_view
 
-        self.setColumnCount(2)          # TODO: 改掉硬编码?
+        self.setColumnCount(5)          # TODO: 改掉硬编码?
         self.setAlternatingRowColors(True)
         self.setEditTriggers(QTableWidget.NoEditTriggers)
         self.setSelectionBehavior(QTableWidget.SelectRows)   # 设置为全行选中
@@ -72,11 +72,11 @@ class LibraryTableWidget(QTableWidget):
         self.clear()
         self.setStyleSheet("selection-background-color: red")  # 设置选中背景色
         self.setRowCount(len(self.library['books']))
-        self.setHorizontalHeaderLabels(['Title', 'Authors', 'Tags'])
+        self.setHorizontalHeaderLabels(['Title', 'Authors', 'Tags', 'Date', 'Size(MB)'])
 
         for i, book in enumerate(self.library['books']):
-            for j, cell in enumerate((book['title'], book['author'], book['tags'])):
-                print str(i) + str(j) + str(cell)
+            for j, cell in enumerate((book['title'], book['author'], book['tags'],
+                                      book['date'], book['size'])):
                 item = QTableWidgetItem(cell)
                 item.setTextAlignment(Qt.AlignCenter)
                 self.setItem(i, j, item)

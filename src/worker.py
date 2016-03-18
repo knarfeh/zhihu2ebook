@@ -37,7 +37,7 @@ class PageWorker(object):
         self.info_url_complete_set = set()
 
         self.add_property()  # 添加扩展属性
-        Http.set_cookie()
+        Http.set_cookie('DontNeed')   # SinaBlog, jianshu:DontNeed
 
     def add_property(self):
 
@@ -85,7 +85,6 @@ class PageWorker(object):
         self.start_catch_info()
         self.start_create_work_list()
         self.start_worker()
-        # print "answer_list!!!!!!!:" + str(self.answer_list)
         self.save()
         return
 
@@ -131,7 +130,6 @@ class PageWorker(object):
         parser = QuestionParser(content)
         self.question_list += parser.get_question_info_list()
         self.answer_list += parser.get_answer_list()
-
         return
 
     def start_worker(self):
@@ -165,11 +163,8 @@ class PageWorker(object):
 class QuestionWorker(PageWorker):
     def parse_content(self, content):
         parser = QuestionParser(content)
-        print u"在QuestionWorker中"
         self.question_list += parser.get_question_info_list()
-        print u"question_list是:" + str(self.question_list)
         self.answer_list += parser.get_answer_list()
-        print u"answer_list是:" + str(self.answer_list)
         return
 
 
@@ -245,7 +240,6 @@ class CollectionWorker(PageWorker):
 
         collection_info = parser.get_extra_info()
         self.add_collection_index(collection_info['collection_id'], parser.get_answer_list())
-
         return
 
     def add_collection_index(self, collection_id, answer_list):
