@@ -3,7 +3,7 @@
 ## 简介
 ---
 
-更多内容写在博客中，这里是个简单介绍。
+更多内容写在[博客](http://knarfeh.github.io/2016/03/17/EE-Book/)中，这里是个简单介绍。
 ### 缘起
 在知乎「发现(大V们)更大的世界」的过程中，我发现了一个开源项目[ZhihuHelp](https://github.com/YaoZeyuan/ZhihuHelp)，刚好初学Python，于是跟着慢慢地学习，后来根据自己的需要写了简书的版本，能够把某个博主的所有博文做成电子书，如，把王垠的所有博客做成EPub格式的电子书：
 ![wangyin](http://7xi5vu.com1.z0.glb.clouddn.com/2016-03-09-jianshu_epub_wangyin.png?imageView/2/w/800/q/90)   
