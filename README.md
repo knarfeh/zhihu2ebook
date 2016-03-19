@@ -38,6 +38,8 @@
 ```shell
 $ sudo pip install -r requirements.txt
 ```
+
+[pyqt4的安装](https://riverbankcomputing.com/software/pyqt/download/)
 ## 开发环境
 ---
 
