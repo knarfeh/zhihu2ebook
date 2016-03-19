@@ -38,7 +38,7 @@ class MainWindow(QtGui.QMainWindow):
         # ###########actions############################
         self.addBookAction = self.create_action(
             u"添加EPub格式的电子书", self.add_book, QKeySequence.Open,
-            QtGui.QIcon(":/open3.png"), u"从文件系统中添加"
+            QtGui.QIcon(":/open.png"), u"从文件系统中添加"
         )
         # TODO: 切图标
         self.removeAction = self.create_action(
@@ -53,7 +53,7 @@ class MainWindow(QtGui.QMainWindow):
         # TODO: 阅读电子书的图标
         self.readAction = self.create_action(
             u"阅读电子书", self.view_book, None,          # TODO
-            QtGui.QIcon(":/preview.png"), u"阅读电子书"
+            QtGui.QIcon(":/read.png"), u"阅读电子书"
         )
         self.toolbarAction = self.create_action(
             u"切换工具栏", self.toggle_toolbar
@@ -89,7 +89,7 @@ class MainWindow(QtGui.QMainWindow):
         # ###########toolbar############################
         self.toolbar = self.addToolBar("&Options")
         self.add_actions(self.toolbar, (self.addBookAction, self.removeAction,
-                         self.downloadAction, self.readAction))
+                         self.readAction, self.downloadAction))
         self.addToolBarBreak()
         self.toolbar.setVisible(True)
         # ###########menubar############################
@@ -116,8 +116,6 @@ class MainWindow(QtGui.QMainWindow):
         self.library_table.setVisible(True)
 
         self.setCentralWidget(self.library_table)
-
-        self.setWindowIcon(QtGui.QIcon(":/icon.png"))    # TODO: 切图标
 
         settings = QSettings()
         size = settings.value("MainWindow/Size", QVariant(QSize(1030, 800))).toSize()
@@ -311,7 +309,7 @@ class MainWindow(QtGui.QMainWindow):
         else:
             read_method_info = u"软件内置的EPub格式阅读器"
         question_info = u"""
-        现在设定的EPub阅读器是 %s, 目前软件自带的EPub阅读器正在开发中, 还比较简陋, 但可以用来预览(如果没有系统装EPub格式阅读器), 点击确定进行切换, 点击取消不切换
+        现在设定的EPub阅读器是 %s, 目前软件自带的EPub阅读器正在开发中, 还比较简陋, 但可以用来预览(如果系统没有装EPub格式阅读器), 点击确定进行切换, 点击取消不切换
         """ % read_method_info
         clicked = QMessageBox.question(self, "设置EPub阅读器", question_info,
                                        QMessageBox.Ok | QMessageBox.Cancel, QMessageBox.Ok)

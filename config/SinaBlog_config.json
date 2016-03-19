@@ -16,7 +16,7 @@
     "update_time": "2016-01-01", 
     "account": "zhihu2ebook@hotmail.com", 
     "password": "Zhihu2Ebook", 
-    "remember_account": true, 
+    "remember_account": false,
     "max_question": 100, 
     "article_order_by_desc": false, 
     "max_try": 5, 
