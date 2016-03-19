@@ -6,6 +6,7 @@ import time
 
 from src.container.books import Book
 from src.gui.library import insert_library
+from src.tools.config import Config
 from PyQt4.Qt import QDialog, pyqtSignal, QProgressDialog
 from PyQt4 import QtCore, QtGui
 
@@ -82,7 +83,8 @@ class DownloadDialog(QDialog, Ui_Dialog):
             %(description)s
             </p>
             ''' % dict(title='zhihu', cb='Created by: YaoZeyuan',
-                     description=u'https://github.com/YaoZeyuan/ZhihuHelp <br/>第一次使用,请登录! '))
+                     description=u'https://github.com/YaoZeyuan/ZhihuHelp <br/>第一次使用,请登录!\
+                      若不登录,将尝试用程序内置账号登陆,私人收藏夹将无法爬取'))
         elif url == 'jianshu':
             self.detail_box.setVisible(True)
             self.account.setVisible(False)
@@ -129,6 +131,8 @@ class DownloadDialog(QDialog, Ui_Dialog):
             if click_ok:
                 login.get_captcha()
                 return
+        Config.remember_account = True
+        Config._save()
         QtGui.QMessageBox.information(self, u"登陆成功", u"恭喜, 登陆成功, 登陆信息已经保存")
 
     def download_button_clicked(self):
@@ -195,7 +199,7 @@ class DownloadDialog(QDialog, Ui_Dialog):
                 book_id = file_name.split('.epub')[0]
                 book = Book(str(book_id))
                 book.date = time.strftime(ISOTIMEFORMAT, time.localtime())
-                book.tags = tags.replace(' ', '')
+                book.tags += tags.replace(' ', '')
                 book.tags += ','+str(self.now_url)
                 if self.add_title_tag.isChecked():
                     book.tags += ','+str(book.title)

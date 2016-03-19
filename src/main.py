@@ -34,19 +34,21 @@ class EEBook(object):
             login = Login(recipe_kind='zhihu')
         else:
             return
+        # 分发的时候一定要把Config.remember_account改成false
+        # 登陆成功了,自动记录账户
         if Config.remember_account:
-            print u'检测到有设置文件，是否直接使用之前的设置？(帐号、密码、图片质量)'
-            print u'按回车使用之前设置，敲入任意字符后点按回车进行重新设置'
+            Debug.logger.info(u'检测到有设置文件，直接使用之前的设置')
             # if raw_input():
             # login.start()
             # Config.picture_quality = guide.set_picture_quality()
             Config.picture_quality = 1
             # else:
-            Http.set_cookie()
+            Http.set_cookie()   # SinaBlog, jianshu:DontNeed
         else:
             login.start()
             # Config.picture_quality = guide.set_picture_quality()
             Config.picture_quality = 1
+            Config.remember_account = True
 
         # 储存设置
         Config._save()
@@ -103,36 +105,3 @@ class EEBook(object):
             with open(Path.sql_path) as sql_script:
                 DB.cursor.executescript(sql_script.read())
             DB.commit()
-
-    @staticmethod        # TODO 删除这部分????
-    def check_update():  # 强制更新
-        u"""
-            *   功能
-                *   检测更新。
-                *   若在服务器端检测到新版本，自动打开浏览器进入新版下载页面
-                *   网页请求超时或者版本号正确都将自动跳过
-            *   输入
-                *   无
-            *   返回
-                *   无
-        """
-        print u"检查更新。。。"
-        try:
-            # example:
-            # 2016-01-02
-            # http://www.dwz.cn/helperupgrade
-            content = Http.get_content(u"http://zhihuhelpbyyzy-zhihu.stor.sinaapp.com/ZhihuHelpUpdateTime.txt")
-            if not content:
-                raise Exception('HttpError')
-            time, url = [x.strip() for x in content.split('\n')]
-            if time == Config.update_time:
-                return
-            else:
-                print u"发现新版本，\n更新日期:{} ，点按回车进入更新页面".format(time)
-                print u'新版本下载地址:' + url
-                raw_input()
-                import webbrowser
-                webbrowser.open_new_tab(url)
-        except:
-            # 不论发生任何异常均直接返回
-            return
