@@ -92,7 +92,6 @@ class Login(object):
         content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
-
         with open(captcha_path, 'wb') as image:
             image.write(content)
         print u'请输入您所看到的验证码'
@@ -103,7 +102,6 @@ class Login(object):
             os.system(u'open "{}" &'.format(captcha_path).encode(sys.stdout.encoding))
         else:
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
-
 
     def start(self):
         account, password = guide.set_account()

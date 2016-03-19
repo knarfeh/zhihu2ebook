@@ -83,11 +83,9 @@ class TaskPackage(object):
     def merge_question_book_list(self, book_type):
         book_list = self.book_list[book_type]
         book = InitialBook()
-        print u"book_list[0].sql.info是???" + str(book_list[0].sql.info)
         question = [item.sql.question for item in book_list]
         answer = [item.sql.answer for item in book_list]
         info = [item.sql.info for item in book_list]
-        print u"info是什么????:" + str(info)
         book.kind = book_type
         book.sql.info = 'select * from Question where ({})'.format(' or '.join(info))
         book.sql.question = 'select * from Question where ({})'.format(' or '.join(question))
