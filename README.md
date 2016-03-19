@@ -1,7 +1,7 @@
 # EE-Book
-===
+
 ## 简介
-===
+
 更多内容写在博客中，这里是个简单介绍。
 ### 缘起
 在知乎「发现(大V们)更大的世界」的过程中，我发现了一个开源项目[ZhihuHelp](https://github.com/YaoZeyuan/ZhihuHelp)，刚好初学Python，于是跟着慢慢地学习，后来根据自己的需要写了简书的版本，能够把某个博主的所有博文做成电子书，如，把王垠的所有博客做成EPub格式的电子书：
@@ -25,8 +25,8 @@
 
 这样的场景当然还有很多。网络上的资源参差不齐，我们不缺阅读资源，我们缺的是深度阅读，EE-Book给我们一个这样的选择，在网络不便的时候，在需要断绝干扰深度思考的时候，我们可以利用EE-Book的功能进行深度阅读。这个，就是这个程序的意义。
 
-## 依赖 
-===
+## 依赖
+
  * [Beautiful Soup 4](http://www.crummy.com/software/BeautifulSoup/)
  * [lxml](http://lxml.de/)
  * [PyQt4](https://www.riverbankcomputing.com/software/pyqt/download)
@@ -36,12 +36,13 @@
 $ sudo pip install -r requirements.txt
 ```
 ## 开发环境
+
 Mac 10.11   
 Python 2.7.11      
 PyCharm CE 5.0.3  
 
 ## 使用说明
-===
+
 该项目最初是命令行界面，将网址写入ReadList.txt, 把EEBook.py的recipe_kind写为对应的种类，执行  
 
 ```shell
@@ -89,6 +90,5 @@ calibre写了快十年，功能已经非常强大，EE-Book这个程序本质上
 * 打包发布，制作mac的app程序，windows的exe程序
 
 ## License
-===
 
 [MIT](./LICENSE) 
