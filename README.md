@@ -33,7 +33,7 @@
  * [Beautiful Soup 4](http://www.crummy.com/software/BeautifulSoup/)
  * [lxml](http://lxml.de/)
  * [PyQt4](https://www.riverbankcomputing.com/software/pyqt/download)
- 
+
 ### 解决依赖
 ```shell
 $ sudo pip install -r requirements.txt
@@ -80,20 +80,20 @@ calibre写了快十年，功能已经非常强大，EE-Book这个程序本质上
 
 * 优化后台代码，使得添加模块变得简单、快捷
 * 新浪博客
-	* 单篇文章制作
-	* 各种细节，比如评论数，发布时间、更新时间、标签等等
-	* ...
+  * 单篇文章制作
+  * 各种细节，比如评论数，发布时间、更新时间、标签等等
+  * ...
 * 简书
    * 单篇文章抓取，专题、文集的爬取
    * 各种细节，粉丝数、字数、收获喜欢
    * ...
 * GUI界面
-	* 图标
-	* 通过标签分类浏览
-	* 搜索功能
-	* EPub阅读器
-	* 通过选项配置知乎模块的config内容
-	* ...
+  * 图标
+  * 通过标签分类浏览
+  * 搜索功能
+  * EPub阅读器
+  * 通过选项配置知乎模块的config内容
+  * ...
 * 打包发布，制作mac的app程序，windows的exe程序
 
 ## License
