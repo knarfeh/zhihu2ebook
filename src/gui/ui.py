@@ -61,8 +61,8 @@ class MainWindow(QtGui.QMainWindow):
         self.statusbarAction = self.create_action(
             u"切换状态栏", self.toggle_statusbar
         )
-        self.aboutAction = self.create_action(
-            u"帮助", None, None, None, None,
+        self.aboutHelpAction = self.create_action(
+            u"帮助", self.aboutHelp, None, None, None,
         )
         self.setViewerAction = self.create_action(
             u"设置EPub阅读器", self.set_viewer, None,
@@ -104,7 +104,7 @@ class MainWindow(QtGui.QMainWindow):
         self.add_actions(self.settingMenu, (self.setViewerAction, ))
 
         self.helpMenu = self.menu_bar.addMenu("&Help")
-        self.add_actions(self.helpMenu, (self.aboutAction, ))
+        self.add_actions(self.helpMenu, (self.aboutHelpAction, ))
 
         # Initialize a statusbar for the window
         status = self.statusBar()
@@ -315,6 +315,10 @@ class MainWindow(QtGui.QMainWindow):
                                        QMessageBox.Ok | QMessageBox.Cancel, QMessageBox.Ok)
         if clicked:
             self.read_method_build_in = not self.read_method_build_in
+
+
+    def aboutHelp(self):
+        form
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

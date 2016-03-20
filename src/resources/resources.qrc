@@ -1,9 +1,15 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
-        <file alias="remove.png">icon/close.png</file>
-        <file alias="download.png">icon/download-from-cloud.png</file>
-        <file alias="open.png">icon/folders.png</file>
-        <file alias="read.png">icon/open-book.png</file>
-        <file alias="icon.png">icon/book_icon.png</file>
-</qresource>
+        <file alias="remove.png">images/close.png</file>
+        <file alias="download.png">images/download-from-cloud.png</file>
+        <file alias="open.png">images/folders.png</file>
+        <file alias="read.png">images/open-book.png</file>
+        <file alias="icon.png">images/book_icon.png</file>
+        <file alias="back.png">images/back.png</file>
+        <file alias="home.png">images/home.png</file>
+
+        <file>help/editmenu.html</file>
+        <file>help/filemenu.html</file>
+        <file>help/index.html</file>
+    </qresource>
 </RCC>
