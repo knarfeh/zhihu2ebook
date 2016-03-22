@@ -8,8 +8,9 @@
         <file alias="back.png">images/back.png</file>
         <file alias="home.png">images/home.png</file>
 
-        <file>help/editmenu.html</file>
-        <file>help/filemenu.html</file>
         <file>help/index.html</file>
+        <file>help/booksmenu.html</file>
+        <file>help/settingmenu.html</file>
+        <file>help/viewmenu.html</file>
     </qresource>
 </RCC>
