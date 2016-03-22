@@ -7,7 +7,7 @@ from PyQt4.QtGui import (QDialog, QAction, QIcon, QKeySequence, QLabel, QToolBar
                          QVBoxLayout, QApplication, QTextBrowser)
 
 
-from PyQt4.QtCore import *
+from PyQt4.QtCore import QTextCodec, Qt, SIGNAL, SLOT, QUrl
 
 
 
@@ -15,6 +15,9 @@ class HelpForm(QDialog):
 
     def __init__(self, page, parent=None):
         super(HelpForm, self).__init__(parent)
+        QTextCodec.setCodecForTr(QTextCodec.codecForName("system"))
+        QTextCodec.setCodecForCStrings(QTextCodec.codecForName("system"))
+        QTextCodec.setCodecForLocale(QTextCodec.codecForName("system"))
         self.setAttribute(Qt.WA_DeleteOnClose)
         self.setAttribute(Qt.WA_GroupLeader)
 
@@ -29,6 +32,7 @@ class HelpForm(QDialog):
         toolBar.addAction(homeAction)
         toolBar.addWidget(self.pageLabel)
         self.textBrowser = QTextBrowser()
+        # self.textBrowser.
 
         layout = QVBoxLayout()
         layout.addWidget(toolBar)
