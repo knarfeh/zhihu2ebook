@@ -15,7 +15,7 @@ sys.setdefaultencoding('utf8')
 def main():
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(":/icon.png"))
-
+    app.setApplicationName('EE-Book')
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
