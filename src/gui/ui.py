@@ -10,13 +10,14 @@ import subprocess
 from PyQt4 import QtGui
 from PyQt4.QtGui import (QMainWindow, QDockWidget, QFileDialog, QTableWidgetItem,
                          QAction, QKeySequence, QTableWidget, QMessageBox, QMenu, QCursor)
-from PyQt4.QtCore import Qt, SIGNAL, QSettings, QVariant, QSize, QPoint, QTimer, QFile
+from PyQt4.QtCore import Qt, SIGNAL, QSettings, QVariant, QSize, QPoint, QTimer, QFile, QTextCodec
 
 from src.tools.debug import Debug
 from src.gui.dialogs.download import DownloadDialog
 from src.web.feeds.recipes.model import RecipeModel
 from src.gui.library import LibraryTableWidget, insert_library, get_library, remove_from_library
 from src.gui.bookview import BookView
+from src.gui.dialogs.helpform import HelpForm
 
 from src.container.books import Book
 from src.constants import *
@@ -95,12 +96,12 @@ class MainWindow(QtGui.QMainWindow):
         # ###########menubar############################
         self.menu_bar = self.menuBar()
         self.editBook = self.menu_bar.addMenu("&Books")
-        self.add_actions(self.editBook, (self.addBookAction, self.removeAction))
+        self.add_actions(self.editBook, (self.addBookAction, self.removeAction, self.downloadAction))
 
         self.viewMenu = self.menu_bar.addMenu("&View")
         self.add_actions(self.viewMenu, (self.toolbarAction, self.statusbarAction))
 
-        self.settingMenu = self.menu_bar.addMenu("&setting")
+        self.settingMenu = self.menu_bar.addMenu("&Setting")
         self.add_actions(self.settingMenu, (self.setViewerAction, ))
 
         self.helpMenu = self.menu_bar.addMenu("&Help")
@@ -316,9 +317,12 @@ class MainWindow(QtGui.QMainWindow):
         if clicked:
             self.read_method_build_in = not self.read_method_build_in
 
-
     def aboutHelp(self):
-        form
+        form = HelpForm("index.html")
+        form.setWindowTitle('EE-Book Help')
+        form.show()
+        form.exec_()
+
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

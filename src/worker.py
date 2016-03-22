@@ -36,8 +36,13 @@ class PageWorker(object):
         self.info_url_set = self.task_set.copy()
         self.info_url_complete_set = set()
 
-        self.add_property()  # 添加扩展属性
-        Http.set_cookie('DontNeed')   # SinaBlog, jianshu:DontNeed
+        # 添加扩展属性
+        self.add_property()
+        # TODO: 改掉硬编码
+        if isinstance(self, SinaBlogWorker) or isinstance(self, JianshuWorker):
+            Http.set_cookie('DontNeed')   # SinaBlog, jianshu:DontNeed
+        else:
+            Http.set_cookie()
 
     def add_property(self):
 
