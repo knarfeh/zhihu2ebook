@@ -1,7 +1,6 @@
 # EE-Book
 
 ## 简介
----
 
 更多内容写在[博客](http://knarfeh.github.io/2016/03/17/EE-Book/)中，这里是个简单介绍。
 ### 缘起
@@ -28,7 +27,6 @@
 这样的场景当然还有很多。网络上的资源参差不齐，我们不缺阅读资源，我们缺的是深度阅读，EE-Book给我们一个这样的选择，在网络不便的时候，在需要断绝干扰深度思考的时候，我们可以利用EE-Book的功能进行深度阅读。这个，就是这个程序的意义。
 
 ## 依赖
----
 
  * [Beautiful Soup 4](http://www.crummy.com/software/BeautifulSoup/)
  * [lxml](http://lxml.de/)
@@ -41,14 +39,12 @@ $ sudo pip install -r requirements.txt
 
 [pyqt4的安装](https://riverbankcomputing.com/software/pyqt/download/)
 ## 开发环境
----
 
 Mac 10.11   
 Python 2.7.11      
 PyCharm CE 5.0.3  
 
 ## 使用说明
----
 
 该项目最初是命令行界面，将网址写入ReadList.txt, 把EEBook.py的recipe_kind写为对应的种类，执行  
 
@@ -97,6 +93,5 @@ calibre写了快十年，功能已经非常强大，EE-Book这个程序本质上
 * 打包发布，制作mac的app程序，windows的exe程序
 
 ## License
----
 
 [MIT](./LICENSE) 

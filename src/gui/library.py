@@ -3,8 +3,9 @@
 
 
 import json
-from PyQt4.QtGui import QTableWidget, QTableWidgetItem, QAbstractItemView
+from PyQt4.QtGui import QTableWidget, QTableWidgetItem, QAbstractItemView, QTableView
 from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4 import QtGui, QtCore
 
 from src.constants import LIBRARY    # It's ok
 
@@ -52,35 +53,12 @@ class LibraryTableWidget(QTableWidget):
         self.setAlternatingRowColors(True)
         self.setEditTriggers(QTableWidget.NoEditTriggers)
         self.setSelectionBehavior(QTableWidget.SelectRows)   # 设置为全行选中
-        # self.setStyleSheet("QTableWidget::Item{background-color:#FF3EFF}")
         self.setStyleSheet("selection-background-color:blue")  # 设置选中背景色
         self.setSelectionMode(QTableWidget.SingleSelection)
         self.setFocus(Qt.MouseFocusReason)
         self.resizeColumnsToContents()
-        # selected = None       # TODO: 搜索功能
-        # if selected is not None:
-        #     selected.setSelected(True)
-        # self.setCurrentItem(1)
-            # self.scrollToItem(selected)
 
         self.library = get_library()
-        # self.refresh()
-        # self.create_connections()
 
-    def refresh(self):
-
-        self.clear()
-        self.setStyleSheet("selection-background-color: red")  # 设置选中背景色
-        self.setRowCount(len(self.library['books']))
-        self.setHorizontalHeaderLabels(['Title', 'Authors', 'Tags', 'Date', 'Size(MB)'])
-
-        for i, book in enumerate(self.library['books']):
-            for j, cell in enumerate((book['title'], book['author'], book['tags'],
-                                      book['date'], book['size'])):
-                item = QTableWidgetItem(cell)
-                item.setTextAlignment(Qt.AlignCenter)
-                self.setItem(i, j, item)
-
-        self.resizeColumnsToContents()
 
 
