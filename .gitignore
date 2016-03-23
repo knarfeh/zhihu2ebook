@@ -216,6 +216,7 @@ pip-log.txt
 *.ini
 我是登陆知乎时的验证码.gif
 .idea/
+src/gui/code Examples/
 
 *.jpg
 

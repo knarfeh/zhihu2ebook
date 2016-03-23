@@ -29,6 +29,7 @@ sys.path.insert(0, parentdir)
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self, parent=None):
+        # super(MainWindow, self).__init__(parent)
         QtGui.QMainWindow.__init__(self, parent)
 
         self.filename = ""
@@ -63,7 +64,7 @@ class MainWindow(QtGui.QMainWindow):
             u"切换状态栏", self.toggle_statusbar
         )
         self.aboutHelpAction = self.create_action(
-            u"帮助", self.aboutHelp, None, None, None,
+            u"帮助", self.about_help, None, None, None,
         )
         self.setViewerAction = self.create_action(
             u"设置EPub阅读器", self.set_viewer, None,
@@ -113,10 +114,20 @@ class MainWindow(QtGui.QMainWindow):
 
         self.setGeometry(100, 100, 1030, 800)
 
+        self.centralWidget = QtGui.QWidget(self)
+
+        self.search_label = QtGui.QLabel(self.centralWidget)
+        self.search_label.setText(u'搜索:')
+        self.searchLineEdit = QtGui.QLineEdit(self.centralWidget)
         self.library_table = LibraryTableWidget(self.book_view)
         self.library_table.setVisible(True)
 
-        self.setCentralWidget(self.library_table)
+        self.gridLayout = QtGui.QGridLayout(self.centralWidget)
+        self.gridLayout.addWidget(self.search_label, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.searchLineEdit, 0, 1, 1, 15)
+        self.gridLayout.addWidget(self.library_table, 1, 0, 1, 16)
+
+        self.setCentralWidget(self.centralWidget)
 
         settings = QSettings()
         size = settings.value("MainWindow/Size", QVariant(QSize(1030, 800))).toSize()
@@ -152,13 +163,14 @@ class MainWindow(QtGui.QMainWindow):
         self.library_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.library_table.setSelectionMode(QTableWidget.SingleSelection)
 
+        self.model = QtGui.QStandardItemModel(self)
         for i, book in enumerate(self.library['books']):
             for j, cell in enumerate((book['title'], book['author'], book['tags'],
                                       book['date'], book['size'])):
                 item = QTableWidgetItem(cell)
                 item.setTextAlignment(Qt.AlignCenter)
-                # item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsEnabled)
                 self.library_table.setItem(i, j, item)
+
         self.library_table.resizeColumnsToContents()
 
     def create_action(self, text, slot=None, shortcut=None, icon=None, tip=None, checkable=False, signal="triggered()"):
@@ -222,8 +234,6 @@ class MainWindow(QtGui.QMainWindow):
         # Get filename and show only .epub files    Mac 系统下返回的是native fiel dialog
         book_path = QtGui.QFileDialog.getOpenFileName(self, u'打开Epub格式电子书', ".", "(*.epub)")
 
-        print os.path.dirname(str(book_path))
-
         if str(book_path) is '':
             # 没有选中电子书
             return
@@ -263,6 +273,7 @@ class MainWindow(QtGui.QMainWindow):
     def create_connections(self):
         self.library_table.itemDoubleClicked.connect(self.view_book)
         self.library_table.itemClicked.connect(self.row_clicked)
+        self.searchLineEdit.textChanged.connect(self.search_text_changed)
 
     def row_clicked(self):
         current = self.library_table.currentRow()
@@ -317,12 +328,21 @@ class MainWindow(QtGui.QMainWindow):
         if clicked:
             self.read_method_build_in = not self.read_method_build_in
 
-    def aboutHelp(self):
+    def about_help(self):
         form = HelpForm("index.html")
         form.setWindowTitle('EE-Book Help')
         form.show()
         form.exec_()
 
+    def search_text_changed(self, text):
+        for i in range(self.library_table.rowCount()):
+            match = False
+            for j in range(self.library_table.columnCount()):
+                item = self.library_table.item(i, j)
+                if item.text().contains(text):
+                    match = True
+                    break
+            self.library_table.setRowHidden(i, not match)
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
