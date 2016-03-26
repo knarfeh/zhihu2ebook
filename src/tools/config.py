@@ -12,7 +12,7 @@ class Config(object):
     # 全局变量
     update_time = '2016-03-07'  # 更新日期
 
-    debug = False
+    debug = True
 
     need_account = False        # 是否需要账号密码
     login_with_previously_config = True  # 是否通过之前的登陆记录进行登陆
