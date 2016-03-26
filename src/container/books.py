@@ -14,9 +14,6 @@ parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
 
 from src.constants import LIBRARY_DIR    # it's ok
-# LIBRARY_DIR = os.path.abspath('.') + os.sep
-
-# print LIBRARY_DIR
 
 RECOVER_PARSER = etree.XMLParser(recover=True, no_network=True)
 NAMESPACES = {
@@ -28,7 +25,7 @@ class Book(object):
     u"""
     需要主动调用open方法才能获得相应的属性
     """
-    _FILE = LIBRARY_DIR + '%s.epub'
+    _FILE = LIBRARY_DIR + '%s/%s.epub'
 
     def __init__(self, book_id=None):
         self.tags = 'EEBook'
@@ -61,12 +58,12 @@ class Book(object):
         if not self.book_id:
             raise Exception('Book id not set')
 
-        self.size = os.path.getsize(self._FILE % self.book_id)
+        self.size = os.path.getsize(self._FILE % (self.book_id, self.book_id))
         sz_mult = 1.0/(1024**2)
         result = u'%.1f' % (self.size * sz_mult)
         self.size = u'<0.1' if result == u'0.0' else result
 
-        self.f = zipfile.ZipFile(self._FILE % self.book_id, 'r')
+        self.f = zipfile.ZipFile(self._FILE % (self.book_id, self.book_id), 'r')
         soup = BeautifulStoneSoup(self.f.read('META-INF/container.xml'))
 
         oebps = soup.findAll('rootfile')[0]['full-path']
@@ -84,17 +81,22 @@ class Book(object):
 
         self.chapters = [(nav.navlabel.text, nav.content['src']) for
                          nav in ncx_bs.findAll('navmap')[0].findAll('navpoint')]
+        self.cover_href = self.chapters[0][1]    # 封面路径
+
+        cover_content = self.f.read('OEBPS/'+self.cover_href)
+        # print u"cover_content:" + str(cover_content)    # TODO:html转jpg,作为封面,又是一个坑
 
     def get_chapter(self, num):
         return self.f.read(self.oebps_folder+self.chapters[num][1])
 
 if __name__ == '__main__':
-    book = Book('莎士比亚全集')
+    book = Book('简书_正义的花生(b1dd2b2c87a8)')
     print book.oebps_folder
 
     print book.title
     print book.author
 
+    print u"封面的路径是:" + str(book.cover_href)
     print str(book.chapters).decode("unicode-escape").encode("utf-8")
 
 

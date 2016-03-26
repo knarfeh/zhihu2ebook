@@ -243,6 +243,20 @@ class MainWindow(QtGui.QMainWindow):
 
         file_name = os.path.basename(str(book_path))
         book_id = file_name.split('.epub')[0]
+        bookdata_book_catalog = LIBRARY_DIR+book_id
+        if not os.path.exists(bookdata_book_catalog):
+            Debug.logger.info(u"文件夹不存在,新建文件夹" + str(bookdata_book_catalog))
+            os.mkdir(bookdata_book_catalog)
+
+        Debug.logger.debug(u"移入bookdata中的是:" + str(LIBRARY_DIR+file_name))
+        Debug.logger.debug(u"bookdata中的书是?" + str(bookdata_book_catalog))
+        Debug.logger.debug(u"book_path是" + os.path.dirname(str(book_path)))
+        if os.path.dirname(str(book_path)) != bookdata_book_catalog:
+            shutil.move(LIBRARY_DIR+file_name, bookdata_book_catalog)
+        else:
+            Debug.logger.info(u"是相同文件夹, 添加的是bookdata中的书")
+            os.remove(LIBRARY_DIR+file_name)
+
         book = Book(book_id)
         book.date = time.strftime(ISOTIMEFORMAT, time.localtime())
         insert_library(book)
@@ -303,7 +317,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def view_book_with_os(self):
         book_id = self.library['books'][self.library_table.currentRow()]['book_id']
-        epub_path = LIBRARY_DIR + '%s.epub' % book_id
+        epub_path = LIBRARY_DIR + '%s/%s.epub' % (book_id, book_id)
         if isosx:
             subprocess.call(["open", epub_path])
         elif iswindows:
