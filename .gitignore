@@ -232,4 +232,5 @@ src/gui/code Examples/
 *.sqlite
 
 fifty/grey
+bookdata/
 
