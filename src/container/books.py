@@ -83,7 +83,7 @@ class Book(object):
                          nav in ncx_bs.findAll('navmap')[0].findAll('navpoint')]
         self.cover_href = self.chapters[0][1]    # 封面路径
 
-        cover_content = self.f.read('OEBPS/'+self.cover_href)
+        # cover_content = self.f.read('OEBPS/'+self.cover_href)
         # print u"cover_content:" + str(cover_content)    # TODO:html转jpg,作为封面,又是一个坑
 
     def get_chapter(self, num):

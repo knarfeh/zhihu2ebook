@@ -12,5 +12,6 @@
         <file>help/booksmenu.html</file>
         <file>help/settingmenu.html</file>
         <file>help/viewmenu.html</file>
+
     </qresource>
 </RCC>
