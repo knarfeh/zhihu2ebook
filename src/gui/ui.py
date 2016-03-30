@@ -9,7 +9,8 @@ import subprocess
 
 from PyQt4 import QtGui
 from PyQt4.QtGui import (QMainWindow, QDockWidget, QFileDialog, QTableWidgetItem,
-                         QAction, QKeySequence, QTableWidget, QMessageBox, QMenu, QCursor)
+                         QAction, QKeySequence, QTableWidget, QMessageBox, QMenu, QCursor,
+                         QSplitter, QScrollArea, QHBoxLayout)
 from PyQt4.QtCore import Qt, SIGNAL, QSettings, QVariant, QSize, QPoint, QTimer, QFile, QTextCodec
 
 from src.tools.debug import Debug
@@ -18,6 +19,7 @@ from src.web.feeds.recipes.model import RecipeModel
 from src.gui.library import LibraryTableWidget, insert_library, get_library, remove_from_library
 from src.gui.bookview import BookView
 from src.gui.dialogs.helpform import HelpForm
+from src.gui.book_details import BookDetails
 
 from src.container.books import Book
 from src.constants import *
@@ -126,9 +128,11 @@ class MainWindow(QtGui.QMainWindow):
         self.gridLayout.addWidget(self.search_label, 0, 0, 1, 1)
         self.gridLayout.addWidget(self.searchLineEdit, 0, 1, 1, 15)
         self.gridLayout.addWidget(self.library_table, 1, 0, 1, 16)
+        # self.scrollArea = QScrollArea()
 
         self.setCentralWidget(self.centralWidget)
 
+        self.create_book_info_dock()
         settings = QSettings()
         size = settings.value("MainWindow/Size", QVariant(QSize(1030, 800))).toSize()
         self.resize(size)
@@ -141,6 +145,18 @@ class MainWindow(QtGui.QMainWindow):
         QTimer.singleShot(0, self.loadInitialFile)
         self.update_library()
         self.create_connections()
+
+    def create_book_info_dock(self):
+        if getattr(self, 'dock', None):
+            self.dock.show()
+            return
+
+        self.dock = QDockWidget("book details", self)
+        self.dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
+        self.book_detail = BookDetails(self.book_view)
+        self.dock.setWidget(self.book_detail)
+        self.addDockWidget(Qt.RightDockWidgetArea, self.dock)
+
 
     def showContextMenu(self, pos):
         u"""
@@ -290,8 +306,14 @@ class MainWindow(QtGui.QMainWindow):
         self.searchLineEdit.textChanged.connect(self.search_text_changed)
 
     def row_clicked(self):
-        current = self.library_table.currentRow()
-        # TODO
+        current_row = self.library_table.currentRow()
+        current_book = self.library['books'][current_row]
+        print u"book_id" + str(current_book['book_id'])
+        print u"title" + str(current_book['title'])
+        print u"author" + str(current_book['author'])
+        print u"tags" + str(current_book['tags'])
+        print u"date" + str(current_book['date'])
+        print u"size" + str(current_book['size'])
         # print str(current)
         pass
 
