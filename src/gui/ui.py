@@ -60,10 +60,13 @@ class MainWindow(QtGui.QMainWindow):
             QtGui.QIcon(":/read.png"), u"阅读电子书"
         )
         self.toolbarAction = self.create_action(
-            u"切换工具栏", self.toggle_toolbar
+            u"切换工具栏", self.toggle_toolbar, None, None, None,
         )
         self.statusbarAction = self.create_action(
-            u"切换状态栏", self.toggle_statusbar
+            u"切换状态栏", self.toggle_statusbar, None, None, None
+        )
+        self.bookDetailAction = self.create_action(
+            u"打开书籍详情窗口", self.create_book_info_dock, None, None, None
         )
         self.aboutHelpAction = self.create_action(
             u"帮助", self.about_help, None, None, None,
@@ -102,7 +105,7 @@ class MainWindow(QtGui.QMainWindow):
         self.add_actions(self.editBook, (self.addBookAction, self.removeAction, self.downloadAction))
 
         self.viewMenu = self.menu_bar.addMenu("&View")
-        self.add_actions(self.viewMenu, (self.toolbarAction, self.statusbarAction))
+        self.add_actions(self.viewMenu, (self.toolbarAction, self.statusbarAction, self.bookDetailAction))
 
         self.settingMenu = self.menu_bar.addMenu("&Setting")
         self.add_actions(self.settingMenu, (self.setViewerAction, ))
@@ -225,7 +228,7 @@ class MainWindow(QtGui.QMainWindow):
         settings = QSettings()
         settings.setValue("MainWindow/Size", QVariant(self.size()))
         settings.setValue("MainWindow/Position", QVariant(self.pos()))
-        # settings.setValue("MainWindow/State", QVariant(self.saveState()))
+        settings.setValue("MainWindow/State", QVariant(self.saveState()))
 
     def loadInitialFile(self):
         settings = QSettings()
@@ -268,7 +271,11 @@ class MainWindow(QtGui.QMainWindow):
         Debug.logger.debug(u"bookdata中的书是?" + str(bookdata_book_catalog))
         Debug.logger.debug(u"book_path是" + os.path.dirname(str(book_path)))
         if os.path.dirname(str(book_path)) != bookdata_book_catalog:
-            shutil.move(LIBRARY_DIR+file_name, bookdata_book_catalog)
+            try:
+                shutil.move(LIBRARY_DIR+file_name, bookdata_book_catalog)
+            except shutil.Error:
+                Debug.logger.debug(u"TODO:以前添加过这个书,删除原来的书")
+                pass
         else:
             Debug.logger.info(u"是相同文件夹, 添加的是bookdata中的书")
             os.remove(LIBRARY_DIR+file_name)
@@ -308,13 +315,7 @@ class MainWindow(QtGui.QMainWindow):
     def row_clicked(self):
         current_row = self.library_table.currentRow()
         current_book = self.library['books'][current_row]
-        print u"book_id" + str(current_book['book_id'])
-        print u"title" + str(current_book['title'])
-        print u"author" + str(current_book['author'])
-        print u"tags" + str(current_book['tags'])
-        print u"date" + str(current_book['date'])
-        print u"size" + str(current_book['size'])
-        # print str(current)
+        self.book_detail.show_data(current_book)
         pass
 
     def view_book(self):
