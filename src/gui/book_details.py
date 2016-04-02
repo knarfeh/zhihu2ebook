@@ -10,11 +10,15 @@ from PyQt4.Qt import (Qt, QLayout, QWidget, pyqtSignal, QWebView, QSize, QProper
 
 from math import floor
 from src.tools.debug import Debug
-
 from src.resources import qrc_resources
+from src.ebooks.metadata.book.render import book_detail_to_html
 
-# def render_data(current_data, use_roman_numbers=True, all_fields=False):
-#     field_list = get_field_list(getattr(current))
+
+def render_data(current_book, use_roman_numbers=True, all_fields=False):
+    # TODO 修改为一部分display, 一部分不需要display, 由all_fields和display控制
+    field_list = current_book
+    # field_list = [(x, display) for x, display in field_list]
+    return book_detail_to_html(current_book, field_list, 'TODO:default_author_link', True)
 
 
 def render_html(current_book, css, vertical, widget, all_fields=False, render_data_func=None):
@@ -28,8 +32,7 @@ def render_html(current_book, css, vertical, widget, all_fields=False, render_da
     :param render_data_func:
     :return:
     """
-    # table, comment_fields = (render_data_func or render_data)(current_book, all_fields=all_fields,
-    #         use_roman_numbers=True)
+    table, comment_fields = render_data(current_book, all_fields=all_fields, use_roman_numbers=True)
 
     def color_to_string(col):
         ans = '#000000'
@@ -73,8 +76,6 @@ def render_html(current_book, css, vertical, widget, all_fields=False, render_da
     if comment_fields:
         comments = '\n'.join(u'<div>%s</div>' % x for x in comment_fields)
     right_pane = u'<div id="comments" class="comments">%s</div>' % comments
-
-    table = '<p>test</p>'
 
     if vertical:
         ans = template % (table+right_pane)
@@ -137,7 +138,6 @@ class CoverView(QWidget):
             QSizePolicy.Expanding
         )
 
-        print u"os cwd" + str(os.getcwd())
         # self.default_pixmap = QPixmap(os.getcwd() + "/src/gui/code Examples/book.icns")
         self.default_pixmap = QPixmap(":/back.png")
         self.pixmap = self.default_pixmap
@@ -224,7 +224,6 @@ class BookInfo(QWebView):
 
     def show_data(self, current_book):
         html = render_html(current_book, self.css, self.vertical, self.parent())
-        print u"book_info中的html" + str(html)
         self.setHtml(html)
 
 
@@ -334,7 +333,6 @@ class BookDetails(QWidget):
         self.cover_view.show_data(current_book)
         # self.current_path = getattr(data, u'path', u'')
         # self.updata_layout()
-        print u"show_data中" + str(current_book['book_id'])
 
     def updata_layout(self):
         self.cover_view.setVisible(True)
