@@ -95,6 +95,7 @@ class MainWindow(QtGui.QMainWindow):
 
         # ###########toolbar############################
         self.toolbar = self.addToolBar("&Options")
+        self.toolbar.setObjectName('Options')
         self.add_actions(self.toolbar, (self.addBookAction, self.removeAction,
                          self.readAction, self.downloadAction))
         self.addToolBarBreak()
@@ -155,6 +156,7 @@ class MainWindow(QtGui.QMainWindow):
             return
 
         self.dock = QDockWidget("book details", self)
+        self.dock.setObjectName('book details')
         self.dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
         self.book_detail = BookDetails(self.book_view)
         self.dock.setWidget(self.book_detail)
