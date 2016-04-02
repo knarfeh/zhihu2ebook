@@ -16,7 +16,7 @@ class InitialBook(object):
             self.info = ''
             self.article = ''
             self.info_extra = ''
-            self.article_extra = ''      # 用来扩展的????
+            self.article_extra = ''      # 用来扩展
             return
 
         def get_answer_sql(self):
@@ -255,8 +255,17 @@ class InitialBook(object):
     def __sort(self):
         if self.kind in Type.article_type_list:
             self.sort_article()
+        elif self.kind == Type.author:
+            self.sort_author_answer()
         else:
             self.sort_question()
+        return
+
+    def sort_author_answer(self):
+        if Config.author_answer_order_by == 'answer_id':
+            self.article_list.sort(key=lambda x: x['answer_list'][0][Config.author_answer_order_by], reverse=Config.author_answer_order_by_desc)
+        else:
+            self.article_list.sort(key=lambda x: (x['answer_list'][0][Config.author_answer_order_by], x['answer_list'][0]['answer_id']), reverse=Config.author_answer_order_by_desc)
         return
 
     def sort_article(self):
