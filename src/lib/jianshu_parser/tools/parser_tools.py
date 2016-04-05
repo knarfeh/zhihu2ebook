@@ -36,3 +36,7 @@ class ParserTools(object):
         if dom is None:
             return defaultValue
         return dom.get(attr, defaultValue)
+
+    @staticmethod
+    def parse_date(date='1357-08-12'):
+        return ParserTools.match_content(r'\d{4}-\d{2}-\d{2}', date, '1357-08-12')

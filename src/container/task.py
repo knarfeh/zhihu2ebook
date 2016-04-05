@@ -9,6 +9,7 @@ class Spider(object):
         self.href = ''
         return
 
+
 class SingleTask(object):
     u"""
     任务信息以对象属性方式进行存储
@@ -71,11 +72,9 @@ class TaskPackage(object):
         book_list = self.book_list[Type.article]
         book = InitialBook()
         answer = [item.sql.answer for item in book_list]
-        # print u"book_list是???" + str(book_list[0])
         info = [item.sql.info for item in book_list]
         book.kind = Type.article
         book.sql.info = 'select * from Article where ({})'.format(' or '.join(info))
-        print u"book.sql.info:????" + str(book.sql.info)
         book.sql.answer = 'select * from Article where ({})'.format(' or '.join(answer))
         self.book_list[Type.article] = [book]
         return
