@@ -9,6 +9,10 @@ class Path(object):
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数
     """
     base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
+
+    config_path = ''     # 根据recipe_kind确定config_path
+    db_path = ''         # 根据recipe_kind确定
+    sql_path = ''        # 新建数据库的脚本路径
     # try:
     #     base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
     # except:
@@ -45,7 +49,8 @@ class Path(object):
         try:
             os.mkdir(path)
         except OSError:
-            # Debug.logger.debug(u'指定目录已存在')
+            from src.tools.debug import Debug
+            Debug.logger.debug(u'指定目录已存在')
             pass
         return
 
@@ -59,7 +64,8 @@ class Path(object):
         try:
             os.chdir(path)
         except OSError:
-            # Debug.logger.debug(u'指定目录不存在，自动创建之')
+            from src.tools.debug import Debug
+            Debug.logger.debug(u'指定目录不存在，自动创建之')
             Path.mkdir(path)
             os.chdir(path)
         return
@@ -78,7 +84,8 @@ class Path(object):
     @staticmethod
     def copy(src, dst):
         if not os.path.exists(src):
-            # Debug.logger.info('{}不存在，自动跳过'.format(src))
+            from src.tools.debug import Debug
+            Debug.logger.info('{}不存在，自动跳过'.format(src))
             return
         if os.path.isdir(src):
             shutil.copytree(src, dst)
@@ -110,7 +117,6 @@ class Path(object):
             Path.db_path = Path.base_path + u'/db/zhihuDB_173.sqlite'
             Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
         elif recipe_kind == 'SinaBlog':
-            print u""
             Path.config_path = Path.base_path + u'/config/SinaBlog_config.json'
             Path.db_path = Path.base_path + u'/db/SinaBlog_db_001.sqlite'
             Path.sql_path = Path.base_path + u'/db/SinaBlog.sql'

@@ -16,7 +16,7 @@ class InitialBook(object):
             self.info = ''
             self.article = ''
             self.info_extra = ''
-            self.article_extra = ''      # 用来扩展
+            self.article_extra = ''
             return
 
         def get_answer_sql(self):
@@ -174,9 +174,6 @@ class InitialBook(object):
         question_list = [DB.wrap('question', x) for x in DB.get_result_list(self.sql.question)]
         answer_list = [DB.wrap('answer', x) for x in DB.get_result_list(self.sql.get_answer_sql())]
 
-        # Debug.logger.info(u"在__get_question_list中, question_list为:" + str(question_list))
-        # Debug.logger.info(u"在__get_question_list中, answer_list为:" + str(answer_list))
-
         def merge_answer_into_question():
             question_dict = {x['question_id']: {'question': x.copy(), 'answer_list': [], 'agree': 0} for x in
                              question_list}
@@ -239,9 +236,6 @@ class InitialBook(object):
                 self.epub.agree_count += article['agree_count']
                 self.epub.char_count += article['char_count']
             self.epub.article_count = len(article_list)         # 所以说, 一个question是一个article
-        # Debug.logger.info(u"answer_count和article_count是什么鬼???")
-        # Debug.logger.info(u"answer_count:" + str(self.epub.answer_count))
-        # Debug.logger.info(u"article_count:" + str(self.epub.article_count))
         self.article_list = article_list
         return
 

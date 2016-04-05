@@ -123,7 +123,6 @@ class Book(object):
             # 否则会发生『rm -rf / 』的惨剧
             return
         Path.chdir(Path.base_path + u'/电子书临时资源库')
-        # print (u"title是???" + title)
         epub = Epub(title)
         html_tmp_path = Path.html_pool_path + u'/'
         image_tmp_path = Path.image_pool_path + u'/'
