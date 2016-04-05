@@ -5,7 +5,8 @@ from src.tools.config import Config
 
 
 def set_account():
-    print u'#使用内置账号进行登陆#'
+    from src.tools.debug import Debug
+    Debug.logger.info(u'#使用内置账号进行登陆#')
     # account = raw_input()
     account = None
     if account:

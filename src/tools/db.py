@@ -30,7 +30,6 @@ class DB(object):
         sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
                                                                               columns=','.join(data.keys()),
                                                                               items=(',?' * len(data.keys()))[1:])
-        # Debug.logger.debug(sql)
         DB.cursor.execute(sql, tuple(data.values()))
         return
 
@@ -41,7 +40,6 @@ class DB(object):
 
     @staticmethod
     def get_result_list(sql):
-        Debug.logger.debug(sql)
         result = DB.cursor.execute(sql).fetchall()
         return result
 
@@ -66,7 +64,7 @@ class DB(object):
             ),
             Type.jianshu_article: (                # 这里把article_id 和author_id对换一下,不然会出错???TODO
                 'article_id', 'author_hash', 'author_name', 'author_sign',
-                'author_id', 'href', 'title', 'content', 'comment', 'publish_date'
+                'author_id', 'href', 'title', 'content', 'comment', 'agree', 'publish_date'
             ),
             # SinaBlog
             Type.SinaBlog_Info: (

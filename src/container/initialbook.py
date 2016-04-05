@@ -53,7 +53,7 @@ class InitialBook(object):
         """
         self.catch_info()
         self.get_article_list()         # 获取文章所有信息
-        if self.kind != Type.SinaBlog and self.kind != Type.jianshu:
+        if self.kind != Type.SinaBlog:
             self.__sort()
         return self
 
@@ -263,7 +263,7 @@ class InitialBook(object):
         return
 
     def sort_article(self):
-        self.article_list.sort(key=lambda x: x[Config.article_order_by], reverse=Config.article_order_by_desc)
+        self.article_list.sort(key=lambda x: (x['author_id'], x[Config.article_order_by]), reverse=Config.article_order_by_desc)
         return
 
     def sort_question(self):

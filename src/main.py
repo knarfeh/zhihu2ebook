@@ -34,7 +34,7 @@ class EEBook(object):
             login = Login(recipe_kind='zhihu')
         else:
             return
-        # !!!!!发布的时候一定要把Config.remember_account改成false!!!!!,使得第一次需要登录,之后用cookie即可
+        # !!!!!发布的时候把Config.remember_account改成false!!!!!,使得第一次需要登录,之后用cookie即可
         # 登陆成功了,自动记录账户
         if Config.remember_account:
             Debug.logger.info(u'检测到有设置文件，直接使用之前的设置')
