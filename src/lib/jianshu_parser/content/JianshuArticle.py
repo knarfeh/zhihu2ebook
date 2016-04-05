@@ -30,7 +30,7 @@ class JianshuArticle(ParserTools):
         self.parse_answer_content()     # 获得博文的内容
         # self.parse_href()
         # self.parse_comment()          # TODO
-        # self.parse_publish_data()     # TODO
+        self.parse_publish_date()
         return self.info
 
     def parse_author_id(self):          # TODO 这个部分可以不重复的
@@ -41,7 +41,6 @@ class JianshuArticle(ParserTools):
         author_id = str(self.dom.find("div", class_="author-info").find("a", class_="avatar")['href'][7:])
         if not author_id:
             Debug.logger.info(u"没有找到文章作者id")
-        Debug.logger.debug(u"parse_creator_id中, creator_id为:" + str(author_id))
         self.info['author_id'] = author_id
 
     def parse_author_name(self):        # TODO: 这部分也没有必要
@@ -49,7 +48,6 @@ class JianshuArticle(ParserTools):
         if not author_name:
             Debug.logger.info(u"没有找到文章作者名称")
             return
-        Debug.logger.debug(u"parse_author_name中,ahthor_name为:" + str(author_name))
         self.info['author_name'] = author_name
 
     def parse_article_id(self):
@@ -75,3 +73,8 @@ class JianshuArticle(ParserTools):
             return
         self.info['content'] = content
 
+    def parse_publish_date(self):
+        content = str(self.dom.find("div", class_="author-info").findAll("span")[3].get_text())
+        if not content:
+            Debug.logger.info(u"没有找到文章更新时间")
+        self.info['publish_date'] = self.parse_date(content[:10].replace('.', '-'))
