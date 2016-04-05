@@ -426,30 +426,25 @@ class JianshuWorker(PageWorker):
         :param target_url:
         :return:
         """
-        # Debug.logger.debug(u"target_url是???" + str(target_url))
         if target_url in self.task_complete_set:
             return
         id_result = Match.jianshu(target_url)
         jianshu_id = id_result.group('jianshu_id')
-        Debug.logger.debug(u"jianshu_id是???" + str(jianshu_id))
 
         # ############下面这部分应该是JianshuAuthorInfo的内容, 完成jianshu_info中的内容,暂时写在这, 以后再优化
         content_profile = Http.get_content(target_url)
 
         parser = JianshuParser(content_profile)
         self.question_list += parser.get_jianshu_info_list()
-        Debug.logger.debug(u"create_work_set中的question_list是什么??" + str(self.question_list))
         # #############上面这部分应该是JianshuAuthorInfo的内容, 完成jianshu_info中的内容,暂时写在这, 以后再优化
 
         self.task_complete_set.add(target_url)
         article_num = self.question_list[0]['article_num']    # 这样的话, 一行只能写一个地址  TODO
-        Debug.logger.debug(u"article_num" + str(article_num))
 
         if article_num % 9 != 0:
             page_num = article_num/9 + 1      # 博客目录页面, 1页放50个博客链接
         else:
             page_num = article_num / 9
-        Debug.logger.debug(u"page_num????" + str(page_num))
 
         article_list = self.parse_get_article_list(content_profile)
         for item in article_list:
@@ -532,7 +527,6 @@ class SinaBlogWorker(PageWorker):
         :param target_url: 博客首页的url
         :return:
         """
-        Debug.logger.debug(u"target_url是:" + str(target_url))
         if target_url in self.task_complete_set:
             return
         result = Match.SinaBlog(target_url)
@@ -553,7 +547,6 @@ class SinaBlogWorker(PageWorker):
         content_article_list = Http.get_content(href_article_list)
 
         article_num = int(self.parse_article_num(content_article_list))
-        Debug.logger.debug(u"article_num:" + str(article_num))
         if article_num % 50 != 0:
             page_num = article_num/50 + 1      # 博客目录页面, 1页放50个博客链接
         else:
@@ -583,8 +576,6 @@ def worker_factory(task):
         'jianshu': JianshuWorker, 'jianshuAuthor': JianshuAuthorWorker
         }
     for key in task:
-        # Debug.logger.debug(u"在worker_factory中, key:" + str(key))
-        # Debug.logger.debug(u"在worker_factory中, task[key]:" + str(task[key]))
         worker = type_list[key](task[key])
         worker.start()
     return

@@ -50,7 +50,7 @@ class Path(object):
             os.mkdir(path)
         except OSError:
             from src.tools.debug import Debug
-            Debug.logger.debug(u'指定目录已存在')
+            Debug.logger.debug(u'指定目录 ' + str(path) + u' 已存在')
             pass
         return
 

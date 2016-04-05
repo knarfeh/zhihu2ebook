@@ -241,6 +241,5 @@ class ReadListParser():
     def merge_task_list(task_list):
         task_package = TaskPackage()
         for item in task_list:
-            Debug.logger.debug(u"merge_task_list中的item是什么???" + str(item))
             task_package.add_task(item)
         return task_package.get_task()
