@@ -22,6 +22,6 @@
     "article_order_by_desc": false, 
     "author_answer_order_by": "answer_id", 
     "need_account": false, 
-    "debug": false, 
+    "debug": true, 
     "picture_quality": 1
 }
