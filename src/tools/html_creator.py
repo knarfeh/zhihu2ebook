@@ -25,7 +25,6 @@ class HtmlCreator(object):
                 # fix img
                 if img[-1] == '/':
                     img = img[:-1]
-
             img += '>'
             src = re.search(r'(?<=src=").*?(?=")', img)
             if not src:

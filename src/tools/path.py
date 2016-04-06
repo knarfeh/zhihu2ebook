@@ -7,6 +7,7 @@ import locale
 class Path(object):
     u"""
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数
+    不能在开头from src.tools.debug import Debug
     """
     base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
 
