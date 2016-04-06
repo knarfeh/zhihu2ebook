@@ -4,18 +4,15 @@ import sys
 import locale
 import codecs
 import os
-import importlib
-import collections
 
 __license__ = 'GPL v3'
 __copyright__ = '2016, Frank He knarfeh@outlook.com'
-__docformat__ = 'restructuredtext en'
 __appname__ = u'EE-Book'
 numeric_version = (0, 0, 1)
 __version__ = u'.'.join(map(unicode, numeric_version))
 __author__ = u"Frank he <knarfeh@outlook.com>"
 
-"""
+u"""
 Various run time constants.
 """
 
