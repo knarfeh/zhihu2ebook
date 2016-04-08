@@ -16,11 +16,21 @@ from src.tools.type import Type
 
 
 class EEBook(object):
-    def __init__(self, recipe_kind):
+    def __init__(self, recipe_kind='Notset', read_list='ReadList.txt', url=None):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
+        :param recipe_kind:
+        :param read_list_txt_file: default value: readlist.txt
+        :param url:
+        :return:
         """
         self.recipe_kind = recipe_kind
+        self.read_list = read_list
+        self.url = url
+        Debug.logger.info(u"self.recipe_kind: " + str(self.recipe_kind))
+        Debug.logger.info(u"self.read_list: " + str(self.read_list))
+        Debug.logger.info(u"self.url: " + str(self.url))
+
         Debug.logger.debug(u"recipe种类是:" + str(recipe_kind))
         Path.init_base_path(recipe_kind)       # 设置路径
         Path.init_work_directory(recipe_kind)  # 创建路径
@@ -63,7 +73,13 @@ class EEBook(object):
         self.init_config(recipe_kind=self.recipe_kind)
         Debug.logger.info(u"开始读取ReadList.txt的内容")
         bookfiles = []
-        with open('./ReadList.txt', 'r') as read_list:
+
+        if self.url is not None:
+            file_name = self.create_book(self.url, 1)
+            bookfiles.append(file_name)
+            return bookfiles
+
+        with open(self.read_list, 'r') as read_list:
             counter = 1
             for line in read_list:
                 line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
@@ -84,15 +100,17 @@ class EEBook(object):
             worker_factory(task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"网页信息抓取完毕")
 
+        file_name_set = None
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始从数据库中生成电子书")
             book = Book(task_package.book_list)
             file_name_set = book.create()
 
-        file_name_set2list = list(file_name_set)
-        file_name = '-'.join(file_name_set2list[0:3])
-
-        return file_name
+        if file_name_set is not None:
+            file_name_set2list = list(file_name_set)
+            file_name = '-'.join(file_name_set2list[0:3])
+            return file_name
+        return u"no epub file produced"
 
     @staticmethod
     def init_database():
