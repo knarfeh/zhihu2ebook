@@ -47,7 +47,7 @@ class ReadListParser():
 
         command = remove_comment(command)
         command_list = split_command(command)
-        Debug.logger.debug(u"command_list:" + str(command_list))
+        Debug.logger.debug(u"[debug]command_list:" + str(command_list))
         raw_task_list = []
         for command in command_list:
             raw_task = ReadListParser.parse_command(command)

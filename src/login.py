@@ -24,7 +24,11 @@ class Login(object):
         urllib2.install_opener(self.opener)
 
     def login(self, account, password, captcha=''):
-        content = Http.get_content('https://www.zhihu.com/')
+        if self.recipe_kind == 'zhihu':
+            content = Http.get_content('https://www.zhihu.com/')
+        else:
+            Debug.logger.error(u"登录中...未知类型错误!")
+            return
         xsrf = Match.xsrf(content)
         if not xsrf:
             Debug.logger.info(u'登陆失败')
