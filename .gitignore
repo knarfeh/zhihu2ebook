@@ -220,8 +220,8 @@ src/gui/code Examples/
 
 *.jpg
 
-电子书临时资源库/
-生成的电子书/
+e-books_produced/
+e-books_tmp_source/
 
 *.opf
 

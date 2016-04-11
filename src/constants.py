@@ -38,7 +38,7 @@ except:
 
 # #############################################################
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-EPUBSTOR_DIR = os.path.dirname(os.path.dirname(__file__)) + '/生成的电子书'
+EPUBSTOR_DIR = os.path.dirname(os.path.dirname(__file__)) + '/e-books_produced'
 LIBRARY_DIR = os.path.join(PROJECT_DIR, 'bookdata') + os.sep
 
 if not os.path.exists(LIBRARY_DIR):
