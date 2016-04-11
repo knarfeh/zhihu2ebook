@@ -10,7 +10,7 @@ from src.tools.debug import Debug
 from src.tools.http import Http             # 用于检查更新
 from src.tools.db import DB
 from login import Login
-from src.read_list_parser import ReadListParser
+from src.url_parser import UrlParser
 from src.worker import worker_factory
 from src.tools.type import Type
 
@@ -94,7 +94,7 @@ class EEBook(object):
 
         Debug.logger.info(u"开始制作第 {} 本电子书".format(counter))
         Debug.logger.info(u"对记录 {} 进行分析".format(command))
-        task_package = ReadListParser.get_task(command)  # 分析命令
+        task_package = UrlParser.get_task(command)  # 分析命令
 
         if not task_package.is_work_list_empty():
             worker_factory(task_package.work_list)  # 执行抓取程序
