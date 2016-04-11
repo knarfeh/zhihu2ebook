@@ -122,7 +122,7 @@ class Book(object):
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧
             return
-        Path.chdir(Path.base_path + u'/电子书临时资源库')
+        Path.chdir(Path.base_path + u'/e-books_tmp_source')
         epub = Epub(title)
         html_tmp_path = Path.html_pool_path + u'/'
         image_tmp_path = Path.image_pool_path + u'/'
