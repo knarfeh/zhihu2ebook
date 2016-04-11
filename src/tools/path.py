@@ -122,17 +122,17 @@ class Path(object):
             Path.db_path = Path.base_path + u'/db/SinaBlog_db_001.sqlite'
             Path.sql_path = Path.base_path + u'/db/SinaBlog.sql'
 
-        Path.html_pool_path = Path.base_path + u'/电子书临时资源库/网页池'
-        Path.image_pool_path = Path.base_path + u'/电子书临时资源库/图片池'
-        Path.result_path = Path.base_path + u'/生成的电子书'
+        Path.html_pool_path = Path.base_path + u'/e-books_tmp_source/网页池'
+        Path.image_pool_path = Path.base_path + u'/e-books_tmp_source资源库/图片池'
+        Path.result_path = Path.base_path + u'/e-books_produced'
         return
 
     @staticmethod
     def init_work_directory(recipe_kind):
         Path.reset_path()
-        Path.mkdir(u'./电子书临时资源库')
-        Path.mkdir(u'./生成的电子书')
-        Path.chdir(u'./电子书临时资源库')
+        Path.mkdir(u'./e-books_tmp_source')
+        Path.mkdir(u'./e-books_produced')
+        Path.chdir(u'./e-books_tmp_source')
         Path.mkdir(u'./网页池')
         Path.mkdir(u'./图片池')
         Path.reset_path()
