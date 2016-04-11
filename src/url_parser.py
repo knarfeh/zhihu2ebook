@@ -5,7 +5,7 @@ from src.tools.match import Match
 from src.tools.type import Type
 
 
-class ReadListParser():
+class UrlParser():
     u"""
     通过Parser类，生成任务列表以及查询列表，统一存放于urlInfo中
     task结构
@@ -50,12 +50,20 @@ class ReadListParser():
         Debug.logger.debug(u"[debug]command_list:" + str(command_list))
         raw_task_list = []
         for command in command_list:
-            raw_task = ReadListParser.parse_command(command)
+            raw_task = UrlParser.parse_command(command)
             if raw_task:
                 raw_task_list.append(raw_task)
 
-        task_package = ReadListParser.merge_task_list(raw_task_list)
+        task_package = UrlParser.merge_task_list(raw_task_list)
         return task_package
+
+    @staticmethod
+    def detect(command):
+        for command_type in Type.type_list:
+            result = getattr(Match, command_type)(command)
+            if result:
+                return command_type
+        return 'unknown'
 
     @staticmethod
     def parse_command(raw_command=''):
@@ -76,13 +84,6 @@ class ReadListParser():
             *   question
             *   answer
         """
-
-        def detect(command):
-            for command_type in Type.type_list:
-                result = getattr(Match, command_type)(command)
-                if result:
-                    return command_type
-            return 'unknown'
 
         def parse_question(command):
             result = Match.question(command)
@@ -233,7 +234,7 @@ class ReadListParser():
                   'SinaBlog': parse_SinaBlog,
                   'jianshu_author': parse_jianshu_author,
                   'unknown': parse_error, }
-        kind = detect(raw_command)
+        kind = UrlParser.detect(raw_command)
 
         return parser[kind](raw_command)
 
