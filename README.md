@@ -1,7 +1,25 @@
 # EE-Book
 
 
-[EE-Book](https://github.com/knarfeh/EE-Book) is a command-line utility to downlaod text from the the Web, and make it a e-book. GUI is under developing.
+[EE-Book](https://github.com/knarfeh/EE-Book) is a command-line utility to downlaod text from the Web, and make it a e-book. GUI is under developing.
+
+
+## Usage
+
+get help info:  
+
+```shell
+./ee-book -h
+```
+
+for example:  
+
+```shell
+./ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
+```
+
+then you can get the book:  
+![yinwang](http://7xi5vu.com1.z0.glb.clouddn.com/2016-03-09jianshu_yinwang.png)
 
 ## Supported Sites (UPDATING!)
 * [zhihu](https://www.zhihu.com/)
@@ -23,13 +41,6 @@ $ sudo pip install -r requirements.txt
 [install pyqt4](https://riverbankcomputing.com/software/pyqt/download/)
 
 
-## Usage
-
-
-```shell
-python ee-book.py
-```
-
 ### [TODO List](./doc/TODOlist.md)
 
 ## Relevant Infomation
@@ -40,5 +51,5 @@ python ee-book.py
 
 ## License
 
-[MIT](./LICENSE) 
+licensed under the [MIT license](./LICENSE).
 

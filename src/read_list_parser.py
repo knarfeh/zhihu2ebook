@@ -201,21 +201,21 @@ class ReadListParser():
             # Debug.logger.debug(u"在parse_SinaBlog中, task.book.author_id为" + str(task.book.author_id))
             return task
 
-        def parse_jianshu(command):
+        def parse_jianshu_author(command):
             u"""
 
-            :param command: 某个新浪博客博主的首页地址
+            :param command: 某个简书博主的首页地址
             :return: task:
             """
-            result = Match.jianshu(command)
+            result = Match.jianshu_author(command)
             jianshu_id = result.group('jianshu_id')
             Debug.logger.debug(u"jianshu_id:" + str(jianshu_id))
             task = SingleTask()
 
             task.author_id = jianshu_id
-            task.kind = 'jianshu'
+            task.kind = 'jianshu_author'
             task.spider.href = 'http://www.jianshu.com/users/{}/latest_articles'.format(jianshu_id)
-            task.book.kind = 'jianshu'
+            task.book.kind = 'jianshu_author'
             task.book.sql.info_extra = 'creator_id = "{}"'.format(jianshu_id)
             task.book.sql.article_extra = 'author_id = "{}"'.format(jianshu_id)
             task.book.author_id = jianshu_id
@@ -231,7 +231,7 @@ class ReadListParser():
                   'collection': parse_collection, 'topic': parse_topic, 'article': parse_article,
                   'column': parse_column,
                   'SinaBlog': parse_SinaBlog,
-                  'jianshu': parse_jianshu,
+                  'jianshu_author': parse_jianshu_author,
                   'unknown': parse_error, }
         kind = detect(raw_command)
 
