@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
 
+from src.tools.type import Type
+
 
 class Match(object):
     @staticmethod
@@ -45,31 +47,7 @@ class Match(object):
     # 以上是zhihu相关
 
     @staticmethod
-    def fix_html(content=''):
-        content = content.replace('</br>', '').replace('</img>', '')
-        content = content.replace('<br>', '<br/>')
-        content = content.replace('<wbr>', '').replace('</wbr>', '<br/>')  # for SinaBlog
-        content = content.replace('href="//link.zhihu.com', 'href="https://link.zhihu.com')  # 修复跳转链接
-
-        # for SinaBlog
-        for item in re.findall(r'\<span class="img2"\>.*?\</span\>', content):
-            content = content.replace(item, '')
-        for item in re.findall(r'\<script\>.*?\</script\>', content, re.S):
-            content = content.replace(item, '')
-        for item in re.findall(r'height=\".*?\" ', content):     # 因为新浪博客的图片的高,宽是js控制的,不加
-            content = content.replace(item, '')                 # 这一段会导致无法匹配
-        for item in re.findall(r'width=\".*?\" ', content):
-            content = content.replace(item, '')
-        for item in re.findall(r'\<cite\>.*?\</cite\>', content):
-            content = content.replace(item, '')
-
-        for item in re.findall(r'\<noscript\>.*?\</noscript\>', content, re.S):
-            content = content.replace(item, '')
-
-        return content
-
-    @staticmethod
-    def jianshu(content=''):
+    def jianshu_author(content=''):
         u"""
 
         :param content: jianshu个人主页的地址
@@ -124,3 +102,36 @@ class Match(object):
         for key, value in illegal.items():
             filename = filename.replace(key, value)
         return unicode(filename[:80])
+
+    @staticmethod
+    def fix_html(content=''):
+        content = content.replace('</br>', '').replace('</img>', '')
+        content = content.replace('<br>', '<br/>')
+        content = content.replace('<wbr>', '').replace('</wbr>', '<br/>')  # for SinaBlog
+        content = content.replace('href="//link.zhihu.com', 'href="https://link.zhihu.com')  # 修复跳转链接
+
+        # for SinaBlog
+        for item in re.findall(r'\<span class="img2"\>.*?\</span\>', content):
+            content = content.replace(item, '')
+        for item in re.findall(r'\<script\>.*?\</script\>', content, re.S):
+            content = content.replace(item, '')
+        for item in re.findall(r'height=\".*?\" ', content):     # 因为新浪博客的图片的高,宽是js控制的,不加
+            content = content.replace(item, '')                 # 这一段会导致无法匹配
+        for item in re.findall(r'width=\".*?\" ', content):
+            content = content.replace(item, '')
+        for item in re.findall(r'\<cite\>.*?\</cite\>', content):
+            content = content.replace(item, '')
+
+        for item in re.findall(r'\<noscript\>.*?\</noscript\>', content, re.S):
+            content = content.replace(item, '')
+        return content
+
+    @staticmethod
+    def detect(command):
+        for command_type in Type.type_list:
+            result = getattr(Match, command_type)(command)
+            if result:
+                return command_type
+        return 'unknown'
+
+
