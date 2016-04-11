@@ -23,13 +23,6 @@ short_options = 'Vhgu:r:'
 long_options = ['version', 'help', 'url', 'gui']
 
 
-def main(recipe_kind=''):
-    if recipe_kind == '':
-        print 'fuck'
-    else:
-        game = EEBook(recipe_kind=recipe_kind)
-        game.begin()
-
 if __name__ == '__main__':
     def version():
         log.info_log('version %s' % __version__)
@@ -43,7 +36,7 @@ if __name__ == '__main__':
     '''
 
     help_info += '''Run options:
-    -g | --gui                      Graphical user interface
+    -g | --gui                      Graphical user interface, under developing.
     -u | --url <URL>                Url to download, if not setted, read from text file
     TODO:
     -r | --file <file-path>         Read from the given file. Notice: only one kind could be accepted in one file
@@ -61,7 +54,7 @@ if __name__ == '__main__':
         elif option in ('-h', '--help'):
             version()
             print(help_info)
-
+            sys.exit()
         elif option in ('-g', '--gui'):
             from PyQt4.QtGui import QApplication
             from PyQt4.QtGui import QIcon
@@ -76,18 +69,18 @@ if __name__ == '__main__':
             sys.exit(app.exec_())
         elif option in ('-u', '--url'):
             url = args
-            # TODO: 自动检测类型
-            game = EEBook(recipe_kind='zhihu', url=url)
+            # TODO: 自动检测 url 类型
+            game = EEBook(recipe_kind='jianshu', url=url)
             game.begin()
             sys.exit()
         elif option in('-r', '--file'):
             file_name = args
             log.print_log(u'read from %s' % file_name)
-            game = EEBook(recipe_kind='zhihu', url=None)
+            game = EEBook(recipe_kind='zhihu', url=None, read_list=file_name)
             game.begin()
             sys.exit()
     # ./ee-book
-    game = EEBook(recipe_kind='jianshu', url=None)
+    game = EEBook(recipe_kind='zhihu', url=None)
     game.begin()
 
 

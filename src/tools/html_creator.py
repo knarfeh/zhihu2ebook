@@ -44,7 +44,7 @@ class HtmlCreator(object):
                 filename = ''
             new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
 
-            if recipe == Type.jianshu:
+            if recipe == Type.jianshu_author:
                 new_image = new_image.replace('data-original-src', 'temppicsr')
                 new_image = new_image.replace('src', 'falsesrc')
                 new_image = new_image.replace('temppicsr', 'src')    # 应该有更好的方式, 暂时先这样写
@@ -148,7 +148,7 @@ class HtmlCreator(object):
 
     def wrap_front_page_info(self, kind, info):
         result = {}
-        if kind == Type.jianshu:
+        if kind == Type.jianshu_author:
             result['title'] = u'简书文章集锦'
             result['description'] = u''   # TODO: description
         elif kind == Type.SinaBlog:

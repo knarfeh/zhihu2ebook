@@ -14,9 +14,9 @@ class Path(object):
     www_css = base_path + u'/www/css'
     www_image = base_path + u'/www/images'
 
-    html_pool_path = base_path + u'/电子书临时资源库/网页池'
-    image_pool_path = base_path + u'/电子书临时资源库/图片池'
-    result_path = base_path + u'/生成的电子书'
+    html_pool_path = base_path + u'/e-books_tmp_source/网页池'
+    image_pool_path = base_path + u'/e-books_tmp_source/图片池'
+    result_path = base_path + u'/e-books_produced'
 
     read_list_path = base_path + u'/ReadList.txt'
 
@@ -85,9 +85,9 @@ class Path(object):
         Path.www_css = Path.base_path + u'/www/css'
         Path.www_image = Path.base_path + u'/www/images'
 
-        Path.html_pool_path = Path.base_path + u'/电子书临时资源库/网页池'
-        Path.image_pool_path = Path.base_path + u'/电子书临时资源库/图片池'
-        Path.result_path = Path.base_path + u'/生成的电子书'
+        Path.html_pool_path = Path.base_path + u'/e-books_tmp_source/网页池'
+        Path.image_pool_path = Path.base_path + u'/e-books_tmp_source/图片池'
+        Path.result_path = Path.base_path + u'/e-books_produced'
 
         return
 
@@ -95,8 +95,8 @@ class Path(object):
     def init_work_directory():
         Path.reset_path()
         Path.mkdir(u'./生成的电子书')
-        Path.mkdir(u'./电子书临时资源库')
-        Path.chdir(u'./电子书临时资源库')
+        Path.mkdir(u'./e-books_tmp_source')
+        Path.chdir(u'./e-books_tmp_source')
         Path.mkdir(u'./网页池')
         Path.mkdir(u'./图片池')
         Path.reset_path()

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 class Type(object):
+    # zhihu
     answer = 'answer'
     question = 'question'
     topic = 'topic'
@@ -17,7 +18,7 @@ class Type(object):
     column_info = 'column_info'
 
     question_answer_type_list = ['answer', 'question']
-    article_type_list = ['article', 'column', 'SinaBlog', 'jianshu']
+    article_type_list = ['article', 'column', 'SinaBlog', 'jianshu_author']
     question_type_list = ['answer', 'question', 'author', 'collection', 'topic', ]
 
     # SinaBlog
@@ -32,15 +33,12 @@ class Type(object):
 
     # jianshu    # TODO, 目前只有latest_articles一种, 还可以写collections, notebook等等
     jianshu_article = 'jianshu_article'     # 类型是单篇的文章   TODO
-    jianshu = 'jianshu'                     # 类型是简书文章的集锦
+    jianshu_author = 'jianshu_author'                     # 类型是简书某博主文章的集锦
 
     jianshu_info = 'jianshu_info'
 
     jianshu_article_type_list = ['jianshu']
 
-    info_table = {
-        'jianshu_info': jianshu_info
-    }
     jianshu_type_list = [
         'jianshu',
     ]
@@ -54,6 +52,8 @@ class Type(object):
         collection: collection_info,
         topic: topic_info,
 
-        'SinaBlog_Info': SinaBlog_Info
+        'SinaBlog_Info': SinaBlog_Info,
+
+        'jianshu_info': jianshu_info
     }
     pass

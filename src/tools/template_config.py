@@ -13,16 +13,16 @@ class TemplateConfig(object):
 
     content_base_uri = template_path + u'/base.html'
 
-    # content
-    ##info
+    # #content
+    # ##info
     info_author_uri = content_info_template_path + u'/author.html'
     info_comment_uri = content_info_template_path + u'/comment.html'
     info_title_uri = content_info_template_path + u'/title.html'
-    ##question
+    # ##question
     question_answer_uri = content_question_template_path + u'/answer.html'
     question_question_uri = content_question_template_path + u'/question.html'
 
-    # front_page
+    # #front_page
     front_page_author_uri = front_page_info_template_path + u'/author.html'
     front_page_collection_uri = front_page_info_template_path + u'/collection.html'
     front_page_column_uri = front_page_info_template_path + u'/column.html'
@@ -31,6 +31,6 @@ class TemplateConfig(object):
     front_page_answer_uri = front_page_info_template_path + u'/answer.html'
     front_page_article_uri = front_page_info_template_path + u'/article.html'
     front_page_SinaBlog_uri = front_page_info_template_path + u'/sinablog.html'
-    front_page_jianshu_uri = front_page_info_template_path + u'/jianshu.html'
+    front_page_jianshu_author_uri = front_page_info_template_path + u'/jianshu_author.html'
 
     front_page_base_uri = front_page_template_path + u'/base.html'
