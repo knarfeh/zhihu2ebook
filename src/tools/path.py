@@ -123,7 +123,7 @@ class Path(object):
             Path.sql_path = Path.base_path + u'/db/SinaBlog.sql'
 
         Path.html_pool_path = Path.base_path + u'/e-books_tmp_source/网页池'
-        Path.image_pool_path = Path.base_path + u'/e-books_tmp_source资源库/图片池'
+        Path.image_pool_path = Path.base_path + u'/e-books_tmp_source/图片池'
         Path.result_path = Path.base_path + u'/e-books_produced'
         return
 

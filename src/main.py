@@ -20,7 +20,7 @@ class EEBook(object):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         :param recipe_kind:
-        :param read_list_txt_file: default value: readlist.txt
+        :param read_list_txt_file: default value: ReadList.txt
         :param url:
         :return:
         """
@@ -32,9 +32,9 @@ class EEBook(object):
         Debug.logger.info(u"self.url: " + str(self.url))
 
         Debug.logger.debug(u"recipe种类是:" + str(recipe_kind))
-        Path.init_base_path(recipe_kind)       # 设置路径
-        Path.init_work_directory(recipe_kind)  # 创建路径
-        self.init_database()        # 初始化数据库
+        Path.init_base_path(recipe_kind)        # 设置路径
+        Path.init_work_directory(recipe_kind)   # 创建路径
+        self.init_database()                    # 初始化数据库
         Config._load()
         return
 

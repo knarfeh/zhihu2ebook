@@ -39,7 +39,7 @@ class PageWorker(object):
         # 添加扩展属性
         self.add_property()
         # TODO: 改掉硬编码
-        if isinstance(self, SinaBlogWorker) or isinstance(self, JianshuWorker):
+        if isinstance(self, SinaBlogWorker) or isinstance(self, JianshuAuthorWorker):
             Http.set_cookie('DontNeed')   # SinaBlog, jianshu:DontNeed
         else:
             Http.set_cookie()
@@ -385,10 +385,6 @@ class ColumnWorker(PageWorker):
 
 
 class JianshuAuthorWorker(PageWorker):
-    pass
-
-
-class JianshuWorker(PageWorker):
     u"""
     简书的worker
     """
@@ -428,7 +424,7 @@ class JianshuWorker(PageWorker):
         """
         if target_url in self.task_complete_set:
             return
-        id_result = Match.jianshu(target_url)
+        id_result = Match.jianshu_author(target_url)
         jianshu_id = id_result.group('jianshu_id')
 
         # ############下面这部分应该是JianshuAuthorInfo的内容, 完成jianshu_info中的内容,暂时写在这, 以后再优化
@@ -573,7 +569,7 @@ def worker_factory(task):
         'collection': CollectionWorker, 'topic': TopicWorker, 'column': ColumnWorker,
         'article': ColumnWorker,
         'SinaBlog': SinaBlogWorker, 'SinaBlogAuthor': SinaBlogAuthorWorker,
-        'jianshu': JianshuWorker, 'jianshuAuthor': JianshuAuthorWorker
+        'jianshu_author': JianshuAuthorWorker, 'jianshuAuthor': JianshuAuthorWorker
         }
     for key in task:
         worker = type_list[key](task[key])
