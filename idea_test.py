@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 from src.tools.match import Match
 
-SinaBlog_author_id = 1287694611
-href_article_list = 'http://blog.sina.com.cn/s/articlelist_{}_0_1.html'.format(SinaBlog_author_id)
-href_index = 'http://blog.sina.com.cn/u/{}'.format(SinaBlog_author_id)
-href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(SinaBlog_author_id)
+sinablog_author_id = 1287694611
+href_article_list = 'http://blog.sina.com.cn/s/articlelist_{}_0_1.html'.format(sinablog_author_id)
+href_index = 'http://blog.sina.com.cn/u/{}'.format(sinablog_author_id)
+href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(sinablog_author_id)
 
 article_href = 'http://blog.sina.com.cn/s/blog_5f34b1e601010fxd.html'
 
@@ -46,15 +46,15 @@ def get_tag_content(tag):
     """
     return "".join([unicode(x) for x in tag.contents])
 
-def SinaBlog(content=''):
+def sinablog(content=''):
     u"""
 
     :param content: Sina博客网址, 如:http://blog.sina.com.cn/u/1287694611
     :return:  re.match object
     """
-    return re.search(r'(?<=blog\.sina\.com\.cn/u/)(?P<SinaBlog_people_id>[^/\n\r]*)', content)
+    return re.search(r'(?<=blog\.sina\.com\.cn/u/)(?P<sinablog_people_id>[^/\n\r]*)', content)
 
-def SinaBlog_article_content(content=''):
+def sinablog_article_content(content=''):
     return re.search(r'(?<=<!-- 正文开始 -->)<?P<real_content>(<!-- 正文结束 -->)', content)
 
 
@@ -79,7 +79,7 @@ def SinaBlog_article_content(content=''):
 # result = article_body[lindex:rindex]
 # print result + '</div>'    # 因为没有爬取评论的部分作为博客的内容,所以最后会少一个</div>
 
-# # result_re = SinaBlog_article_content(article_body)
+# # result_re = sinablog_article_content(article_body)
 # # result = result_re.group('real_content')
 #
 # print result
@@ -150,9 +150,9 @@ def SinaBlog_article_content(content=''):
 # creator_id = soup.select('div.blognavInfo span a')
 # creator_id_href = get_attr(creator_id[1], 'href')
 #
-# result = Match.SinaBlog_profile(creator_id)
-# SinaBlog_id = result.group('SinaBlog_people_id')
-# print SinaBlog_id
+# result = Match.sinablog_profile(creator_id)
+# sinablog_id = result.group('sinablog_people_id')
+# print sinablog_id
 
 
 
