@@ -12,6 +12,7 @@ class Match(object):
             return '_xsrf=' + xsrf.group(0)
         return ''
 
+    # zhihu
     @staticmethod
     def answer(content=''):
         return re.search(r'(?<=zhihu\.com/)question/(?P<question_id>\d{8})/answer/(?P<answer_id>\d{8})', content)
@@ -44,8 +45,7 @@ class Match(object):
     def html_body(content=''):
         return re.search('(?<=<body>).*(?=</body>)', content, re.S).group(0)
 
-    # 以上是zhihu相关
-
+    # jianshu
     @staticmethod
     def jianshu_author(content=''):
         u"""
@@ -64,6 +64,7 @@ class Match(object):
         """
         return re.search(r'(?<=www\.jianshu\.com/p/)(?P<jianshu_article_id>[^/\n\r\']*)()', content)
 
+    # sinablog
     @staticmethod
     def sinablog_author(content=''):
         u"""
@@ -82,6 +83,16 @@ class Match(object):
         :return:
         """
         return re.search(r'(?<=blog\.sina\.com\.cn/s/articlelist_)(?P<sinablog_people_id>[^/\n\r]*)(_0_1\.)', content)
+
+    # csdn
+    @staticmethod
+    def csdnblog_author(content=''):
+        u"""
+
+        :param content: csdn 博主主页地址, http://blog.csdn.net/elton_xiao
+        :return: re.match object
+        """
+        return re.search(r'(?<=blog\.csdn\.net)(?P<csdnblog_author_id>[^/\n\r]*)', content)
 
     @staticmethod
     def fix_filename(filename):

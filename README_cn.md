@@ -24,7 +24,7 @@
 ## 支持的网站 (正在更新中!)
 * [zhihu](https://www.zhihu.com/)
 * [jianshu](https://www.jianshu.com/)
-* [SinaBlog](http://blog.sina.com.cn)
+* [sinablog](http://blog.sina.com.cn)
 
 ## 先决条件
 

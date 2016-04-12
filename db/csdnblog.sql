@@ -1,4 +1,4 @@
-CREATE TABLE csdnblog_info (
+CREATE TABLE SinaBlog_Info (
   creator_id   VARCHAR(255)  NOT NULL    DEFAULT '',
   creator_hash VARCHAR(255)  NOT NULL    DEFAULT '',
   creator_name VARCHAR(255)  NOT NULL    DEFAULT '',
@@ -7,11 +7,11 @@ CREATE TABLE csdnblog_info (
 
   description  VARCHAR(3000) NOT NULL    DEFAULT '',
   article_num  INT(20)       NOT NULL    DEFAULT 0,
-  ranking     INT(20)       NOT NULL    DEFAULT 0,
+  follower     INT(20)       NOT NULL    DEFAULT 0,
   PRIMARY KEY (creator_id)
 );
 
-CREATE TABLE csdnblog_article (
+CREATE TABLE SinaBlog_Article (
   article_id   VARCHAR(255)  NOT NULL    DEFAULT '',
   author_hash  VARCHAR(255)  NOT NULL    DEFAULT '',
   author_name  VARCHAR(255)  NOT NULL    DEFAULT '',
