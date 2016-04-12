@@ -1,5 +1,6 @@
 # EE-Book
 
+([中文文档](./README_cn.md))    
 
 [EE-Book](https://github.com/knarfeh/EE-Book) is a command-line utility to downlaod text from the Web, and make it a e-book. GUI is under developing.
 
