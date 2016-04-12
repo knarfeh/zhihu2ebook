@@ -33,7 +33,7 @@ class Type(object):
 
     SinaBlog_article_type_list = ['SinaBlog']
 
-    SinaBlog = [SinaBlog_Article, SinaBlog, SinaBlog_Info]
+    # SinaBlog = [SinaBlog_Article, SinaBlog, SinaBlog_Info]   # TODO: rename
 
     # jianshu    # TODO, 目前只有latest_articles一种, 还可以写collections, notebook等等
     jianshu_article = 'jianshu_article'     # 类型是单篇的文章   TODO

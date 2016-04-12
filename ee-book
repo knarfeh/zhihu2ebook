@@ -8,8 +8,7 @@ from src.main import EEBook
 from src.tools.debug import Debug
 from src.constants import __version__
 from src.utils import log
-from src.url_parser import UrlParser
-from src.tools.type import Type
+from src.tools.match import Match
 
 reload(sys)
 base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
@@ -25,29 +24,30 @@ short_options = 'Vhgu:r:'
 long_options = ['version', 'help', 'url', 'gui']
 
 
+help_info = 'Usage: ee-book [OPTION]... [URL]... \n\n'
+
+help_info += '''Starup options:
+-V | --version                  Print version and exit
+-h | --help                     Print help and exit
+\n
+'''
+
+help_info += '''Run options:
+-g | --gui                      Graphical user interface. under developing.
+-u | --url <URL>                Url to download, if not setted, read from text file
+TODO:
+-r | --file <file-path>         Read from the given file. Notice: only one kind could be accepted in one file
+'''
+
+
 if __name__ == '__main__':
     def version():
         log.info_log('version %s' % __version__)
 
-    help_info = 'Usage: ee-book [OPTION]... [URL]... \n\n'
-
-    help_info += '''Starup options:
-    -V | --version                  Print version and exit
-    -h | --help                     Print help and exit
-    \n
-    '''
-
-    help_info += '''Run options:
-    -g | --gui                      Graphical user interface, under developing.
-    -u | --url <URL>                Url to download, if not setted, read from text file
-    TODO:
-    -r | --file <file-path>         Read from the given file. Notice: only one kind could be accepted in one file
-    '''
-
     try:
         opts, args = getopt.getopt(sys.argv[1:], short_options, long_options)
     except getopt.GetoptError as err:
-        Debug.logger.info(u"try ee-book --help for more options")
+        log.error_log(u"try ee-book --help for more options")
         sys.exit(2)
     for option, args in opts:
         if option in ('-V', '--version'):
@@ -71,13 +71,7 @@ if __name__ == '__main__':
             sys.exit(app.exec_())
         elif option in ('-u', '--url'):
             url = args
-            url_type = UrlParser.detect(url)
-
-            recipe_kind = 'Unsupport type'
-            for website in Type.website_type:
-                if url_type in getattr(Type, website):
-                    recipe_kind = website
-
+            recipe_kind = Match.get_recipe_kind(url)
             if recipe_kind == 'Unsupport type':
                 print("Unsupport type")
                 sys.exit()
@@ -89,11 +83,29 @@ if __name__ == '__main__':
             # TODO: 读文件中第一条的内容的type
             file_name = args
             log.print_log(u'read from %s' % file_name)
-            game = EEBook(recipe_kind='zhihu', url=None, read_list=file_name)
+            with open(file_name, 'r') as read_list:
+                line = read_list[0]
+                recipe_kind = Match.get_recipe_kind(line)
+                if recipe_kind == 'Unsupport type':
+                    print("Unsupport type")
+                    sys.exit()
+            print u"recipe_kind" + str(recipe_kind)
+            game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
             game.begin()
             sys.exit()
     # ./ee-book
-    game = EEBook(recipe_kind='zhihu', url=None)
+
+    file_name = 'ReadList.txt'
+    log.print_log(u'read from %s' % file_name)
+    with open(file_name, 'r') as read_list:
+        line = read_list[0]
+        recipe_kind = Match.get_recipe_kind(line)
+        if recipe_kind == 'Unsupport type':
+            print("Unsupport type")
+            sys.exit()
+
+    print u"recipe_kind" + str(recipe_kind)
+    game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
     game.begin()
 
 
