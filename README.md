@@ -25,7 +25,7 @@ then you can get the book:
 ## Supported Sites (UPDATING!)
 * [zhihu](https://www.zhihu.com/)
 * [jianshu](https://www.jianshu.com/)
-* [SinaBlog](http://blog.sina.com.cn)
+* [sinablog](http://blog.sina.com.cn)
 
 ## Prerequisites
 
