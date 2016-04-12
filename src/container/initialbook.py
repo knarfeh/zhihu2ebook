@@ -53,7 +53,7 @@ class InitialBook(object):
         """
         self.catch_info()
         self.get_article_list()         # 获取文章所有信息
-        if self.kind != Type.SinaBlog_author:
+        if self.kind != Type.sinablog_author:
             self.__sort()
         return self
 
@@ -66,8 +66,8 @@ class InitialBook(object):
         if self.sql.info:
             if self.kind == Type.jianshu_author:
                 info = self.catch_jianshu_book_info()
-            elif self.kind == Type.SinaBlog_author:
-                info = self.catch_SinaBlog_book_info()
+            elif self.kind == Type.sinablog_author:
+                info = self.catch_sinablog_book_info()
             elif self.kind in [Type.question, Type.answer]:
                 info = self.catch_question_book_info(self.sql.info)
             elif self.kind == Type.article:
@@ -91,14 +91,14 @@ class InitialBook(object):
         info['creator_id'] = '_'.join([str(item['creator_id']) for item in info_list])
         return info
 
-    def catch_SinaBlog_book_info(self):
+    def catch_sinablog_book_info(self):
         u"""
 
         :param
         :return: info
         """
         info_list = DB.cursor.execute(self.sql.info).fetchall()
-        info_list = [DB.wrap(Type.SinaBlog_Info, item) for item in info_list]
+        info_list = [DB.wrap(Type.sinablog_info, item) for item in info_list]
         info = {}
         info['creator_name'] = '_'.join([str(item['creator_name']) for item in info_list])  # 可以是多个博客组合在一起
         info['creator_id'] = '_'.join([str(item['creator_id']) for item in info_list])
@@ -132,10 +132,10 @@ class InitialBook(object):
         elif self.kind == Type.jianshu_article:    # 单篇博文 TODO
             self.epub.title = u'简书博文集锦({})'.format(info['title'])
             self.epub.id = info['id']       # TODO
-        elif self.kind == Type.SinaBlog_author:              # 该博客所有的博文
+        elif self.kind == Type.sinablog_author:              # 该博客所有的博文
             self.epub.title = u'新浪博客_{}({})'.format(info['creator_name'], info['creator_id'])
             self.epub.id = info['creator_id']
-        elif self.kind == Type.SinaBlog_Article:    # 新浪单篇博文 TODO
+        elif self.kind == Type.sinablog_article:    # 新浪单篇博文 TODO
             self.epub.title = u'新浪博客博文集锦({})'.format(info['title'])
             self.epub.id = info['id']       # TODO
         elif self.kind == Type.question:
@@ -202,7 +202,7 @@ class InitialBook(object):
         def add_property(article):
             article['char_count'] = len(article['content'])
             article['answer_count'] = 1
-            if self.kind == Type.SinaBlog_author or self.kind == Type.jianshu_author:
+            if self.kind == Type.sinablog_author or self.kind == Type.jianshu_author:
                 article['agree_count'] = "没有赞同数"     # article['agree']
             else:
                 article['agree_count'] = article['agree']
@@ -213,8 +213,8 @@ class InitialBook(object):
 
         if self.kind == Type.jianshu_author:
             article_list = [DB.wrap(Type.jianshu_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
-        elif self.kind == Type.SinaBlog_author:
-            article_list = [DB.wrap(Type.SinaBlog_Article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
+        elif self.kind == Type.sinablog_author:
+            article_list = [DB.wrap(Type.sinablog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         else:
             article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         article_list = [add_property(x) for x in article_list]
@@ -226,7 +226,7 @@ class InitialBook(object):
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.char_count += article['char_count']
-        elif self.kind == Type.SinaBlog_author:      # SinaBlog类型
+        elif self.kind == Type.sinablog_author:      # sinablog类型
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.char_count += article['char_count']

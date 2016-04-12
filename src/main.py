@@ -53,7 +53,7 @@ class EEBook(object):
             # Config.picture_quality = guide.set_picture_quality()
             Config.picture_quality = 1
             # else:
-            Http.set_cookie()   # SinaBlog, jianshu:DontNeed
+            Http.set_cookie()   # sinablog, jianshu:DontNeed
         else:
             login.start()
             # Config.picture_quality = guide.set_picture_quality()

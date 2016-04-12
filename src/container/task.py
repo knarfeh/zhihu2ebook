@@ -45,8 +45,8 @@ class TaskPackage(object):
     def get_task(self):
         if Type.jianshu_author in self.book_list:
             self.merge_jianshu_article_book_list(Type.jianshu_author)
-        if Type.SinaBlog_author in self.book_list:
-            self.merge_SinaBlog_article_book_list(Type.SinaBlog_author)
+        if Type.sinablog_author in self.book_list:
+            self.merge_sinablog_article_book_list(Type.sinablog_author)
         if Type.answer in self.book_list:
             self.merge_question_book_list(book_type=Type.answer)
         if Type.question in self.book_list:
@@ -92,16 +92,16 @@ class TaskPackage(object):
         self.book_list[book_type] = [book]
         return
 
-    def merge_SinaBlog_article_book_list(self, book_type):
-        book_list = self.book_list[Type.SinaBlog_author]
+    def merge_sinablog_article_book_list(self, book_type):
+        book_list = self.book_list[Type.sinablog_author]
         book = InitialBook()
         info_extra = [item.sql.info_extra for item in book_list]
         article_extra = [item.sql.article_extra for item in book_list]
         book.kind = book_type
         book.author_id = book_list[0].author_id       # 这里的len(book_list)比1大怎么办?
-        book.sql.info = 'select * from SinaBlog_Info where ({})'.format(' or '.join(info_extra))
-        book.sql.article = 'select * from SinaBlog_Article where ({})'.format(' or '.join(article_extra))
-        book.sql.answer = 'select * from SinaBlog_Article where ({})'.format(' or '.join(article_extra))
+        book.sql.info = 'select * from sinablog_info where ({})'.format(' or '.join(info_extra))
+        book.sql.article = 'select * from sinablog_article where ({})'.format(' or '.join(article_extra))
+        book.sql.answer = 'select * from sinablog_article where ({})'.format(' or '.join(article_extra))
         self.book_list[book_type] = [book]
         return
 

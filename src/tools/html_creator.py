@@ -21,7 +21,7 @@ class HtmlCreator(object):
     def fix_image(self, content, recipe):
         content = Match.fix_html(content)
         for img in re.findall(r'<img[^>]*', content):
-            if recipe is not Type.SinaBlog_author:
+            if recipe is not Type.sinablog_author:
                 # fix img
                 if img[-1] == '/':
                     img = img[:-1]
@@ -49,7 +49,7 @@ class HtmlCreator(object):
                 new_image = new_image.replace('src', 'falsesrc')
                 new_image = new_image.replace('temppicsr', 'src')    # 应该有更好的方式, 暂时先这样写
                 new_image += '</img>'
-            elif recipe == Type.SinaBlog_author:
+            elif recipe == Type.sinablog_author:
                 # 硬编码, 可以优化?写到fix_html函数中
                 new_image = new_image.replace('http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif',\
                                           '../images/{}'.format(filename))
@@ -128,8 +128,7 @@ class HtmlCreator(object):
     def create_article(self, article, prefix='', recipe=None):
         article['edit_date'] = article['publish_date']
         article['description'] = ''
-        print u"recipe是???" + str(recipe)
-        if recipe in ['jianshu_author', 'SinaBlog_author']:       # TODO: 改掉硬编码
+        if recipe in ['jianshu_author', 'sinablog_author']:       # TODO: 改掉硬编码
             article['agree'] = '无'
         result = {
             'answer': self.create_answer(article),
@@ -152,7 +151,7 @@ class HtmlCreator(object):
         if kind == Type.jianshu_author:
             result['title'] = u'简书文章集锦'
             result['description'] = u''   # TODO: description
-        elif kind == Type.SinaBlog_author:
+        elif kind == Type.sinablog_author:
             result['title'] = u'新浪博客集锦'
             result['description'] = u''
         elif kind == Type.answer:
