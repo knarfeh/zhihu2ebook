@@ -18,22 +18,22 @@ class Type(object):
     column_info = 'column_info'
 
     question_answer_type_list = ['answer', 'question']
-    article_type_list = ['article', 'column', 'SinaBlog_author', 'jianshu_author']
+    article_type_list = ['article', 'column', 'sinablog_author', 'jianshu_author']
     question_type_list = ['answer', 'question', 'author', 'collection', 'topic', ]
 
     zhihu_article_type_list = ['article', 'column', ]
 
     zhihu = question_answer_type_list + question_type_list + zhihu_article_type_list
 
-    # SinaBlog
-    SinaBlog_Article = 'SinaBlog_Article'       # 类型是单篇的文章
-    SinaBlog_author = 'SinaBlog_author'                       # 类型是文章的集锦
+    # sinablog
+    sinablog_article = 'sinablog_article'       # 类型是单篇的文章
+    sinablog_author = 'sinablog_author'                       # 类型是文章的集锦
 
-    SinaBlog_Info = 'SinaBlog_Info'             # 新浪博客的一些基本信息,如作者id
+    sinablog_info = 'sinablog_info'             # 新浪博客的一些基本信息,如作者id
 
-    SinaBlog_article_type_list = ['SinaBlog']
+    sinablog_article_type_list = ['sinablog']
 
-    SinaBlog = [SinaBlog_Article, SinaBlog_author, SinaBlog_Info]   # TODO: rename
+    sinablog = [sinablog_article, sinablog_author, sinablog_info]   # TODO: rename
 
     # jianshu    # TODO, 目前只有latest_articles一种, 还可以写collections, notebook等等
     jianshu_article = 'jianshu_article'     # 类型是单篇的文章   TODO
@@ -54,7 +54,7 @@ class Type(object):
         collection: collection_info,
         topic: topic_info,
 
-        'SinaBlog_Info': SinaBlog_Info,
+        'sinablog_info': sinablog_info,
         'jianshu_info': jianshu_info
     }
     pass
@@ -62,5 +62,5 @@ class Type(object):
     website_type = {
         'zhihu': zhihu,
         'jianshu': jianshu,
-        'SinaBlog': SinaBlog
+        'sinablog': sinablog
     }

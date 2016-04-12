@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.lib.SinaBlog_parser.base import BaseParser
+from src.lib.sinablog_parser.base import BaseParser
 # from src.lib.SinaBlog_parser.content.author import AuthorInfo
 
 
