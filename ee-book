@@ -94,7 +94,6 @@ if __name__ == '__main__':
             game.begin()
             sys.exit()
     # ./ee-book
-
     file_name = 'ReadList.txt'
     log.print_log(u'read from %s' % file_name)
     with open(file_name, 'r') as read_list:

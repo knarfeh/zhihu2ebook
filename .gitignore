@@ -231,7 +231,4 @@ e-books_tmp_source/
 
 *.sqlite
 
-fifty/grey
 bookdata/
-idea_test.py
-ReadList_test.txt
