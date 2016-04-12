@@ -117,10 +117,10 @@ class Path(object):
             Path.config_path = Path.base_path + u'/config/zhihu_config.json'
             Path.db_path = Path.base_path + u'/db/zhihuDB_173.sqlite'
             Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
-        elif recipe_kind == 'SinaBlog':
-            Path.config_path = Path.base_path + u'/config/SinaBlog_config.json'
-            Path.db_path = Path.base_path + u'/db/SinaBlog_db_001.sqlite'
-            Path.sql_path = Path.base_path + u'/db/SinaBlog.sql'
+        elif recipe_kind == 'sinablog':
+            Path.config_path = Path.base_path + u'/config/sinablog_config.json'
+            Path.db_path = Path.base_path + u'/db/sinablog_db_001.sqlite'
+            Path.sql_path = Path.base_path + u'/db/sinablog.sql'
 
         Path.html_pool_path = Path.base_path + u'/e-books_tmp_source/网页池'
         Path.image_pool_path = Path.base_path + u'/e-books_tmp_source/图片池'

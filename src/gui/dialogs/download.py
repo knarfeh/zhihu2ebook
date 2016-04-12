@@ -96,7 +96,7 @@ class DownloadDialog(QDialog, Ui_Dialog):
             </p>
             ''' % dict(title='jianshu', cb='Created by: Frank',
                      description=u'https://github.com/knarfeh/jianshu2e-book'))
-        elif url == 'SinaBlog':
+        elif url == 'sinablog':
             self.detail_box.setVisible(True)
             self.account.setVisible(False)
             self.blurb.setText('''
@@ -105,7 +105,7 @@ class DownloadDialog(QDialog, Ui_Dialog):
             %(cb)s <br/>
             %(description)s
             </p>
-            ''' % dict(title='SinaBlog', cb='Created by: Frank',
+            ''' % dict(title='sinablog', cb='Created by: Frank',
                      description=u'https://github.com/knarfeh/SinaBlog2e-book'))
         else:
             self.detail_box.setVisible(False)

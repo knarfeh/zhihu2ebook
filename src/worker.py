@@ -13,9 +13,9 @@ from src.lib.zhihu_parser.collection import CollectionParser
 from src.lib.zhihu_parser.question import QuestionParser
 from src.lib.zhihu_parser.topic import TopicParser
 
-from src.lib.SinaBlog_parser.SinaBlogparser import SinaBlogParser
+from src.lib.sinablog_parser.sinablogparser import SinaBlogParser
 from src.lib.jianshu_parser.jianshuparser import JianshuParser
-from src.lib.SinaBlog_parser.tools.parser_tools import ParserTools
+from src.lib.sinablog_parser.tools.parser_tools import ParserTools
 
 from bs4 import BeautifulSoup
 
@@ -39,8 +39,8 @@ class PageWorker(object):
         # 添加扩展属性
         self.add_property()
         # TODO: 改掉硬编码
-        if isinstance(self, SinaBlogAuthorWorker) or isinstance(self, JianshuAuthorWorker):
-            Http.set_cookie('DontNeed')   # SinaBlog, jianshu:DontNeed
+        if isinstance(self, sinablogAuthorWorker) or isinstance(self, JianshuAuthorWorker):
+            Http.set_cookie('DontNeed')   # sinablog, jianshu: DontNeed
         else:
             Http.set_cookie()
 
@@ -454,7 +454,7 @@ class JianshuAuthorWorker(PageWorker):
         return
 
 
-class SinaBlogAuthorWorker(PageWorker):
+class sinablogAuthorWorker(PageWorker):
     u"""
     Sina博客的worker
     """
@@ -474,7 +474,7 @@ class SinaBlogAuthorWorker(PageWorker):
             return max_page
 
     def create_save_config(self):    # TODO
-        config = {'SinaBlog_Article': self.answer_list, 'SinaBlog_Info': self.question_list, }
+        config = {'sinablog_article': self.answer_list, 'sinablog_info': self.question_list, }
         return config
 
     def parse_content(self, content):
@@ -513,7 +513,7 @@ class SinaBlogAuthorWorker(PageWorker):
 
     def create_work_set(self, target_url):
         u"""
-        根据博客首页的url, 首先通过re获得博客id, 然后根据博客"关于我"的页面的内容获得写入SinaBlog_Info
+        根据博客首页的url, 首先通过re获得博客id, 然后根据博客"关于我"的页面的内容获得写入sinablog_info
         的数据(这部分理应不在这个函数中, 可以改进), 最后通过博客目录页面的内容, 获得每篇博文的地址,
         放入work_set中
 
@@ -522,19 +522,19 @@ class SinaBlogAuthorWorker(PageWorker):
         """
         if target_url in self.task_complete_set:
             return
-        result = Match.SinaBlog_author(target_url)
-        SinaBlog_author_id = int(result.group('SinaBlog_people_id'))
+        result = Match.sinablog_author(target_url)
+        sinablog_author_id = int(result.group('sinablog_people_id'))
 
-        href_article_list = 'http://blog.sina.com.cn/s/articlelist_{}_0_1.html'.format(SinaBlog_author_id)
-        href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(SinaBlog_author_id)
+        href_article_list = 'http://blog.sina.com.cn/s/articlelist_{}_0_1.html'.format(sinablog_author_id)
+        href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(sinablog_author_id)
 
-        # ############下面这部分应该是SinaBlogAuthorWorker的内容, 写到SinaBlog_Info, 暂时写在这, 以后再优化
+        # ############下面这部分应该是SinaBlogAuthorWorker的内容, 写到sinablog_info, 暂时写在这, 以后再优化
         content_profile = Http.get_content(href_profile)
 
         parser = SinaBlogParser(content_profile)
-        self.question_list += parser.get_SinaBlog_info_list()
+        self.question_list += parser.get_sinablog_info_list()
         # Debug.logger.debug(u"create_work_set中的question_list是什么??" + str(self.question_list))
-        # #############上面这部分应该是SinaBlogAuthorWorker的内容, 写到SinaBlog_Info, 暂时写在这, 以后再优化
+        # #############上面这部分应该是SinaBlogAuthorWorker的内容, 写到sinablog_info, 暂时写在这, 以后再优化
 
         # content_index = Http.get_content(href_index)
         content_article_list = Http.get_content(href_article_list)
@@ -551,7 +551,7 @@ class SinaBlogAuthorWorker(PageWorker):
         self.task_complete_set.add(target_url)
 
         for page in range(page_num):
-            url = 'http://blog.sina.com.cn/s/articlelist_{}_0_{}.html'.format(SinaBlog_author_id, page+1)
+            url = 'http://blog.sina.com.cn/s/articlelist_{}_0_{}.html'.format(sinablog_author_id, page+1)
             content_article_list = Http.get_content(url)
             article_list = self.parse_get_article_list(content_article_list)
             for item in article_list:
@@ -565,7 +565,7 @@ def worker_factory(task):
         'answer': QuestionWorker, 'question': QuestionWorker, 'author': AuthorWorker,
         'collection': CollectionWorker, 'topic': TopicWorker, 'column': ColumnWorker,
         'article': ColumnWorker,
-        'SinaBlog_author': SinaBlogAuthorWorker,
+        'sinablog_author': sinablogAuthorWorker,
         'jianshu_author': JianshuAuthorWorker, 'jianshuAuthor': JianshuAuthorWorker
         }
     for key in task:
