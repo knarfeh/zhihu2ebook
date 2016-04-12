@@ -305,7 +305,6 @@ class MainWindow(QtGui.QMainWindow):
 
         ui.exec_()
         self.update_library()
-
         del download
 
     def create_connections(self):
@@ -381,6 +380,7 @@ class MainWindow(QtGui.QMainWindow):
                     match = True
                     break
             self.library_table.setRowHidden(i, not match)
+
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

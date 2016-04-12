@@ -190,13 +190,17 @@ class DownloadDialog(QDialog, Ui_Dialog):
             progress_dlg.close()
 
             info_filename = ','.join(filename)
-            QtGui.QMessageBox.information(self, u"Error", u"电子书"+str(info_filename)+u"制作成功")
+            QtGui.QMessageBox.information(self, u"info", u"电子书"+str(info_filename)+u"制作成功")
 
             for item in filename:
                 file_path = EPUBSTOR_DIR + '/' + item
-                shutil.copy(str(file_path+'.epub'), LIBRARY_DIR)
+                Path.copy(str(file_path+'.epub'), LIBRARY_DIR)
                 file_name = os.path.basename(str(file_path))
                 book_id = file_name.split('.epub')[0]
+
+                Path.mkdir(LIBRARY_DIR + book_id)
+                shutil.move(LIBRARY_DIR+book_id+'.epub', LIBRARY_DIR+book_id)
+
                 book = Book(str(book_id))
                 book.date = time.strftime(ISOTIMEFORMAT, time.localtime())
                 book.tags += tags.replace(' ', '')
@@ -205,5 +209,4 @@ class DownloadDialog(QDialog, Ui_Dialog):
                     book.tags += ','+str(book.title)
                 insert_library(book)
             return
-
 
