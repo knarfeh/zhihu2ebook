@@ -134,4 +134,19 @@ class Match(object):
                 return command_type
         return 'unknown'
 
+    @staticmethod
+    def get_recipe_kind(url):
+        u"""
 
+        :param url: one line
+        :return: website kind, e.g. 'zhihu', 'jianshu', 'SinaBlog'
+        """
+        url = url.split('#')[0]    # remove comment
+        url = url.split('$')[0]    # the first one determine type
+        url_type = Match.detect(url)
+
+        recipe_kind = 'Unsupport type'
+        for website in Type.website_type:
+            if url_type in getattr(Type, website):
+                recipe_kind = website
+        return recipe_kind
