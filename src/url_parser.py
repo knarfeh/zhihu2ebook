@@ -29,24 +29,8 @@ class UrlParser():
         :param command:   网页的首地址
         :return:
         """
-        def split_command(command):
-            u"""
-            # 一行是一本书, 每一行用$符号来区分章节
-            :param command: 一行命令
-            :return:
-            """
-            return command.split('$')
-
-        def remove_comment(command):
-            u"""
-            去掉#后面的注释
-            :param command:
-            :return:
-            """
-            return command.split('#')[0]
-
-        command = remove_comment(command)
-        command_list = split_command(command)
+        command = command.split('#')[0]             # remove_comment
+        command_list = command.split('$')           # split_command
         Debug.logger.debug(u"[debug]command_list:" + str(command_list))
         raw_task_list = []
         for command in command_list:
@@ -56,14 +40,6 @@ class UrlParser():
 
         task_package = UrlParser.merge_task_list(raw_task_list)
         return task_package
-
-    @staticmethod
-    def detect(command):
-        for command_type in Type.type_list:
-            result = getattr(Match, command_type)(command)
-            if result:
-                return command_type
-        return 'unknown'
 
     @staticmethod
     def parse_command(raw_command=''):
@@ -234,7 +210,7 @@ class UrlParser():
                   'SinaBlog': parse_SinaBlog,
                   'jianshu_author': parse_jianshu_author,
                   'unknown': parse_error, }
-        kind = UrlParser.detect(raw_command)
+        kind = Match.detect(raw_command)
 
         return parser[kind](raw_command)
 
