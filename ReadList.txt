@@ -1,2 +1,1 @@
-https://www.zhihu.com/question/39700505
-#http://www.jianshu.com/users/73b9198347dc/latest_articles$http://www.jianshu.com/users/f49b12177a28/latest_articles
+http://www.jianshu.com/users/73b9198347dc/latest_articles
