@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.lib.SinaBlog_parser.tools.parser_tools import ParserTools
+from src.lib.sinablog_parser.tools.parser_tools import ParserTools
 from src.tools.match import Match
 from src.tools.debug import Debug
 
@@ -7,7 +7,6 @@ from src.tools.debug import Debug
 class SinaBlogArticle(ParserTools):
     def __init__(self, dom=None):
         if dom:
-            # Debug.logger.debug(u"SinaBlogArticle中,YESSSSSSSSSSSSSSSSSS")
             pass
         self.set_dom(dom)
         self.info = {}
@@ -49,7 +48,6 @@ class SinaBlogArticle(ParserTools):
         article_body = str(article_body)
         self.info['content'] = article_body
 
-
     def parse_author_id(self):   # TODO 这个部分可以不重复的
         u"""
         获得author_id
@@ -64,9 +62,9 @@ class SinaBlogArticle(ParserTools):
             Debug.logger.debug(u"没有找到creator_id")
             # TODO
             return
-        result = Match.SinaBlog_profile(author_id_href)
-        SinaBlog_id = result.group('SinaBlog_people_id')
-        self.info['author_id'] = SinaBlog_id
+        result = Match.sinablog_profile(author_id_href)
+        sinablog_id = result.group('sinablog_people_id')
+        self.info['author_id'] = sinablog_id
 
     def parse_author_name(self):
         u"""

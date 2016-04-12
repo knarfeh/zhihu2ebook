@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from src.lib.SinaBlog_parser.tools.parser_tools import ParserTools
+from src.lib.sinablog_parser.tools.parser_tools import ParserTools
 from src.tools.debug import Debug
 from src.tools.match import Match
 
 
-class SinaBloeAuthorInfo(ParserTools):
+class SinaBlogAuthorInfo(ParserTools):
     u"""
     在用户档案页面进行解析, 获得博主基本信息
     """
@@ -96,6 +96,6 @@ class SinaBloeAuthorInfo(ParserTools):
             Debug.logger.debug(u"没有找到creator_id")
             # TODO
             return
-        result = Match.SinaBlog_profile(creator_id_href)
-        SinaBlog_id = result.group('SinaBlog_people_id')
-        self.info['creator_id'] = SinaBlog_id
+        result = Match.sinablog_profile(creator_id_href)
+        sinablog_id = result.group('sinablog_people_id')
+        self.info['creator_id'] = sinablog_id

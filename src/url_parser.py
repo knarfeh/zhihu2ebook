@@ -155,27 +155,27 @@ class UrlParser():
             task.book.sql.answer = 'select * from Article where column_id = "{}" '.format(column_id)
             return task
 
-        def parse_SinaBlog_author(command):
+        def parse_sinablog_author(command):
             u"""
 
             :param command: 某个新浪博客博主的首页地址
             :return: task:
             """
-            result = Match.SinaBlog_author(command)
-            SinaBlog_author_id = result.group('SinaBlog_people_id')
-            Debug.logger.debug(u"SinaBlog_people_id:" + str(SinaBlog_author_id))
+            result = Match.sinablog_author(command)
+            sinablog_author_id = result.group('sinablog_people_id')
+            Debug.logger.debug(u"sinablog_people_id:" + str(sinablog_author_id))
             task = SingleTask()
 
-            task.author_id = SinaBlog_author_id
-            task.kind = 'SinaBlog_author'
-            task.spider.href_article_list = 'http://blog.sina.com.cn/s/articlelist_{}_0_1.html'.format(SinaBlog_author_id)
-            task.spider.href = 'http://blog.sina.com.cn/u/{}'.format(SinaBlog_author_id)
-            task.spider.href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(SinaBlog_author_id)
-            task.book.kind = 'SinaBlog_author'
-            task.book.sql.info_extra = 'creator_id = "{}"'.format(SinaBlog_author_id)
-            task.book.sql.article_extra = 'author_id = "{}"'.format(SinaBlog_author_id)
-            task.book.author_id = SinaBlog_author_id
-            # Debug.logger.debug(u"在parse_SinaBlog中, task.book.author_id为" + str(task.book.author_id))
+            task.author_id = sinablog_author_id
+            task.kind = 'sinablog_author'
+            task.spider.href_article_list = 'http://blog.sina.com.cn/s/articlelist_{}_0_1.html'.format(sinablog_author_id)
+            task.spider.href = 'http://blog.sina.com.cn/u/{}'.format(sinablog_author_id)
+            task.spider.href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(sinablog_author_id)
+            task.book.kind = 'sinablog_author'
+            task.book.sql.info_extra = 'creator_id = "{}"'.format(sinablog_author_id)
+            task.book.sql.article_extra = 'author_id = "{}"'.format(sinablog_author_id)
+            task.book.author_id = sinablog_author_id
+            # Debug.logger.debug(u"在parse_sinablog中, task.book.author_id为" + str(task.book.author_id))
             return task
 
         def parse_jianshu_author(command):
@@ -207,7 +207,7 @@ class UrlParser():
         parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
                   'collection': parse_collection, 'topic': parse_topic, 'article': parse_article,
                   'column': parse_column,
-                  'SinaBlog_author': parse_SinaBlog_author,
+                  'sinablog_author': parse_sinablog_author,
                   'jianshu_author': parse_jianshu_author,
                   'unknown': parse_error, }
         kind = Match.detect(raw_command)

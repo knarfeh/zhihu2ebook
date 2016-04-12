@@ -65,23 +65,23 @@ class Match(object):
         return re.search(r'(?<=www\.jianshu\.com/p/)(?P<jianshu_article_id>[^/\n\r\']*)()', content)
 
     @staticmethod
-    def SinaBlog_author(content=''):
+    def sinablog_author(content=''):
         u"""
 
         :param content: Sina博客网址, 如:http://blog.sina.com.cn/u/1287694611
         :return:  re.match object
         """
-        return re.search(r'(?<=blog\.sina\.com\.cn/u/)(?P<SinaBlog_people_id>[^/\n\r]*)', content)
+        return re.search(r'(?<=blog\.sina\.com\.cn/u/)(?P<sinablog_people_id>[^/\n\r]*)', content)
 
     @staticmethod
-    def SinaBlog_profile(content=''):
+    def sinablog_profile(content=''):
         u"""
 
         :param content: Sina博客"博客目录"的网址, 如:
             http://blog.sina.com.cn/s/articlelist_1287694611_0_1.html
         :return:
         """
-        return re.search(r'(?<=blog\.sina\.com\.cn/s/articlelist_)(?P<SinaBlog_people_id>[^/\n\r]*)(_0_1\.)', content)
+        return re.search(r'(?<=blog\.sina\.com\.cn/s/articlelist_)(?P<sinablog_people_id>[^/\n\r]*)(_0_1\.)', content)
 
     @staticmethod
     def fix_filename(filename):
@@ -107,7 +107,7 @@ class Match(object):
     def fix_html(content=''):
         content = content.replace('</br>', '').replace('</img>', '')
         content = content.replace('<br>', '<br/>')
-        content = content.replace('<wbr>', '').replace('</wbr>', '<br/>')  # for SinaBlog
+        content = content.replace('<wbr>', '').replace('</wbr>', '<br/>')  # for sinablog
         content = content.replace('href="//link.zhihu.com', 'href="https://link.zhihu.com')  # 修复跳转链接
 
         # for SinaBlog
@@ -139,7 +139,7 @@ class Match(object):
         u"""
 
         :param url: one line
-        :return: website kind, e.g. 'zhihu', 'jianshu', 'SinaBlog'
+        :return: website kind, e.g. 'zhihu', 'jianshu', 'sinablog'
         """
         url = url.split('#')[0]    # remove comment
         url = url.split('$')[0]    # the first one determine type

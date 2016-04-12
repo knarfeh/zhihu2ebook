@@ -74,7 +74,7 @@ class RecipeModel(QtCore.QAbstractItemModel):
         for url, recipe_info, lang in (
                 ("zhihu", u"问题, 答案, 专栏", u"Chinese"),
                 ("jianshu", u"文章", u"Chinese"),
-                ("SinaBlog", u"博客", u"Chinese")
+                ("sinablog", u"博客", u"Chinese")
         ):
             recipe_item = Recipes(url, recipe_info, lang)
             self.recipe.append(recipe_item)

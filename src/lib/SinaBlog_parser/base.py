@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 
-from src.lib.SinaBlog_parser.tools.parser_tools import ParserTools
-from src.lib.SinaBlog_parser.content.SinaBlogArticle import SinaBlogArticle
+from src.lib.sinablog_parser.tools.parser_tools import ParserTools
+from src.lib.sinablog_parser.content.SinaBlogArticle import SinaBlogArticle
 
 
 class BaseParser(ParserTools):
