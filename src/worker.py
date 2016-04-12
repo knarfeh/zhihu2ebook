@@ -39,7 +39,7 @@ class PageWorker(object):
         # 添加扩展属性
         self.add_property()
         # TODO: 改掉硬编码
-        if isinstance(self, SinaBlogWorker) or isinstance(self, JianshuAuthorWorker):
+        if isinstance(self, SinaBlogAuthorWorker) or isinstance(self, JianshuAuthorWorker):
             Http.set_cookie('DontNeed')   # SinaBlog, jianshu:DontNeed
         else:
             Http.set_cookie()
@@ -453,11 +453,8 @@ class JianshuAuthorWorker(PageWorker):
                 self.work_set.add(item)
         return
 
+
 class SinaBlogAuthorWorker(PageWorker):
-    pass
-
-
-class SinaBlogWorker(PageWorker):
     u"""
     Sina博客的worker
     """
@@ -525,7 +522,7 @@ class SinaBlogWorker(PageWorker):
         """
         if target_url in self.task_complete_set:
             return
-        result = Match.SinaBlog(target_url)
+        result = Match.SinaBlog_author(target_url)
         SinaBlog_author_id = int(result.group('SinaBlog_people_id'))
 
         href_article_list = 'http://blog.sina.com.cn/s/articlelist_{}_0_1.html'.format(SinaBlog_author_id)
@@ -568,7 +565,7 @@ def worker_factory(task):
         'answer': QuestionWorker, 'question': QuestionWorker, 'author': AuthorWorker,
         'collection': CollectionWorker, 'topic': TopicWorker, 'column': ColumnWorker,
         'article': ColumnWorker,
-        'SinaBlog': SinaBlogWorker, 'SinaBlogAuthor': SinaBlogAuthorWorker,
+        'SinaBlog_author': SinaBlogAuthorWorker,
         'jianshu_author': JianshuAuthorWorker, 'jianshuAuthor': JianshuAuthorWorker
         }
     for key in task:
