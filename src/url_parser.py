@@ -155,23 +155,23 @@ class UrlParser():
             task.book.sql.answer = 'select * from Article where column_id = "{}" '.format(column_id)
             return task
 
-        def parse_SinaBlog(command):
+        def parse_SinaBlog_author(command):
             u"""
 
             :param command: 某个新浪博客博主的首页地址
             :return: task:
             """
-            result = Match.SinaBlog(command)
+            result = Match.SinaBlog_author(command)
             SinaBlog_author_id = result.group('SinaBlog_people_id')
             Debug.logger.debug(u"SinaBlog_people_id:" + str(SinaBlog_author_id))
             task = SingleTask()
 
             task.author_id = SinaBlog_author_id
-            task.kind = 'SinaBlog'
+            task.kind = 'SinaBlog_author'
             task.spider.href_article_list = 'http://blog.sina.com.cn/s/articlelist_{}_0_1.html'.format(SinaBlog_author_id)
             task.spider.href = 'http://blog.sina.com.cn/u/{}'.format(SinaBlog_author_id)
             task.spider.href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(SinaBlog_author_id)
-            task.book.kind = 'SinaBlog'
+            task.book.kind = 'SinaBlog_author'
             task.book.sql.info_extra = 'creator_id = "{}"'.format(SinaBlog_author_id)
             task.book.sql.article_extra = 'author_id = "{}"'.format(SinaBlog_author_id)
             task.book.author_id = SinaBlog_author_id
@@ -207,7 +207,7 @@ class UrlParser():
         parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
                   'collection': parse_collection, 'topic': parse_topic, 'article': parse_article,
                   'column': parse_column,
-                  'SinaBlog': parse_SinaBlog,
+                  'SinaBlog_author': parse_SinaBlog_author,
                   'jianshu_author': parse_jianshu_author,
                   'unknown': parse_error, }
         kind = Match.detect(raw_command)
