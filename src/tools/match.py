@@ -65,7 +65,7 @@ class Match(object):
         return re.search(r'(?<=www\.jianshu\.com/p/)(?P<jianshu_article_id>[^/\n\r\']*)()', content)
 
     @staticmethod
-    def SinaBlog(content=''):
+    def SinaBlog_author(content=''):
         u"""
 
         :param content: Sina博客网址, 如:http://blog.sina.com.cn/u/1287694611

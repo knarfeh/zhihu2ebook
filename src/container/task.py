@@ -45,8 +45,8 @@ class TaskPackage(object):
     def get_task(self):
         if Type.jianshu_author in self.book_list:
             self.merge_jianshu_article_book_list(Type.jianshu_author)
-        if Type.SinaBlog in self.book_list:
-            self.merge_SinaBlog_article_book_list(Type.SinaBlog)
+        if Type.SinaBlog_author in self.book_list:
+            self.merge_SinaBlog_article_book_list(Type.SinaBlog_author)
         if Type.answer in self.book_list:
             self.merge_question_book_list(book_type=Type.answer)
         if Type.question in self.book_list:
@@ -93,7 +93,7 @@ class TaskPackage(object):
         return
 
     def merge_SinaBlog_article_book_list(self, book_type):
-        book_list = self.book_list[Type.SinaBlog]
+        book_list = self.book_list[Type.SinaBlog_author]
         book = InitialBook()
         info_extra = [item.sql.info_extra for item in book_list]
         article_extra = [item.sql.article_extra for item in book_list]
