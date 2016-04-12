@@ -33,7 +33,7 @@ class EEBook(object):
 
         Debug.logger.debug(u"recipe种类是:" + str(recipe_kind))
         Path.init_base_path(recipe_kind)        # 设置路径
-        Path.init_work_directory(recipe_kind)   # 创建路径
+        Path.init_work_directory()              # 创建路径
         self.init_database()                    # 初始化数据库
         Config._load()
         return

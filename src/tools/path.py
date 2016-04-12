@@ -109,7 +109,7 @@ class Path(object):
         Path.www_css = Path.base_path + u'/www/css'
         Path.www_image = Path.base_path + u'/www/images'
 
-        if recipe_kind == 'jianshu':
+        if recipe_kind == 'jianshu':    # TODO: 用循环解决
             Path.config_path = Path.base_path + u'/config/jianshu_config.json'
             Path.db_path = Path.base_path + u'/db/jianshu_db_002.sqlite'
             Path.sql_path = Path.base_path + u'/db/jianshu.sql'
@@ -121,6 +121,10 @@ class Path(object):
             Path.config_path = Path.base_path + u'/config/sinablog_config.json'
             Path.db_path = Path.base_path + u'/db/sinablog_db_001.sqlite'
             Path.sql_path = Path.base_path + u'/db/sinablog.sql'
+        elif recipe_kind == 'csdnblog':
+            Path.config_path = Path.base_path + u'/config/csdn_config.json'
+            Path.db_path = Path.base_path + u'/db/csdn_db_001.sqlite'
+            Path.sql_path = Path.base_path + u'/db/csdnblog.sql'
 
         Path.html_pool_path = Path.base_path + u'/e-books_tmp_source/网页池'
         Path.image_pool_path = Path.base_path + u'/e-books_tmp_source/图片池'
@@ -128,7 +132,7 @@ class Path(object):
         return
 
     @staticmethod
-    def init_work_directory(recipe_kind):
+    def init_work_directory():
         Path.reset_path()
         Path.mkdir(u'./e-books_tmp_source')
         Path.mkdir(u'./e-books_produced')
