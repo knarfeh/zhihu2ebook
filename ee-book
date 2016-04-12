@@ -77,7 +77,7 @@ if __name__ == '__main__':
                 sys.exit()
             print u"recipe_kind" + str(recipe_kind)
             game = EEBook(recipe_kind=recipe_kind, url=url)
-            game.begin()
+            # game.begin()
             sys.exit()
         elif option in('-r', '--file'):
             # TODO: 读文件中第一条的内容的type
