@@ -1,4 +1,4 @@
-## 怎么参与进来
+## EE-Book Contributing Guide
 
 ### Pull Requests
 ===

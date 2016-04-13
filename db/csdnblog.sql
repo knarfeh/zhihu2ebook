@@ -1,4 +1,4 @@
-CREATE TABLE SinaBlog_Info (
+CREATE TABLE csdnblog_info (
   creator_id   VARCHAR(255)  NOT NULL    DEFAULT '',
   creator_hash VARCHAR(255)  NOT NULL    DEFAULT '',
   creator_name VARCHAR(255)  NOT NULL    DEFAULT '',
@@ -11,7 +11,7 @@ CREATE TABLE SinaBlog_Info (
   PRIMARY KEY (creator_id)
 );
 
-CREATE TABLE SinaBlog_Article (
+CREATE TABLE csdnblog_article (
   article_id   VARCHAR(255)  NOT NULL    DEFAULT '',
   author_hash  VARCHAR(255)  NOT NULL    DEFAULT '',
   author_name  VARCHAR(255)  NOT NULL    DEFAULT '',
@@ -22,7 +22,7 @@ CREATE TABLE SinaBlog_Article (
   title        VARCHAR(2000) NOT NULL    DEFAULT '',
   content      longtext      NOT NULL    DEFAULT '',
   comment      INT(20)       NOT NULL    DEFAULT 0,
-  agree        VARCHAR(255) DEFAULT '无',
+  agree        VARCHAR(255)  DEFAULT '无',
   publish_date DATE          NOT NULL    DEFAULT '2000-01-01',
   PRIMARY KEY (article_id)
 );

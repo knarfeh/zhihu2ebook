@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 
-from src.lib.jianshu_parser.tools.parser_tools import ParserTools
-from src.lib.jianshu_parser.content.JianshuArticle import JianshuArticle
+from src.lib.parser_tools import ParserTools
+from src.lib.jianshu_parser.content.jianshu_article import JianshuArticle
 
 
 class BaseParser(ParserTools):

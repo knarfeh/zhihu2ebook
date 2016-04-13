@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
 
+from src.tools.extra_tools import ExtraTools
+
 
 class ParserTools(object):
     @staticmethod
@@ -18,6 +20,26 @@ class ParserTools(object):
         :return:
         """
         return ParserTools.match_content("\d+", content, "0")
+
+    @staticmethod
+    def match_question_id(rawLink):
+        return ParserTools.match_content("(?<=question/)\d{8}", rawLink)
+
+    @staticmethod
+    def match_answer_id(rawLink):
+        return ParserTools.match_content("(?<=answer/)\d{8}", rawLink)
+
+    @staticmethod
+    def match_topic_id(rawLink):
+        return ParserTools.match_content("(?<=topic/)\d+", rawLink)
+
+    @staticmethod
+    def match_collection_id(rawLink):
+        return ParserTools.match_content("(?<=collection/)\d+", rawLink)
+
+    @staticmethod
+    def match_author_id(rawLink):
+        return ParserTools.match_content("""(?<=people/)[^/'"]+""", rawLink)
 
     @staticmethod
     def get_tag_content(tag):
@@ -39,4 +61,8 @@ class ParserTools(object):
 
     @staticmethod
     def parse_date(date='1357-08-12'):
-        return ParserTools.match_content(r'\d{4}-\d{2}-\d{2}', date, '1357-08-12')
+        if u'昨天' in date:
+            return ExtraTools.get_yesterday()
+        if u'今天' in date:
+            return ExtraTools.get_today()
+        return ParserTools.match_content(r'\d{4}-\d{2}-\d{2}', date, '1357-08-12')  # 一三五七八十腊，三十一天永不差！
