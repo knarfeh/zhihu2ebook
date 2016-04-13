@@ -131,7 +131,7 @@ class DownloadDialog(QDialog, Ui_Dialog):
             if click_ok:
                 login.get_captcha()
                 return
-        Config.remember_account = True
+        Config.remember_account_set = True
         Config._save()
         QtGui.QMessageBox.information(self, u"登陆成功", u"恭喜, 登陆成功, 登陆信息已经保存")
 

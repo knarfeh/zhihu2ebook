@@ -232,3 +232,5 @@ e-books_tmp_source/
 *.sqlite
 
 bookdata/
+
+test_idea.py
