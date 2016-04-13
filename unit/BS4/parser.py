@@ -2,7 +2,7 @@
 import sys
 
 from bs4 import BeautifulSoup
-from src.lib.zhihu_parser.tools.parser_tools import ParserTools
+from src.lib.parser_tools import ParserTools
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -19,4 +19,3 @@ content = open(u'./content.html').read()
 
 parser = BeautifulSoup(content, 'html.parser')
 tag_content = ParserTools.get_tag_content(parser)
-parser

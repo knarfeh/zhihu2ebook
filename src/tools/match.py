@@ -92,7 +92,7 @@ class Match(object):
         :param content: csdn 博主主页地址, http://blog.csdn.net/elton_xiao
         :return: re.match object
         """
-        return re.search(r'(?<=blog\.csdn\.net)(?P<csdnblog_author_id>[^/\n\r]*)', content)
+        return re.search(r'(?<=blog\.csdn\.net/)(?P<csdnblog_author_id>[^/\n\r\$]*)', content)
 
     @staticmethod
     def fix_filename(filename):
@@ -152,9 +152,9 @@ class Match(object):
         :param url: one line
         :return: website kind, e.g. 'zhihu', 'jianshu', 'sinablog'
         """
-        url = url.split('#')[0]    # remove comment
-        url = url.split('$')[0]    # the first one determine type
-        url_type = Match.detect(url)
+        split_url = url.split('#')[0]    # remove comment
+        split_url = split_url.split('$')[0]    # the first one determine type
+        url_type = Match.detect(split_url)
 
         recipe_kind = 'Unsupport type'
         for website in Type.website_type:

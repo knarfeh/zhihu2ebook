@@ -13,15 +13,15 @@
     "sql_extend_answer_filter": "", 
     "max_answer": 600, 
     "timeout_download_picture": 10, 
+    "remember_account_set": true, 
     "update_time": "2016-03-07", 
     "account": "zhihu2ebook@hotmail.com", 
     "max_try": 5, 
     "password": "Zhihu2Ebook", 
-    "remember_account": true, 
     "max_question": 100, 
     "article_order_by_desc": false, 
     "author_answer_order_by": "answer_id", 
-    "need_account": false, 
+    "need_account": true, 
     "debug": true, 
     "picture_quality": 1
 }

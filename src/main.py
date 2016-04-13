@@ -11,7 +11,7 @@ from src.tools.http import Http             # 用于检查更新
 from src.tools.db import DB
 from login import Login
 from src.url_parser import UrlParser
-from src.worker import worker_factory
+from src.worker.worker_factory import worker_factory
 from src.tools.type import Type
 
 
@@ -46,7 +46,7 @@ class EEBook(object):
             return
         # !!!!!发布的时候把Config.remember_account改成false!!!!!,使得第一次需要登录,之后用cookie即可
         # 登陆成功了,自动记录账户
-        if Config.remember_account:
+        if Config.remember_account_set:
             Debug.logger.info(u'检测到有设置文件，直接使用之前的设置')
             # if raw_input():
             # login.start()
@@ -58,7 +58,7 @@ class EEBook(object):
             login.start()
             # Config.picture_quality = guide.set_picture_quality()
             Config.picture_quality = 1
-            Config.remember_account = True
+            Config.remember_account_set = True
 
         # 储存设置
         Config._save()
@@ -99,7 +99,7 @@ class EEBook(object):
         if not task_package.is_work_list_empty():
             worker_factory(task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"网页信息抓取完毕")
-
+        #
         file_name_set = None
         if not task_package.is_book_list_empty():
             Debug.logger.info(u"开始从数据库中生成电子书")
@@ -115,9 +115,10 @@ class EEBook(object):
     @staticmethod
     def init_database():
         if Path.is_file(Path.db_path):
+            Debug.logger.debug(u"连接数据库...")
             DB.set_conn(sqlite3.connect(Path.db_path))
         else:
-            DB.set_conn(sqlite3.connect(Path.db_path))
+            Debug.logger.dubug(u"新建数据库...")
             with open(Path.sql_path) as sql_script:
                 DB.cursor.executescript(sql_script.read())
             DB.commit()

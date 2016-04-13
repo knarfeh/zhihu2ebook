@@ -73,7 +73,7 @@ class Login(object):
                 # print u'帐号密码已保存,可通过修改config.json修改设置'
                 pass
             else:
-                Config.account, Config.password, Config.remember_account = '', '', False
+                Config.account, Config.password, Config.remember_account_set = '', '', False
                 print u'跳过保存环节，进入下一流程'
             Config._save()
             cookie = self.get_cookie()
