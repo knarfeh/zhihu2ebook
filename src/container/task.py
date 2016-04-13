@@ -43,10 +43,12 @@ class TaskPackage(object):
         return
 
     def get_task(self):
+        if Type.csdnblog_author in self.book_list:
+            self.merge_csdnblog_article_book_list(book_type=Type.csdnblog_author)
         if Type.jianshu_author in self.book_list:
-            self.merge_jianshu_article_book_list(Type.jianshu_author)
+            self.merge_jianshu_article_book_list(book_type=Type.jianshu_author)
         if Type.sinablog_author in self.book_list:
-            self.merge_sinablog_article_book_list(Type.sinablog_author)
+            self.merge_sinablog_article_book_list(book_type=Type.sinablog_author)
         if Type.answer in self.book_list:
             self.merge_question_book_list(book_type=Type.answer)
         if Type.question in self.book_list:
@@ -61,10 +63,38 @@ class TaskPackage(object):
         info_extra = [item.sql.info_extra for item in book_list]
         article_extra = [item.sql.article_extra for item in book_list]
         book.kind = book_type
-        book.author_id = book_list[0].author_id
+        book.author_id = '_'.join([item.author_id for item in book_list])
         book.sql.info = 'select * from jianshu_info where ({})'.format(' or '.join(info_extra))
         book.sql.article = 'select * from jianshu_article where ({})'.format(' or '.join(article_extra))
         book.sql.answer = 'select * from jianshu_article where ({})'.format(' or '.join(article_extra))
+        self.book_list[book_type] = [book]
+        return
+
+    # TODO: merge_sinablog 和 merge_jianshu 都可以合并, 但要合并 csdnblog.sql, jianshu.sql
+    # 这里有一个矛盾,如果合并了, jianshu 中如果要写其他的类型???比如文集类型
+    def merge_sinablog_article_book_list(self, book_type):
+        book_list = self.book_list[Type.sinablog_author]
+        book = InitialBook()
+        info_extra = [item.sql.info_extra for item in book_list]
+        article_extra = [item.sql.article_extra for item in book_list]
+        book.kind = book_type
+        book.author_id = '_'.join([item.author_id for item in book_list])
+        book.sql.info = 'select * from sinablog_info where ({})'.format(' or '.join(info_extra))
+        book.sql.article = 'select * from sinablog_article where ({})'.format(' or '.join(article_extra))
+        book.sql.answer = 'select * from sinablog_article where ({})'.format(' or '.join(article_extra))
+        self.book_list[book_type] = [book]
+        return
+
+    def merge_csdnblog_article_book_list(self, book_type):
+        book_list = self.book_list[Type.csdnblog_author]
+        book = InitialBook()
+        info_extra = [item.sql.info_extra for item in book_list]
+        article_extra = [item.sql.article_extra for item in book_list]
+        book.kind = book_type
+        book.author_id = '_'.join([item.author_id for item in book_list])
+        book.sql.info = 'select * from csdnblog_info where ({})'.format(' or '.join(info_extra))
+        book.sql.article = 'select * from csdnblog_article where ({})'.format(' or '.join(article_extra))
+        book.sql.answer = 'select * from csdnblog_article where ({})'.format(' or '.join(article_extra))
         self.book_list[book_type] = [book]
         return
 
@@ -89,19 +119,6 @@ class TaskPackage(object):
         book.sql.info = 'select * from Question where ({})'.format(' or '.join(info))
         book.sql.question = 'select * from Question where ({})'.format(' or '.join(question))
         book.sql.answer = 'select * from Answer where ({})'.format(' or '.join(answer))
-        self.book_list[book_type] = [book]
-        return
-
-    def merge_sinablog_article_book_list(self, book_type):
-        book_list = self.book_list[Type.sinablog_author]
-        book = InitialBook()
-        info_extra = [item.sql.info_extra for item in book_list]
-        article_extra = [item.sql.article_extra for item in book_list]
-        book.kind = book_type
-        book.author_id = book_list[0].author_id       # 这里的len(book_list)比1大怎么办?
-        book.sql.info = 'select * from sinablog_info where ({})'.format(' or '.join(info_extra))
-        book.sql.article = 'select * from sinablog_article where ({})'.format(' or '.join(article_extra))
-        book.sql.answer = 'select * from sinablog_article where ({})'.format(' or '.join(article_extra))
         self.book_list[book_type] = [book]
         return
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from src.lib.zhihu_parser.content.author import Author
-from src.lib.zhihu_parser.tools.parser_tools import ParserTools
+from src.lib.parser_tools import ParserTools
 from src.tools.debug import Debug
 
 

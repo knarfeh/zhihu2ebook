@@ -14,13 +14,13 @@ class Config(object):
 
     debug = True
 
-    need_account = False        # 是否需要账号密码
+    need_account = True        # 是否需要账号密码
     login_with_previously_config = True  # 是否通过之前的登陆记录进行登陆
 
     account = 'zhihu2ebook@hotmail.com'  # 默认账号密码
     password = 'Zhihu2Ebook'
-    remember_account = False    # 是否使用已有密码
-    max_thread = 10             # 最大线程数，其实设成5就行了，但下图片的时候还是得多开几个线程，所以还是设成10好了（反正冬天，CPU满了有利于室内保温 - -）
+    remember_account_set = True    # 是否使用已有密码
+    max_thread = 10             # 最大线程数
     picture_quality = 1         # 图片质量（0/1/2，无图/标清/原图）
     max_question = 100          # 每本电子书中最多可以放多少个问题
     max_answer = 600            # 每本电子书中最多可以放多少个回答
@@ -54,7 +54,7 @@ class Config(object):
             return
         with open(Path.config_path) as f:
             config = json.load(f)
-            if not config.get('remember_account'):
+            if not config.get('remember_account_set'):
                 # 当选择不记住密码时，跳过读取，使用默认设置
                 # 不考虑用户强行在配置文件中把account改成空的情况
                 return

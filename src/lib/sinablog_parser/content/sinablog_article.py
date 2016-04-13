@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-from src.lib.sinablog_parser.tools.parser_tools import ParserTools
+from src.lib.parser_tools import ParserTools
 from src.tools.match import Match
 from src.tools.debug import Debug
 
 
 class SinaBlogArticle(ParserTools):
     def __init__(self, dom=None):
-        if dom:
-            pass
         self.set_dom(dom)
         self.info = {}
         return
