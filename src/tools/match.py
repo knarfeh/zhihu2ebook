@@ -68,7 +68,8 @@ class Match(object):
     @staticmethod
     def sinablog_author(content=''):
         u"""
-
+        TODO: 这样的链接也是可以的: http://blog.sina.com.cn/1340398703, 以及这样的:
+        http://blog.sina.com.cn/caicui
         :param content: Sina博客网址, 如:http://blog.sina.com.cn/u/1287694611
         :return:  re.match object
         """
@@ -92,7 +93,7 @@ class Match(object):
         :param content: csdn 博主主页地址, http://blog.csdn.net/elton_xiao
         :return: re.match object
         """
-        return re.search(r'(?<=blog\.csdn\.net/)(?P<csdnblog_author_id>[^/\n\r\$]*)', content)
+        return re.search(r'(?<=blog\.csdn\.net/)(?P<csdnblog_author_id>[^/\n\r]*)', content)
 
     @staticmethod
     def fix_filename(filename):

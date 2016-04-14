@@ -99,12 +99,12 @@ class EEBook(object):
         if not task_package.is_work_list_empty():
             worker_factory(task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"网页信息抓取完毕")
-        #
+
         file_name_set = None
-        if not task_package.is_book_list_empty():
-            Debug.logger.info(u"开始从数据库中生成电子书")
-            book = Book(task_package.book_list)
-            file_name_set = book.create()
+        # if not task_package.is_book_list_empty():
+        #     Debug.logger.info(u"开始从数据库中生成电子书")
+        #     book = Book(task_package.book_list)
+        #     file_name_set = book.create()
 
         if file_name_set is not None:
             file_name_set2list = list(file_name_set)
@@ -118,7 +118,8 @@ class EEBook(object):
             Debug.logger.debug(u"连接数据库...")
             DB.set_conn(sqlite3.connect(Path.db_path))
         else:
-            Debug.logger.dubug(u"新建数据库...")
+            Debug.logger.debug(u"新建数据库...")
+            DB.set_conn(sqlite3.connect(Path.db_path))
             with open(Path.sql_path) as sql_script:
                 DB.cursor.executescript(sql_script.read())
             DB.commit()
