@@ -23,9 +23,9 @@ class JianshuAuthorInfo(ParserTools):
         return self.info
 
     def parse_info(self):
-        Debug.logger.debug(u"parse_info执行了")
-        self.parse_base_info()              # 基本信息: 用户id, name, logo, description, article_num
-         # self.parse_detail_info()         # 详细信息, 博客等级, 积分, 访问, 关注人气
+        Debug.logger.debug(u"getting author info...")
+        self.parse_base_info()         # basic user info: id, name, logo, description, article_num
+        # self.parse_detail_info()     # detail_info, 博客等级, 积分, 访问, 关注人气
         return self.info
 
     def parse_base_info(self):
@@ -38,6 +38,17 @@ class JianshuAuthorInfo(ParserTools):
         self.parse_article_count()
 
         return
+
+    def parse_creator_id(self):
+        u"""
+
+        :return:
+        """
+        creator_id = str(self.dom.find("div", class_="basic-info").h3.a['href'][7:])
+        if not creator_id:
+            Debug.logger.info(u"没有找到creator_id")
+        Debug.logger.debug(u"parse_creator_id中, creator_id为:" + str(creator_id))
+        self.info['creator_id'] = creator_id
 
     def parse_article_count(self):
         u"""
@@ -80,21 +91,9 @@ class JianshuAuthorInfo(ParserTools):
         creator_name = self.dom.select('div.basic-info h3 a')
         if not creator_name:
             Debug.logger.info(u"没有找到博主姓名")
-            # TODO: 变量命名可以改一下
         creator_name = creator_name[0].get_text().replace(' ', '').replace('\n', '').replace('\t', '').replace('\r', '')
         Debug.logger.debug(u"creator_name为:" + str(creator_name))
         self.info['creator_name'] = creator_name
 
 
-    def parse_creator_id(self):
-        u"""
-
-        :return:
-        """
-
-        creator_id = str(self.dom.find("div", class_="basic-info").h3.a['href'][7:])
-        if not creator_id:
-            Debug.logger.info(u"没有找到creator_id")
-        Debug.logger.debug(u"parse_creator_id中, creator_id为:" + str(creator_id))
-        self.info['creator_id'] = creator_id
 

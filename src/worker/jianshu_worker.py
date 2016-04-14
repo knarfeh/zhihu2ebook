@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json         # 用于JsonWorker
-import re
-
 from bs4 import BeautifulSoup
 
 from src.tools.http import Http
@@ -19,7 +16,7 @@ class JianshuAuthorWorker(PageWorker):
     u"""
     简书的worker
     """
-    def create_save_config(self):         # TODO
+    def create_save_config(self):
         config = {
             'jianshu_article': self.answer_list,
             'jianshu_info': self.question_list
@@ -46,6 +43,19 @@ class JianshuAuthorWorker(PageWorker):
             article_href_list.append(article_href)
         return article_href_list
 
+    def get_jianshu_question_list(self, target_url):
+        u"""
+        get jianshu_info, article_num, article_list
+        :param target_url:
+        :return:
+        """
+        index_content = Http.get_content(target_url)
+        parser = JianshuParser(index_content)
+        self.question_list += parser.get_jianshu_info_list()
+        article_num = self.question_list[0]['article_num']      # not collection, only one author
+        article_list = self.parse_get_article_list(index_content)
+        return article_num, article_list
+
     def create_work_set(self, target_url):
         u"""
         根据target_url(例:http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles)的内容,
@@ -57,26 +67,16 @@ class JianshuAuthorWorker(PageWorker):
             return
         id_result = Match.jianshu_author(target_url)
         jianshu_id = id_result.group('jianshu_id')
-
-        # ############下面这部分应该是JianshuAuthorInfo的内容, 完成jianshu_info中的内容,暂时写在这, 以后再优化
-        content_profile = Http.get_content(target_url)
-
-        parser = JianshuParser(content_profile)
-        self.question_list += parser.get_jianshu_info_list()
-        # #############上面这部分应该是JianshuAuthorInfo的内容, 完成jianshu_info中的内容,暂时写在这, 以后再优化
-
+        article_num, article_list = self.get_jianshu_question_list(target_url)
         self.task_complete_set.add(target_url)
-        article_num = self.question_list[0]['article_num']    # 这样的话, 一行只能写一个地址  TODO
-
         if article_num % 9 != 0:
-            page_num = article_num/9 + 1      # 博客目录页面, 1页放50个博客链接
+            page_num = article_num/9 + 1      # 9 href on one page
         else:
             page_num = article_num / 9
 
-        article_list = self.parse_get_article_list(content_profile)
         for item in article_list:
             self.work_set.add(item)
-        for page in range(page_num-1):          # 第一页是不需要打开的
+        for page in range(page_num-1):          # page+2, don't need to get the first page
             url = 'http://www.jianshu.com/users/{}/latest_articles?page={}'.format(jianshu_id, page+2)
             content_article_list = Http.get_content(url)
             article_list = self.parse_get_article_list(content_article_list)
