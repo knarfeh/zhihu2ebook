@@ -135,7 +135,7 @@ class PageWorker(object):
 
     def start_worker(self):
         u"""
-        work_set是所有的需要抓取的页面
+        work_set是所有的需要抓取的页面(单篇的文章)
         :return:
         """
         a = list(self.work_set)
