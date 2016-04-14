@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 from bs4 import BeautifulSoup
@@ -8,14 +9,12 @@ from src.lib.jianshu_parser.info.jianshu_author import JianshuAuthorInfo
 
 
 class JianshuParser(BaseParser):
-
     u"""
     获得jianshu_info表中所需的内容
     """
     def __init__(self, content):
         self.dom = BeautifulSoup(content, 'lxml')
         self.article_parser = JianshuArticle(self.dom)
-
         return
 
     def get_jianshu_info_list(self):

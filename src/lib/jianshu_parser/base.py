@@ -1,4 +1,6 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+
 from bs4 import BeautifulSoup
 
 from src.lib.parser_tools import ParserTools
@@ -21,3 +23,4 @@ class BaseParser(ParserTools):
         扩展功能: 获取扩展信息, 需要重载使用, 被author.py重载了
         :return:
         """
+        pass
