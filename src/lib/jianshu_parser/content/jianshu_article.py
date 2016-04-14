@@ -6,8 +6,6 @@ from src.tools.debug import Debug
 
 class JianshuArticle(ParserTools):
     def __init__(self, dom=None):
-        if dom:
-            pass
         self.set_dom(dom)
         self.info = {}
         return
@@ -33,7 +31,7 @@ class JianshuArticle(ParserTools):
         self.parse_publish_date()
         return self.info
 
-    def parse_author_id(self):          # TODO 这个部分可以不重复的
+    def parse_author_id(self):          # TODO delete?这个部分可以不重复的
         u"""
         获得author_id
         :return:
