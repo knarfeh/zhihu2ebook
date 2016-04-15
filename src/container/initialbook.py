@@ -53,7 +53,8 @@ class InitialBook(object):
         """
         self.catch_info()
         self.get_article_list()         # 获取文章所有信息
-        if self.kind != Type.sinablog_author:
+        # TODO: __sort
+        if self.kind != Type.sinablog_author and self.kind != Type.csdnblog_author:
             self.__sort()
         return self
 
@@ -64,7 +65,9 @@ class InitialBook(object):
         """
         info = {}
         if self.sql.info:
-            if self.kind == Type.jianshu_author:
+            if self.kind == Type.csdnblog_author:
+                info = self.catch_csdnblog_book_info()
+            elif self.kind == Type.jianshu_author:
                 info = self.catch_jianshu_book_info()
             elif self.kind == Type.sinablog_author:
                 info = self.catch_sinablog_book_info()
@@ -78,16 +81,28 @@ class InitialBook(object):
         self.set_info(info)
         return
 
+    def catch_csdnblog_book_info(self):
+        u"""
+
+        :return:
+        """
+        info_list = DB.cursor.execute(self.sql.info).fetchall()
+        info_list = [DB.wrap(Type.csdnblog_info, item) for item in info_list]
+        info = dict()
+        info['creator_name'] = '_'.join([str(item['creator_name']) for item in info_list])
+        info['creator_id'] = '_'.join([str(item['creator_id']) for item in info_list])
+        return info
+
     def catch_jianshu_book_info(self):
         u"""
 
-        :param
         :return: info
         """
         info_list = DB.cursor.execute(self.sql.info).fetchall()
         info_list = [DB.wrap(Type.jianshu_info, item) for item in info_list]
-        info = {}
-        info['creator_name'] = '_'.join([str(item['creator_name']) for item in info_list])  # 可以是多个博客组合在一起
+        info = dict()
+        # 可以是多个博客组合在一起 TODO: 删掉???
+        info['creator_name'] = '_'.join([str(item['creator_name']) for item in info_list])
         info['creator_id'] = '_'.join([str(item['creator_id']) for item in info_list])
         return info
 
@@ -99,34 +114,33 @@ class InitialBook(object):
         """
         info_list = DB.cursor.execute(self.sql.info).fetchall()
         info_list = [DB.wrap(Type.sinablog_info, item) for item in info_list]
-        info = {}
+        info = dict()
         info['creator_name'] = '_'.join([str(item['creator_name']) for item in info_list])  # 可以是多个博客组合在一起
         info['creator_id'] = '_'.join([str(item['creator_id']) for item in info_list])
         return info
 
     def catch_question_book_info(self, sql):
         info_list = DB.cursor.execute(self.sql.info).fetchall()
-        # Debug.logger.info(u"第1次的info_list是:" + str(info_list))
         info_list = [DB.wrap(Type.question, item) for item in info_list]
-        # Debug.logger.info(u"第2次的info_list是:" + str(info_list))
-        info = {}
+        info = dict()
         info['title'] = '_'.join([str(item['title']) for item in info_list])   # 可以是多个问题, 多个id联系在一起
         info['id'] = '_'.join([str(item['question_id']) for item in info_list])
-        # Debug.logger.info(u"catch_question_book_info中的info['id']是什么???" + str(info['id']))
-        # Debug.logger.info(u"catch_question_book_info中的info:" + str(info))
         return info
 
     def catch_article_book_info(self, sql):
         info_list = DB.cursor.execute(self.sql.info).fetchall()
         info_list = [DB.wrap(Type.article, item) for item in info_list]
-        info = {}
+        info = dict()
         info['title'] = '_'.join([str(item['title']) for item in info_list])
         info['id'] = '_'.join([str(item['article_id']) for item in info_list])
         return info
 
     def set_info(self, info):
         self.info.update(info)
-        if self.kind == Type.jianshu_author:              # 该博客所有的博文
+        if self.kind == Type.csdnblog_author:
+            self.epub.title = u'csdn博客_{}({})'.format(info['creator_name'], info['creator_id'])
+            self.epub.id = info['creator_id']
+        elif self.kind == Type.jianshu_author:              # 该博客所有的博文
             self.epub.title = u'简书_{}({})'.format(info['creator_name'], info['creator_id'])
             self.epub.id = info['creator_id']
         elif self.kind == Type.jianshu_article:    # 单篇博文 TODO
@@ -202,7 +216,8 @@ class InitialBook(object):
         def add_property(article):
             article['char_count'] = len(article['content'])
             article['answer_count'] = 1
-            if self.kind == Type.sinablog_author or self.kind == Type.jianshu_author:
+            # TODO
+            if self.kind in [Type.jianshu_author, Type.sinablog_author, Type.csdnblog_author]:
                 article['agree_count'] = "没有赞同数"     # article['agree']
             else:
                 article['agree_count'] = article['agree']
@@ -215,6 +230,8 @@ class InitialBook(object):
             article_list = [DB.wrap(Type.jianshu_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         elif self.kind == Type.sinablog_author:
             article_list = [DB.wrap(Type.sinablog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
+        elif self.kind == Type.csdnblog_author:
+            article_list = [DB.wrap(Type.csdnblog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         else:
             article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         article_list = [add_property(x) for x in article_list]
@@ -230,7 +247,11 @@ class InitialBook(object):
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.char_count += article['char_count']
-        else:                               # zhihu类型
+        elif self.kind == Type.csdnblog_author:
+            for article in article_list:
+                self.epub.answer_count += article['answer_count']
+                self.epub.char_count += article['char_count']
+        else:     # zhihu类型
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.agree_count += article['agree_count']
