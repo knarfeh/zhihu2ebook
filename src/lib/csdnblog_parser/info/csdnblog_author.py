@@ -10,6 +10,7 @@ class CsdnBlogAuthorInfo(ParserTools):
 
     """
     def __init__(self, dom=None):
+        self.dom = None
         self.set_dom(dom)
         self.info = {}
         return
@@ -76,4 +77,3 @@ class CsdnBlogAuthorInfo(ParserTools):
             now_article_num = text[:text.rfind(u"篇")]
             article_num += int(now_article_num)
         self.info['article_num'] = int(article_num)
-

@@ -14,6 +14,10 @@ class Path(object):
     config_path = ''     # 根据recipe_kind确定config_path
     db_path = ''         # 根据recipe_kind确定
     sql_path = ''        # 新建数据库的脚本路径
+    image_pool_path = ''
+    html_pool_path = ''
+    result_path = ''
+    www_css = ''
     # try:
     #     base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
     # except:

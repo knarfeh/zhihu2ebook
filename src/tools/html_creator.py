@@ -128,7 +128,8 @@ class HtmlCreator(object):
     def create_article(self, article, prefix='', recipe=None):
         article['edit_date'] = article['publish_date']
         article['description'] = ''
-        if recipe in ['jianshu_author', 'sinablog_author']:       # TODO: 改掉硬编码
+        # TODO: 改掉硬编码
+        if recipe in ['jianshu_author', 'sinablog_author' 'csdnblog_author']:
             article['agree'] = '无'
         result = {
             'answer': self.create_answer(article),
@@ -148,7 +149,10 @@ class HtmlCreator(object):
 
     def wrap_front_page_info(self, kind, info):
         result = {}
-        if kind == Type.jianshu_author:
+        if kind == Type.csdnblog_author:
+            result['title'] = u'csdn博客集锦'
+            result['description'] = u''
+        elif kind == Type.jianshu_author:
             result['title'] = u'简书文章集锦'
             result['description'] = u''   # TODO: description
         elif kind == Type.sinablog_author:
