@@ -30,7 +30,9 @@ class TemplateConfig(object):
     front_page_question_uri = front_page_info_template_path + u'/question.html'
     front_page_answer_uri = front_page_info_template_path + u'/answer.html'
     front_page_article_uri = front_page_info_template_path + u'/article.html'
+
     front_page_sinablog_author_uri = front_page_info_template_path + u'/sinablog_author.html'
     front_page_jianshu_author_uri = front_page_info_template_path + u'/jianshu_author.html'
+    front_page_csdnblog_author_uri = front_page_info_template_path + u'/csdnblog_author.html'
 
     front_page_base_uri = front_page_template_path + u'/base.html'
