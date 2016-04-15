@@ -1,9 +1,15 @@
 # EE-Book
 
-([中文文档](./README_cn.md))    
+[中文](./README_cn.md) | [English](./README.md)
 
 [EE-Book](https://github.com/knarfeh/EE-Book) is a command-line utility to downlaod text from the Web, and make it a e-book. GUI is under developing.
 
+## Supported Sites (UPDATING!)
+
+* [https://www.zhihu.com/](https://www.zhihu.com/)
+* [https://www.jianshu.com/](https://www.jianshu.com/)
+* [http://blog.sina.com.cn/](http://blog.sina.com.cn/)
+* [http://blog.csdn.net/](http://blog.csdn.net/)
 
 ## Usage
 
@@ -19,21 +25,21 @@ for example:
 ./ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
-then you can get the book:  
+after a while, you will get the e-book:   
+
 ![yinwang](http://7xi5vu.com1.z0.glb.clouddn.com/2016-03-09jianshu_yinwang.png)
 
-## Supported Sites (UPDATING!)
-* [zhihu](https://www.zhihu.com/)
-* [jianshu](https://www.jianshu.com/)
-* [sinablog](http://blog.sina.com.cn)
+## Contributing
 
-## Prerequisites
+...would be awesome! 
+
+### requirements
 
  * [Beautiful Soup 4](http://www.crummy.com/software/BeautifulSoup/)
  * [lxml](http://lxml.de/)
  * [PyQt4](https://www.riverbankcomputing.com/software/pyqt/download)
 
-### requirements
+### Setting up a development environment for EE-Book 
 
 ```shell
 $ sudo pip install -r requirements.txt
@@ -52,5 +58,5 @@ $ sudo pip install -r requirements.txt
 
 ## License
 
-licensed under the [MIT license](./LICENSE).
+EE-Book is licensed under the terms of [MIT license](./LICENSE).
 

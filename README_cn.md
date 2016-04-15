@@ -1,8 +1,15 @@
 # EE-Book
 
-([英文文档](./README.md))    
+[中文](./README_cn.md) | [English](./README.md)   
 
 [EE-Book](https://github.com/knarfeh/EE-Book) 是一个命令行程序，它可以从网络上爬取内容制作成EPub格式电子书。图形界面正在开发中。  
+
+## 支持的网站 (正在更新中!)  
+
+* [https://www.zhihu.com/](https://www.zhihu.com/)
+* [https://www.jianshu.com/](https://www.jianshu.com/)
+* [http://blog.sina.com.cn/](http://blog.sina.com.cn/)
+* [http://blog.csdn.net/](http://blog.csdn.net/)
 
 ## 用法
 
@@ -18,21 +25,21 @@
 ./ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
-然后你就可以得到电子书了:  
+稍等片刻, 你就可以得到电子书了:  
+
 ![yinwang](http://7xi5vu.com1.z0.glb.clouddn.com/2016-03-09jianshu_yinwang.png)
 
-## 支持的网站 (正在更新中!)
-* [zhihu](https://www.zhihu.com/)
-* [jianshu](https://www.jianshu.com/)
-* [sinablog](http://blog.sina.com.cn)
 
-## 先决条件
+## 贡献代码
+...当然欢迎!
+
+### 解决依赖
 
  * [Beautiful Soup 4](http://www.crummy.com/software/BeautifulSoup/)
  * [lxml](http://lxml.de/)
  * [PyQt4](https://www.riverbankcomputing.com/software/pyqt/download)
 
-### 解决依赖
+### 建立 EE-Book 的开发环境
 
 ```shell
 $ sudo pip install -r requirements.txt
@@ -51,5 +58,5 @@ $ sudo pip install -r requirements.txt
 
 ## 软件版权许可证
 
-遵循 [MIT license](./LICENSE).
+EE-Book 遵循 [MIT license](./LICENSE).
 
