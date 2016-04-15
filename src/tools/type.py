@@ -59,7 +59,8 @@ class Type(object):
         topic: topic_info,
 
         'sinablog_info': sinablog_info,
-        'jianshu_info': jianshu_info
+        'jianshu_info': jianshu_info,
+        'csdnblog_info': csdnblog_info
     }
     pass
 
