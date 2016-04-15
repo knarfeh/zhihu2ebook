@@ -57,6 +57,16 @@ class DB(object):
         :return:
         """
         template = {
+            # csdnblog
+            Type.csdnblog_info: (
+                'creator_id', 'creator_hash', 'creator_name', 'creator_sign', 'creator_logo',
+                'description', 'article_num', 'follower'
+            ),
+            Type.csdnblog_article: (
+                'article_id', 'author_hash', 'author_name', 'author_sign', 'author_id',
+                'href', 'title', 'content', 'comment', 'agree',
+                'publish_date'
+            ),
             # jianshu
             Type.jianshu_info: (
                 'creator_id', 'creator_hash', 'creator_name', 'creator_sign', 'creator_logo',
@@ -72,10 +82,12 @@ class DB(object):
                 'creator_id', 'creator_hash', 'creator_name', 'creator_sign', 'creator_logo',
                 'description', 'article_num', 'follower'
             ),
+            # TODO agree?????
             Type.sinablog_article: (                # 这里把article_id 和author_id对换一下,不然会出错???TODO
                 'article_id', 'author_hash', 'author_name', 'author_sign', 'author_id',
                 'href', 'title', 'content', 'comment', 'publish_date'
             ),
+            # zhihu
             Type.answer: (
                 'author_id', 'author_sign', 'author_logo', 'author_name', 'agree',
                 'content', 'question_id', 'answer_id', 'commit_date', 'edit_date',
