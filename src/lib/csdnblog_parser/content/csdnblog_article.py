@@ -8,6 +8,7 @@ from src.tools.debug import Debug
 
 class CsdnBlogArticle(ParserTools):
     def __init__(self, dom):
+        self.dom = None
         self.set_dom(dom)
         self.info = {}
 
@@ -97,4 +98,3 @@ class CsdnBlogArticle(ParserTools):
             return
         postdate = article_content[:10]
         self.info['publish_date'] = str(postdate)
-

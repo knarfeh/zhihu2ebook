@@ -101,11 +101,10 @@ class EEBook(object):
             Debug.logger.info(u"网页信息抓取完毕")
 
         file_name_set = None
-        # if not task_package.is_book_list_empty():
-        #     Debug.logger.info(u"开始从数据库中生成电子书")
-        #     book = Book(task_package.book_list)
-        #     file_name_set = book.create()
-
+        if not task_package.is_book_list_empty():
+            Debug.logger.info(u"开始从数据库中生成电子书")
+            book = Book(task_package.book_list)
+            file_name_set = book.create()
         if file_name_set is not None:
             file_name_set2list = list(file_name_set)
             file_name = '-'.join(file_name_set2list[0:3])
