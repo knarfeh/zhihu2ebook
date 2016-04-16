@@ -24,8 +24,4 @@ def worker_factory(task):
     for key in task:
         worker = type_list[key](task[key])
         worker.start()
-        # self.start_catch_info()
-        # self.start_create_work_list()
-        # self.start_worker()
-        # self.save()
     return

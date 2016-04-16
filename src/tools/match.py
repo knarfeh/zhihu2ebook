@@ -151,7 +151,7 @@ class Match(object):
         u"""
 
         :param url: one line
-        :return: website kind, e.g. 'zhihu', 'jianshu', 'sinablog'
+        :return: website kind, e.g. 'zhihu', 'jianshu', 'sinablog', 'csdnblog'
         """
         split_url = url.split('#')[0]    # remove comment
         split_url = split_url.split('$')[0]    # the first one determine type
