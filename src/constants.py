@@ -16,6 +16,55 @@ u"""
 Various run time constants.
 """
 
+zhihu_info = u"""站点:     http://www.zhihu.com
+标题:     知乎
+描述:     与世界分享你的知识、经验和见解
+
+支持的类型:
+
+问题: http://www.zhihu.com/question/{question_id}
+答案: http://www.zhihu.com/question/{question_id}/answer/{answer_id}
+话题: http://www.zhihu.com/topic/{topic_id}
+用户的全部回答: http://www.zhihu.com/people/{people_id}
+             http://www.zhihu.com/people/{people_id}/answers
+收藏夹: http://www.zhihu.com/collection/{collection_id}
+专栏: http://zhuanlan.zhihu.com/{zhuanlan_id}
+"""
+
+jianshu_info = u"""站点:     http://www.jianshu.com
+标题:     简书
+描述:     交流故事，沟通想法
+          一个基于内容分享的社区
+
+支持的类型:
+
+用户的所有文章: http://www.jianshu.com/users/{people_id}/latest_articles
+"""
+
+sinablog_info = u"""站点:     http://blog.sina.com.cn
+标题:     新浪博客
+描述:     全中国最主流，最具人气的博客频道。拥有最耀眼的娱乐明星博客、最知性的名人博客、最动人的情感博客，最自我的草根博客
+
+支持的类型:
+
+用户的所有文章: http://blog.sina.com.cn/u/{people_id}
+"""
+
+csdnblog_info = u"""站点:     http://blog.csdn.net/
+标题:     csdn博客
+
+支持的类型:
+
+用户的所有文章: http://blog.csdn.net/{people_id}
+"""
+
+url_info = {
+    'zhihu': zhihu_info,
+    'jianshu': jianshu_info,
+    'sinablog': sinablog_info,
+    'csdnblog': csdnblog_info
+}
+
 _plat = sys.platform.lower()
 iswindows = 'win32' in _plat or 'win64' in _plat
 isosx = 'darwin' in _plat
