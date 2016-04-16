@@ -4,11 +4,13 @@
 import getopt
 import sys  # 修改默认编码
 import os   # 添加系统路径
+
 from src.main import EEBook
 from src.tools.debug import Debug
 from src.constants import __version__
 from src.utils import log
 from src.tools.match import Match
+from src.constants import url_info
 
 reload(sys)
 base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
@@ -20,8 +22,8 @@ sys.path.append(base_path + '/src/lib')
 sys.setdefaultencoding('utf-8')
 sys.setrecursionlimit(100000)  # 为BS解析知乎上的长答案增加递归深度限制
 
-short_options = 'Vhgu:r:'
-long_options = ['version', 'help', 'url', 'gui']
+short_options = 'Vhgu:r:i:'
+long_options = ['version', 'help', 'url', 'gui', 'info']
 
 
 help_info = 'Usage: ee-book [OPTION]... [URL]... \n\n'
@@ -29,6 +31,7 @@ help_info = 'Usage: ee-book [OPTION]... [URL]... \n\n'
 help_info += '''Starup options:
 -V | --version                  Print version and exit
 -h | --help                     Print help and exit
+-i | --info                     Print information of URLs
 \n
 '''
 
@@ -78,6 +81,12 @@ if __name__ == '__main__':
             print u"recipe_kind: " + str(recipe_kind)
             game = EEBook(recipe_kind=recipe_kind, url=url)
             game.begin()
+            sys.exit()
+        elif option in ('-i', '--info'):
+            url = args
+            recipe_kind = Match.get_recipe_kind(url)
+            info = url_info[recipe_kind]
+            print info
             sys.exit()
         elif option in('-r', '--file'):
             # TODO: 读文件中第一条的内容的type
