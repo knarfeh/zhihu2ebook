@@ -39,7 +39,11 @@ class HtmlCreator(object):
                     continue
             src_download = HtmlCreator.fix_image_src(src)
             if src_download:
-                filename = self.image_container.add(src_download)
+                if src_download.endswith(('.jpg', '.png')):
+                    filename = self.image_container.add(src_download)
+                else:
+                    # fix zhuanlan image href
+                    filename = self.image_container.add('https://pic2.zhimg.com/'+src_download+'_b.jpg')
             else:
                 filename = ''
             new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
@@ -53,7 +57,7 @@ class HtmlCreator(object):
                 # 硬编码, 可以优化?写到fix_html函数中
                 new_image = new_image.replace('http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif',\
                                           '../images/{}'.format(filename))
-            else:
+            elif recipe == Type.zhihu:
                 new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
                                           '../images/{}'.format(filename))
                 new_image += '</img>'
