@@ -170,6 +170,8 @@ class ColumnWorker(PageWorker):
     u"""
     专栏没有Parser, 因为有api
     """
+    column_id = None
+
     def catch_info(self, target_url):
         return
 
@@ -177,8 +179,8 @@ class ColumnWorker(PageWorker):
         if target_url in self.task_complete_set:
             return
         result = Match.column(target_url)
-        column_id = result.group('column_id')
-        content = Http.get_content('https://zhuanlan.zhihu.com/api/columns/' + column_id)
+        self.column_id = result.group('column_id')
+        content = Http.get_content('https://zhuanlan.zhihu.com/api/columns/' + self.column_id)
         if not content:
             return
         raw_info = json.loads(content)
@@ -199,7 +201,7 @@ class ColumnWorker(PageWorker):
         info['description'] = raw_info['description']
         self.info_list.append(info)
         self.task_complete_set.add(target_url)
-        detect_url = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(column_id)
+        detect_url = 'https://zhuanlan.zhihu.com/api/columns/{}/posts?limit=10&offset='.format(self.column_id)
         for i in range(info['article'] / 10 + 1):
             self.work_set.add(detect_url + str(i * 10))
         return
@@ -215,10 +217,11 @@ class ColumnWorker(PageWorker):
             article['author_logo'] = info['author']['avatar']['template'].replace('{id}', info['author']['avatar'][
                 'id']).replace('_{size}', '')
 
-            article['column_id'] = info['column']['slug']
-            article['name'] = info['column']['name']
+            article['column_id'] = self.column_id
+            article['name'] = info['title']
             article['article_id'] = info['slug']
-            article['href'] = u'https://zhuanlan.zhihu.com/{column_id}/{article_id}'.format(**article)
+            url = info['url']
+            article['href'] = u'https://zhuanlan.zhihu.com' + url
             article['title'] = info['title']
             article['title_image'] = info['titleImage']
             article['content'] = info['content']

@@ -31,7 +31,7 @@ class Config(object):
     question_order_by = 'agree_count'       # 问题排序原则  agree_count|char_count|answer_count
     question_order_by_desc = True           # 问题排序顺序->是否为desc
     article_order_by = 'update_date'        # 文章排序原则  update_date|agree_count|char_count
-    author_answer_order_by = 'answer_id'    # 作者回答排序原则  agree_count|answer_id|char_count
+    author_answer_order_by = 'agree_count'  # 作者回答排序原则  agree_count|answer_id|char_count
     author_answer_order_by_desc = True      # 作者回答排序原则->是否为desc
     article_order_by_desc = False           # 文章排序顺序->是否为desc
     show_private_answer = True
