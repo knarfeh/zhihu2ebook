@@ -6,6 +6,7 @@ import platform
 import webbrowser
 import json
 import urllib2
+import time
 
 import guide
 from src.tools.config import Config
@@ -19,13 +20,17 @@ from src.tools.path import Path
 
 class Login(object):
     def __init__(self, recipe_kind):
+        self.recipe_kind = recipe_kind
         self.cookieJar = cookielib.LWPCookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
         urllib2.install_opener(self.opener)
 
     def login(self, account, password, captcha=''):
         if self.recipe_kind == 'zhihu':
-            content = Http.get_content('https://www.zhihu.com/')
+            # 知乎此处的r参数为一个13位的unix时间戳
+            unix_time_stp = str(int(1000 * time.time()))[0:13]
+            # 开始拉取验证码
+            content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))
         else:
             Debug.logger.error(u"登录中...未知类型错误!")
             return
