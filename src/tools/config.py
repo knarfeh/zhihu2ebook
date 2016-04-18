@@ -19,7 +19,7 @@ class Config(object):
 
     account = 'zhihu2ebook@hotmail.com'  # 默认账号密码
     password = 'Zhihu2Ebook'
-    remember_account_set = True    # 是否使用已有密码
+    remember_account_set = False    # 是否使用已有密码
     max_thread = 10             # 最大线程数
     picture_quality = 1         # 图片质量（0/1/2，无图/标清/原图）
     max_question = 100          # 每本电子书中最多可以放多少个问题
