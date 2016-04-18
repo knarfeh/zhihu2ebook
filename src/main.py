@@ -53,7 +53,10 @@ class EEBook(object):
             # Config.picture_quality = guide.set_picture_quality()
             Config.picture_quality = 1
             # else:
-            Http.set_cookie()   # sinablog, jianshu:DontNeed
+            try:
+                Http.set_cookie()   # sinablog, jianshu:DontNeed
+            except TypeError:
+                print u"没有找到登录成功的cookie记录,请重新登录"
         else:
             login.start()
             # Config.picture_quality = guide.set_picture_quality()
