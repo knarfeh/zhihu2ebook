@@ -89,7 +89,6 @@ if __name__ == '__main__':
             print info
             sys.exit()
         elif option in('-r', '--file'):
-            # TODO: 读文件中第一条的内容的type
             file_name = args
             log.print_log(u'read from %s' % file_name)
             with open(file_name, 'r') as read_list:

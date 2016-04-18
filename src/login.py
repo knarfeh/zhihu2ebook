@@ -70,12 +70,11 @@ class Login(object):
         if response['r'] == 0:
             print u'登陆成功！'
             print u'登陆账号:', account
-            # print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
-            # remenber_account = raw_input()      # TODO, 当然是默认记住密码
-            remenber_account = 'yes'
+            print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
+            remenber_account = raw_input()      # TODO: 默认记住密码?
             if remenber_account == 'yes':
-                # Config.account, Config.password, Config.remember_account = account, password, True
-                # print u'帐号密码已保存,可通过修改config.json修改设置'
+                Config.account, Config.password, Config.remember_account = account, password, True
+                print u'帐号密码已保存,可通过修改config.json修改设置'
                 pass
             else:
                 Config.account, Config.password, Config.remember_account_set = '', '', False

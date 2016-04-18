@@ -11,19 +11,13 @@ class Path(object):
     """
     base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
 
-    config_path = ''     # 根据recipe_kind确定config_path
-    db_path = ''         # 根据recipe_kind确定
-    sql_path = ''        # 新建数据库的脚本路径
-    image_pool_path = ''
-    html_pool_path = ''
-    result_path = ''
-    www_css = ''
-    # try:
-    #     base_path = unicode(os.path.abspath('.').decode('gbk'))  # 初始地址,不含分隔符
-    # except:
-    #     base_path = os.path.abspath('.')  # 对于Mac和Linux用户，使用gbk解码反而会造成崩溃，故添加一个try-except，以防万一
-
-    # base_path = os.path.split(os.path.realpath(__file__))[0]
+    config_path = u''     # 根据recipe_kind确定config_path
+    db_path = u''         # 根据recipe_kind确定
+    sql_path = u''        # 新建数据库的脚本路径
+    image_pool_path = u''
+    html_pool_path = u''
+    result_path = u''
+    www_css = u''
 
     read_list_path = base_path + '/ReadList.txt'
 
@@ -55,7 +49,7 @@ class Path(object):
             os.mkdir(path)
         except OSError:
             from src.tools.debug import Debug
-            Debug.logger.debug(u'指定目录 ' + str(path) + u' 已存在')
+            Debug.logger.debug(u'指定目录 ' + str(path) + str(u' 已存在'))
             pass
         return
 
@@ -110,29 +104,29 @@ class Path(object):
         """
         Path.base_path = Path.get_pwd()
 
-        Path.www_css = Path.base_path + u'/www/css'
-        Path.www_image = Path.base_path + u'/www/images'
+        Path.www_css = Path.base_path + str(u'/www/css')
+        Path.www_image = Path.base_path + str(u'/www/images')
 
         if recipe_kind == 'jianshu':    # TODO: 用循环解决
-            Path.config_path = Path.base_path + u'/config/jianshu_config.json'
-            Path.db_path = Path.base_path + u'/db/jianshu_db_002.sqlite'
-            Path.sql_path = Path.base_path + u'/db/jianshu.sql'
+            Path.config_path = Path.base_path + str(u'/config/jianshu_config.json')
+            Path.db_path = Path.base_path + str(u'/db/jianshu_db_002.sqlite')
+            Path.sql_path = Path.base_path + str(u'/db/jianshu.sql')
         elif recipe_kind == 'zhihu':
-            Path.config_path = Path.base_path + u'/config/zhihu_config.json'
-            Path.db_path = Path.base_path + u'/db/zhihuDB_173.sqlite'
-            Path.sql_path = Path.base_path + u'/db/zhihuhelp.sql'
+            Path.config_path = Path.base_path + str(u'/config/zhihu_config.json')
+            Path.db_path = Path.base_path + str(u'/db/zhihuDB_173.sqlite')
+            Path.sql_path = Path.base_path + str(u'/db/zhihuhelp.sql')
         elif recipe_kind == 'sinablog':
-            Path.config_path = Path.base_path + u'/config/sinablog_config.json'
-            Path.db_path = Path.base_path + u'/db/sinablog_db_001.sqlite'
-            Path.sql_path = Path.base_path + u'/db/sinablog.sql'
+            Path.config_path = Path.base_path + str(u'/config/sinablog_config.json')
+            Path.db_path = Path.base_path + str(u'/db/sinablog_db_001.sqlite')
+            Path.sql_path = Path.base_path + str(u'/db/sinablog.sql')
         elif recipe_kind == 'csdnblog':
-            Path.config_path = Path.base_path + u'/config/csdn_config.json'
-            Path.db_path = Path.base_path + u'/db/csdn_db_001.sqlite'
-            Path.sql_path = Path.base_path + u'/db/csdnblog.sql'
+            Path.config_path = Path.base_path + str(u'/config/csdn_config.json')
+            Path.db_path = Path.base_path + str(u'/db/csdn_db_001.sqlite')
+            Path.sql_path = Path.base_path + str(u'/db/csdnblog.sql')
 
-        Path.html_pool_path = Path.base_path + u'/e-books_tmp_source/网页池'
-        Path.image_pool_path = Path.base_path + u'/e-books_tmp_source/图片池'
-        Path.result_path = Path.base_path + u'/e-books_produced'
+        Path.html_pool_path = Path.base_path + str(u'/e-books_tmp_source/网页池')
+        Path.image_pool_path = Path.base_path + str(u'/e-books_tmp_source/图片池')
+        Path.result_path = Path.base_path + str(u'/e-books_produced')
         return
 
     @staticmethod
