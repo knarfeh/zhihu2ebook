@@ -16,13 +16,13 @@
 获得帮助信息:  
 
 ```shell
-./ee-book -h
+python ee-book -h
 ```
 
 举个例子:  
 
 ```shell
-./ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
+python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
 稍等片刻, 你就可以得到电子书了:  
