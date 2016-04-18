@@ -16,13 +16,13 @@
 get help info:  
 
 ```shell
-./ee-book -h
+python ee-book -h
 ```
 
 for example:  
 
 ```shell
-./ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
+python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
 after a while, you will get the e-book:   
