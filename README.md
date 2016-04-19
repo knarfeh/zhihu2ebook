@@ -2,6 +2,8 @@
 
 [中文](./README_cn.md) | [English](./README.md)
 
+*Note*: Due to personal reason, there will be no big changes in the next two months, Only a few small patches.   --2016.04.19  
+
 [EE-Book](https://github.com/knarfeh/EE-Book) is a command-line utility to downlaod text from the Web, and make it a e-book. GUI is under developing.
 
 ## Supported Sites (UPDATING!)
