@@ -16,47 +16,59 @@ u"""
 Various run time constants.
 """
 
-zhihu_info = u"""站点:     http://www.zhihu.com
-标题:     知乎
-描述:     与世界分享你的知识、经验和见解
+info_meta = u"""站点:         {website}
+标题:         {title}
+描述:         {desc}
+是否需要登录?   {need_login}
 
 支持的类型:
 
-问题: http://www.zhihu.com/question/{question_id}
+{supported_type}
+"""
+
+zhihu = {
+    'website': 'zhihu',
+    'title': u'知乎',
+    'desc': u'与世界分享你的知识、经验和见解',
+    'need_login': u'是!',
+    'supported_type': u"""问题: http://www.zhihu.com/question/{question_id}
 答案: http://www.zhihu.com/question/{question_id}/answer/{answer_id}
 话题: http://www.zhihu.com/topic/{topic_id}
 用户的全部回答: http://www.zhihu.com/people/{people_id}
-             http://www.zhihu.com/people/{people_id}/answers
+            http://www.zhihu.com/people/{people_id}/answers
 收藏夹: http://www.zhihu.com/collection/{collection_id}
-专栏: http://zhuanlan.zhihu.com/{zhuanlan_id}
-"""
+专栏: http://zhuanlan.zhihu.com/{zhuanlan_id}"""
+}
 
-jianshu_info = u"""站点:     http://www.jianshu.com
-标题:     简书
-描述:     交流故事，沟通想法
-          一个基于内容分享的社区
+jianshu = {
+    'website': 'http://www.zhihu.com',
+    'title': u'简书',
+    'desc': u"""交流故事，沟通想法
+             一个基于内容分享的社区""",
+    'need_login': u'否',
+    'supported_type': u"""用户的所有文章: http://www.jianshu.com/users/{people_id}/latest_articles"""
+}
 
-支持的类型:
+sinablog = {
+    'website': 'http://blog.sina.com.cn',
+    'title': u'新浪博客',
+    'desc': u"""全中国最主流，最具人气的博客频道。拥有最耀眼的娱乐明星博客、最知性的名人博客、最动人的情感博客，最自我的草根博客""",
+    'need_login': u'否',
+    'supported_type': u"""用户的所有文章: http://blog.sina.com.cn/u/{people_id}"""
+}
 
-用户的所有文章: http://www.jianshu.com/users/{people_id}/latest_articles
-"""
+csdnblog_info = {
+    'website': 'http://blog.csdn.net/',
+    'title': u'csdn博客',
+    'desc': u"""""",
+    'need_login': u'否',
+    'supported_type': u"""用户的所有文章: http://blog.csdn.net/{people_id}"""
+}
 
-sinablog_info = u"""站点:     http://blog.sina.com.cn
-标题:     新浪博客
-描述:     全中国最主流，最具人气的博客频道。拥有最耀眼的娱乐明星博客、最知性的名人博客、最动人的情感博客，最自我的草根博客
-
-支持的类型:
-
-用户的所有文章: http://blog.sina.com.cn/u/{people_id}
-"""
-
-csdnblog_info = u"""站点:     http://blog.csdn.net/
-标题:     csdn博客
-
-支持的类型:
-
-用户的所有文章: http://blog.csdn.net/{people_id}
-"""
+zhihu_info = info_meta.format(**zhihu)
+jianshu_info = info_meta.format(**jianshu)
+sinablog_info = info_meta.format(**sinablog)
+csdnblog_info = info_meta.format(**csdnblog_info)
 
 url_info = {
     'zhihu': zhihu_info,
