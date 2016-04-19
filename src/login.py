@@ -28,9 +28,7 @@ class Login(object):
     def login(self, account, password, captcha=''):
         if self.recipe_kind == 'zhihu':
             # 知乎此处的r参数为一个13位的unix时间戳
-            unix_time_stp = str(int(1000 * time.time()))[0:13]
-            # 开始拉取验证码
-            content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))
+            content = Http.get_content('https://www.zhihu.com/')
         else:
             Debug.logger.error(u"登录中...未知类型错误!")
             return
@@ -97,7 +95,9 @@ class Login(object):
 
     @staticmethod
     def get_captcha():
-        content = Http.get_content('https://www.zhihu.com/captcha.gif')  # 开始拉取验证码
+        unix_time_stp = str(int(1000 * time.time()))[0:13]
+        # 开始拉取验证码
+        content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
         with open(captcha_path, 'wb') as image:
@@ -122,7 +122,7 @@ class Login(object):
             print u'直接敲击回车获取验证码'
             confirm = raw_input()
             if confirm == 'yes':
-                account, password = guide.set_account()
+                account, password = guide.set_account(self.recipe_kind)
             captcha = self.get_captcha()
         return
 
