@@ -58,6 +58,12 @@ $ sudo pip install -r requirements.txt
 
 * An [article](http://knarfeh.github.io/2016/03/17/EE-Book/) posted on [v2ex](https://v2ex.com/)
 
+## Thanks
+
+* [知乎助手](https://github.com/YaoZeyuan/ZhihuHelp)
+* [calibre](https://github.com/kovidgoyal/calibre)
+* [you-get](https://github.com/soimort/you-get)
+
 ## License
 
 EE-Book is licensed under the terms of [MIT license](./LICENSE).
