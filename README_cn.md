@@ -58,6 +58,12 @@ $ sudo pip install -r requirements.txt
 
 * 发在[v2ex](https://v2ex.com/)的一篇[文章](http://knarfeh.github.io/2016/03/17/EE-Book/)
 
+## 感谢
+
+* [知乎助手](https://github.com/YaoZeyuan/ZhihuHelp)
+* [calibre](https://github.com/kovidgoyal/calibre)
+* [you-get](https://github.com/soimort/you-get)
+
 ## 软件版权许可证
 
 EE-Book 遵循 [MIT license](./LICENSE).
