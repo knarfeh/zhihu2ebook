@@ -65,7 +65,6 @@ if __name__ == '__main__':
             from PyQt4.QtGui import QIcon
             from src.gui.ui import MainWindow
             from src.resources import qrc_resources
-
             app = QApplication(sys.argv)
             app.setWindowIcon(QIcon(":/icon.png"))
             app.setApplicationName('EE-Book')
