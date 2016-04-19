@@ -82,7 +82,7 @@ class Login(object):
             Config._save()
             cookie = self.get_cookie()
             DB.execute('delete from LoginRecord')  # 登陆成功后清除数据库中原有的登录记录，避免下次登陆时取到旧记录
-            data = {}
+            data = dict()
             data['account'] = account
             data['password'] = password
             data['recordDate'] = ExtraTools.get_today()
@@ -110,9 +110,11 @@ class Login(object):
             os.system(u'open "{}" &'.format(captcha_path).encode(sys.stdout.encoding))
         else:
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
+        captcha = raw_input()
+        return captcha
 
     def start(self):
-        account, password = guide.set_account()
+        account, password = guide.set_account(self.recipe_kind)
         captcha = ''
         while not self.login(account, password, captcha):
             print u'啊哦，登录失败，可能需要输入验证码'
