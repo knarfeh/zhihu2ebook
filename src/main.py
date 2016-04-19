@@ -57,6 +57,7 @@ class EEBook(object):
                 Http.set_cookie()   # sinablog, jianshu:DontNeed
             except TypeError:
                 print u"没有找到登录成功的cookie记录,请重新登录"
+                login.start()
         else:
             login.start()
             # Config.picture_quality = guide.set_picture_quality()
