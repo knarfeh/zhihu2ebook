@@ -97,7 +97,7 @@ if __name__ == '__main__':
                 if recipe_kind == 'Unsupport type':
                     print("Unsupport type")
                     sys.exit()
-            print u"recipe_kind" + str(recipe_kind)
+            print u"网址类型是:" + str(recipe_kind)
             game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
             game.begin()
             sys.exit()
