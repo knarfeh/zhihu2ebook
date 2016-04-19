@@ -4,24 +4,33 @@ import re
 from src.tools.config import Config
 
 
-def set_account():
+def set_account(recipe_kind):
+    u"""
+    different login process, depending on the type
+    :param recipe_kind:
+    :return:
+    """
     from src.tools.debug import Debug
-    Debug.logger.info(u'#使用内置账号进行登陆#')
-    # account = raw_input()
-    account = None
-    if account:
-        while not re.search(r'\w+@[\w\.]{3,}', account):
-            print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'
-            print u'请重新输入账号，回车确认'
-            account = raw_input()
-        print u'请输入密码，回车确认'
-        password = raw_input()
-        while len(password) < 6:
-            print u'密码长度不正确，密码至少6位'
-            print u'请重新输入密码，回车确认'
+    if recipe_kind == 'zhihu':
+        print u"请输入注册账号,回车确认"
+        account = raw_input()
+        if account:
+            while not re.search(r'\w+@[\w\.]{3,}', account):
+                print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'
+                print u'请重新输入账号，回车确认'
+                account = raw_input()
+            print u'请输入密码，回车确认'
             password = raw_input()
+            while len(password) < 6:
+                print u'密码长度不正确，密码至少6位'
+                print u'请重新输入密码，回车确认'
+                password = raw_input()
+        else:
+            account, password = set_account(recipe_kind)
     else:
-        account, password = Config.account, Config.password
+        Debug.logger.error(u"出错了!!!,目前需要登录的只有知乎")
+        import sys
+        sys.exit()
     return account, password
 
 
