@@ -12,6 +12,9 @@ from src.utils import log
 from src.tools.match import Match
 from src.constants import url_info
 
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
+
 reload(sys)
 base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
 
@@ -44,6 +47,8 @@ TODO:
 
 
 if __name__ == '__main__':
+    # graphviz = GraphvizOutput(output_file='filter_none.png')
+    # with PyCallGraph(output=graphviz):
     def version():
         log.info_log('version %s' % __version__)
 
@@ -103,13 +108,14 @@ if __name__ == '__main__':
     # ./ee-book
     file_name = 'ReadList.txt'
     log.print_log(u'read from %s' % file_name)
-    with open(file_name, 'r') as read_list:
-        line = read_list[0]
-        recipe_kind = Match.get_recipe_kind(line)
-        if recipe_kind == 'Unsupport type':
-            print("Unsupport type")
-            sys.exit()
-
+    # with open(file_name, 'r') as read_list:
+    #     TODO 解决ReadList.txt 内容为空的问题  bug!!!
+        # line = read_list[0]
+        # recipe_kind = Match.get_recipe_kind(line)
+        # if recipe_kind == 'Unsupport type':
+        #     print("Unsupport type")
+        #     sys.exit()
+    recipe_kind = 'jianshu'
     print u"recipe_kind" + str(recipe_kind)
     game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
     game.begin()
