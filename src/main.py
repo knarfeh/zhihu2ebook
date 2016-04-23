@@ -76,21 +76,21 @@ class EEBook(object):
         Debug.logger.debug(u"#Debug模式#: 不检查更新")
         self.init_config(recipe_kind=self.recipe_kind)
         Debug.logger.info(u"开始读取ReadList.txt的内容")
-        bookfiles = []
+        book_files = []
 
         if self.url is not None:
             file_name = self.create_book(self.url, 1)
-            bookfiles.append(file_name)
-            return bookfiles
+            book_files.append(file_name)
+            return book_files
 
         with open(self.read_list, 'r') as read_list:
             counter = 1
             for line in read_list:
                 line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
                 file_name = self.create_book(line, counter)
-                bookfiles.append(file_name)
+                book_files.append(file_name)
                 counter += 1
-        return bookfiles
+        return book_files
 
     @staticmethod
     def create_book(command, counter):
