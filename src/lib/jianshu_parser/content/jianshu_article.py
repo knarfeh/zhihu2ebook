@@ -65,7 +65,7 @@ class JianshuArticle(ParserTools):
         self.info['title'] = title
 
     def parse_answer_content(self):
-        content = str(self.dom.find("div", class_="preview"))
+        content = str(self.dom.find("div", class_="show-content"))
         if not content:
             Debug.logger.info(u"没有找到文章内容")
             return
