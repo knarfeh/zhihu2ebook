@@ -27,9 +27,9 @@ class EEBook(object):
         self.recipe_kind = recipe_kind
         self.read_list = read_list
         self.url = url
-        Debug.logger.info(u"self.recipe_kind: " + str(self.recipe_kind))
-        Debug.logger.info(u"self.read_list: " + str(self.read_list))
-        Debug.logger.info(u"self.url: " + str(self.url))
+        Debug.logger.info(u"recipe_kind: " + str(self.recipe_kind))
+        Debug.logger.info(u"read_list: " + str(self.read_list))
+        Debug.logger.info(u"url: " + str(self.url))
 
         Debug.logger.debug(u"recipe种类是:" + str(recipe_kind))
         Path.init_base_path(recipe_kind)        # 设置路径

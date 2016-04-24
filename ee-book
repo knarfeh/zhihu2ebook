@@ -108,17 +108,16 @@ if __name__ == '__main__':
     # ./ee-book
     file_name = 'ReadList.txt'
     log.print_log(u'read from %s' % file_name)
-    # with open(file_name, 'r') as read_list:
-    #     TODO 解决ReadList.txt 内容为空的问题  bug!!!
-        # line = read_list[0]
-        # recipe_kind = Match.get_recipe_kind(line)
-        # if recipe_kind == 'Unsupport type':
-        #     print("Unsupport type")
-        #     sys.exit()
-    recipe_kind = 'jianshu'
-    print u"recipe_kind" + str(recipe_kind)
+    with open(file_name, 'r') as read_list:
+        read_list = read_list.readlines()
+        line = read_list[0]
+        recipe_kind = Match.get_recipe_kind(line)
+        if recipe_kind == 'Unsupport type':
+            print("Unsupport type")
+            sys.exit()
     game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
     game.begin()
+
 
 
 

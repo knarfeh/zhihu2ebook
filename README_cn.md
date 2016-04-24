@@ -29,7 +29,9 @@ python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
 
 稍等片刻, 你就可以得到电子书了:  
 
-![yinwang](http://7xi5vu.com1.z0.glb.clouddn.com/2016-03-09jianshu_yinwang.png)
+![directory](http://7xi5vu.com1.z0.glb.clouddn.com/2016-03-09directory.png)  
+
+![scheme](http://7xi5vu.com1.z0.glb.clouddn.com/2016-03-09Scheme.png)
 
 
 ## 贡献代码
