@@ -19,7 +19,7 @@ class HtmlCreator(object):
         return
 
     def fix_image(self, content, recipe):
-        content = Match.fix_html(content)
+        content = Match.fix_html(content=content, recipe_kind=recipe)
         for img in re.findall(r'<img[^>]*', content):
             if recipe is not Type.sinablog_author:
                 # fix img
@@ -134,7 +134,7 @@ class HtmlCreator(object):
         article['edit_date'] = article['publish_date']
         article['description'] = ''
         # TODO: 改掉硬编码
-        if recipe in ['jianshu_author', 'sinablog_author' 'csdnblog_author']:
+        if str(recipe) in (Type.sinablog+Type.jianshu+Type.csdnblog):
             article['agree'] = '无'
         result = {
             'answer': self.create_answer(article),
