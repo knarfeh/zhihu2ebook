@@ -39,7 +39,9 @@ class HtmlCreator(object):
                     continue
             src_download = HtmlCreator.fix_image_src(src)
             if src_download:
-                if recipe in Type.zhihu and not src_download.endswith(('.jpg', '.png', '.jpeg')):
+                if recipe in Type.zhihu and not src_download.startswith('http'):
+                    # fix zhuanlan image href
+                    src_download = src_download.split('.')[0]
                     filename = self.image_container.add('https://pic2.zhimg.com/'+src_download+'_b.jpg')
                 else:
                     filename = self.image_container.add(src_download)
@@ -47,18 +49,18 @@ class HtmlCreator(object):
                 filename = ''
             new_image = img.replace('"{}"'.format(src), '"../images/{}"'.format(filename))
 
-            if recipe == Type.jianshu_author:
+            if recipe in Type.jianshu:
                 new_image = new_image.replace('data-original-src', 'temppicsr')
                 new_image = new_image.replace('src', 'falsesrc')
                 new_image = new_image.replace('temppicsr', 'src')    # 应该有更好的方式, 暂时先这样写
                 new_image += '</img>'
-            elif recipe == Type.sinablog_author:
+            elif recipe in Type.sinablog:
                 # 硬编码, 可以优化?写到fix_html函数中
                 new_image = new_image.replace('http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif',\
                                           '../images/{}'.format(filename))
-            elif recipe == Type.zhihu:
+            elif recipe in Type.zhihu:
                 new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
-                                          '../images/{}'.format(filename))
+                                              '../images/{}'.format(filename))
                 new_image += '</img>'
             content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))
 
@@ -123,7 +125,7 @@ class HtmlCreator(object):
 
         content = self.get_template('content', 'base').format(**result)
         page = Page()
-        page.content = self.fix_image(content, recipe="zhihu")
+        page.content = self.fix_image(content, recipe="question")
         page.filename = str(prefix) + '_' + str(question['question_id']) + '.xhtml'
         page.title = question['title']
         return page
