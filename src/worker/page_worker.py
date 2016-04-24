@@ -121,7 +121,11 @@ class PageWorker(object):
         content = Http.get_content(target_url)
         if not content:
             return
-        content = Match.fix_html(content)  # 需要修正其中的<br>标签，避免爆栈
+        from src.worker.sinablog_worker import sinablogAuthorWorker
+        if isinstance(self, sinablogAuthorWorker):
+            content = Match.fix_html(content=content, recipe_kind='sinablog_author')
+        else:
+            content = Match.fix_html(content=content)  # 需要修正其中的<br>标签，避免爆栈
         self.content_list.append(content)
         Debug.logger.debug(u'{}的内容抓取完成'.format(target_url))
         self.work_complete_set.add(target_url)
