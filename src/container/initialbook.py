@@ -174,6 +174,8 @@ class InitialBook(object):
         if self.kind == Type.column:
             self.epub.title = u'专栏_{}({})'.format(info['name'], info['column_id'])
             self.epub.id = info['column_id']
+        from src.html5lib.constants import entities_reverse
+        self.epub.title = Match.replace_words(self.epub.title, entities_reverse)
         return
 
     def get_article_list(self):
