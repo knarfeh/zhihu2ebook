@@ -116,23 +116,25 @@ class Match(object):
         return unicode(filename[:80])
 
     @staticmethod
-    def fix_html(content=''):
+    def fix_html(content='', recipe_kind=''):
         content = content.replace('</br>', '').replace('</img>', '')
         content = content.replace('<br>', '<br/>')
         content = content.replace('<wbr>', '').replace('</wbr>', '<br/>')  # for sinablog
         content = content.replace('href="//link.zhihu.com', 'href="https://link.zhihu.com')  # 修复跳转链接
 
         # for SinaBlog
-        for item in re.findall(r'\<span class="img2"\>.*?\</span\>', content):
-            content = content.replace(item, '')
-        for item in re.findall(r'\<script\>.*?\</script\>', content, re.S):
-            content = content.replace(item, '')
-        for item in re.findall(r'height=\".*?\" ', content):     # 因为新浪博客的图片的高,宽是js控制的,不加
-            content = content.replace(item, '')                 # 这一段会导致无法匹配
-        for item in re.findall(r'width=\".*?\" ', content):
-            content = content.replace(item, '')
-        for item in re.findall(r'\<cite\>.*?\</cite\>', content):
-            content = content.replace(item, '')
+        if recipe_kind in Type.sinablog:
+            print 'fix_html??' + str(recipe_kind)
+            for item in re.findall(r'\<span class="img2"\>.*?\</span\>', content):
+                content = content.replace(item, '')
+            for item in re.findall(r'\<script\>.*?\</script\>', content, re.S):
+                content = content.replace(item, '')
+            for item in re.findall(r'height=\".*?\" ', content):     # 因为新浪博客的图片的高,宽是js控制的,不加
+                content = content.replace(item, '')                 # 这一段会导致无法匹配图片
+            for item in re.findall(r'width=\".*?\" ', content):
+                content = content.replace(item, '')
+            for item in re.findall(r'\<cite\>.*?\</cite\>', content):
+                content = content.replace(item, '')
 
         for item in re.findall(r'\<noscript\>.*?\</noscript\>', content, re.S):
             content = content.replace(item, '')
@@ -162,3 +164,11 @@ class Match(object):
             if url_type in getattr(Type, website):
                 recipe_kind = website
         return recipe_kind
+
+    # @staticmethod
+    # def replace_words(text, word_dic):
+    #     re_obj = re.compile('|'.join(map(re.escape, word_dic)))
+    #
+    #     def translate(mat):
+    #         return word_dic[mat.group(0)]
+    #     return re_obj.sub(translate, text)
