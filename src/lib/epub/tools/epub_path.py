@@ -3,6 +3,7 @@ import os
 import sys
 from src.tools.path import Path
 
+
 class EpubPath(object):
 
     file_path = os.path.realpath(__file__)
