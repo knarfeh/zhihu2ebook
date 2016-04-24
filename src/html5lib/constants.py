@@ -2235,3 +2235,7 @@ entities = {
     "zwj;": "\u200d",
     "zwnj;": "\u200c",
 }
+
+entities_reverse = {value: key for key, value in entities.items()}
+
+entities_reverse.pop('_')
