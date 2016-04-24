@@ -165,10 +165,10 @@ class Match(object):
                 recipe_kind = website
         return recipe_kind
 
-    # @staticmethod
-    # def replace_words(text, word_dic):
-    #     re_obj = re.compile('|'.join(map(re.escape, word_dic)))
-    #
-    #     def translate(mat):
-    #         return word_dic[mat.group(0)]
-    #     return re_obj.sub(translate, text)
+    @staticmethod
+    def replace_words(text, word_dic):
+        re_obj = re.compile('|'.join(map(re.escape, word_dic)))
+
+        def translate(mat):
+            return word_dic[mat.group(0)]
+        return re_obj.sub(translate, text)

@@ -160,7 +160,7 @@ class TopicWorker(PageWorker):
 
     def clear_index(self):
         topic_id_tuple = tuple(set(x['topic_id'] for x in self.topic_index_list))
-        sql = 'DELETE  from TopicIndex where topic_id in ({})'.format((' ?,' * len(topic_id_tuple))[:-1])
+        sql = 'DELETE from TopicIndex where topic_id in ({})'.format((' ?,' * len(topic_id_tuple))[:-1])
         DB.cursor.execute(sql, topic_id_tuple)
         DB.commit()
         return
