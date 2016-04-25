@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
-from src.tools.config import Config
+from src.utils import log
 
 
 def set_account(recipe_kind):
@@ -12,7 +12,8 @@ def set_account(recipe_kind):
     """
     from src.tools.debug import Debug
     if recipe_kind == 'zhihu':
-        print u"请输入注册账号,回车确认"
+        print(u"登录知乎中...")
+        print(u"请输入注册账号,回车确认")
         account = raw_input()
         if account:
             while not re.search(r'\w+@[\w\.]{3,}', account):

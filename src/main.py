@@ -3,7 +3,6 @@ import sqlite3
 
 
 from src.tools.path import Path
-from src import guide
 from src.book import Book
 from src.tools.config import Config
 from src.tools.debug import Debug
@@ -12,7 +11,7 @@ from src.tools.db import DB
 from login import Login
 from src.url_parser import UrlParser
 from src.worker.worker_factory import worker_factory
-from src.tools.type import Type
+from src.utils import log
 
 
 class EEBook(object):
@@ -27,11 +26,11 @@ class EEBook(object):
         self.recipe_kind = recipe_kind
         self.read_list = read_list
         self.url = url
-        Debug.logger.info(u"recipe_kind: " + str(self.recipe_kind))
-        Debug.logger.info(u"read_list: " + str(self.read_list))
-        Debug.logger.info(u"url: " + str(self.url))
+        log.warning_log(u"website type: " + str(self.recipe_kind))
+        Debug.logger.debug(u"read_list: " + str(self.read_list))
+        Debug.logger.debug(u"url: " + str(self.url))
 
-        Debug.logger.debug(u"recipe种类是:" + str(recipe_kind))
+        Debug.logger.debug(u"recipe type:" + str(recipe_kind))
         Path.init_base_path(recipe_kind)        # 设置路径
         Path.init_work_directory()              # 创建路径
         self.init_database()                    # 初始化数据库
@@ -54,17 +53,17 @@ class EEBook(object):
             Config.picture_quality = 1
             # else:
             try:
-                Http.set_cookie()   # sinablog, jianshu:DontNeed
+                Http.set_cookie()   # sinablog, jianshu: DontNeed
             except TypeError:
-                print u"没有找到登录成功的cookie记录,请重新登录"
+                print u"没有找到登录成功的cookie记录, 请重新登录"
                 login.start()
         else:
+            log.warning_log(u"Please login...")
             login.start()
             # Config.picture_quality = guide.set_picture_quality()
             Config.picture_quality = 1
             Config.remember_account_set = True
-
-        # 储存设置
+        # save config
         Config._save()
         return
 
