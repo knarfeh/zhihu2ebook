@@ -99,7 +99,7 @@ def print_log(text, *colors):
     :param colors:
     :return:
     """
-    sys.stderr.write(sprint("{}: {}".format('ee-book', text), *colors) + "\n")
+    sys.stderr.write(sprint("{}".format(text), *colors) + "\n")
 
 
 def info_log(message):
