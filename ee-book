@@ -10,6 +10,7 @@ from src.tools.debug import Debug
 from src.constants import __version__
 from src.utils import log
 from src.tools.match import Match
+from src.login import Login
 from src.constants import url_info
 
 from pycallgraph import PyCallGraph
@@ -25,8 +26,8 @@ sys.path.append(base_path + '/src/lib')
 sys.setdefaultencoding('utf-8')
 sys.setrecursionlimit(100000)  # 为BS解析知乎上的长答案增加递归深度限制
 
-short_options = 'Vhgu:r:i:'
-long_options = ['version', 'help', 'url', 'gui', 'info']
+short_options = 'Vhgu:r:i:l:'
+long_options = ['version', 'help', 'url', 'gui', 'info', 'login']
 
 
 help_info = 'Usage: ee-book [OPTION]... [URL]... \n\n'
@@ -35,20 +36,19 @@ help_info += '''Starup options:
 -V | --version                  Print version and exit
 -h | --help                     Print help and exit
 -i | --info                     Print information of URLs
+-l | --login <URL>              Login via command line
 \n
 '''
 
 help_info += '''Run options:
 -g | --gui                      Graphical user interface. under developing.
--u | --url <URL>                Url to download, if not setted, read from text file
+-u | --url <URL>                URL to download, if not setted, read from text file
 TODO:
 -r | --file <file-path>         Read from the given file. Notice: only one kind could be accepted in one file
 '''
 
 
 if __name__ == '__main__':
-    # graphviz = GraphvizOutput(output_file='filter_none.png')
-    # with PyCallGraph(output=graphviz):
     def version():
         log.info_log('version %s' % __version__)
 
@@ -76,13 +76,25 @@ if __name__ == '__main__':
             window = MainWindow()
             window.show()
             sys.exit(app.exec_())
+        elif option in ('-l', '--login'):
+            url = args
+            recipe_kind = Match.get_recipe_kind(url)
+            if recipe_kind != 'zhihu':
+                print("Unsupport type! Only zhihu are supported now")
+                print("Please try again.")
+                sys.exit()
+            zhihu = EEBook(recipe_kind=recipe_kind)    # Init path, e.g. config, only zhihu are supported now
+            login = Login(recipe_kind=recipe_kind)
+            login.start()
+            sys.exit()
         elif option in ('-u', '--url'):
             url = args
             recipe_kind = Match.get_recipe_kind(url)
             if recipe_kind == 'Unsupport type':
-                print("Unsupport type")
+                print("Unsupport type!")
+                print("Please try again.")
                 sys.exit()
-            print u"recipe_kind: " + str(recipe_kind)
+            print u"website type: " + str(recipe_kind)
             game = EEBook(recipe_kind=recipe_kind, url=url)
             game.begin()
             sys.exit()

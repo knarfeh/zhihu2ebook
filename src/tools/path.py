@@ -84,7 +84,7 @@ class Path(object):
     def copy(src, dst):
         if not os.path.exists(src):
             from src.tools.debug import Debug
-            Debug.logger.info('{}不存在，自动跳过'.format(src))
+            Debug.logger.debug('{}不存在，自动跳过'.format(src))
             return
         if os.path.isdir(src):
             shutil.copytree(src, dst)
