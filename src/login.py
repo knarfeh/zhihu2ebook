@@ -30,7 +30,7 @@ class Login(object):
             # 知乎此处的r参数为一个13位的unix时间戳
             content = Http.get_content('https://www.zhihu.com/')
         else:
-            Debug.logger.error(u"登录中...未知类型错误!")
+            Debug.logger.error(u"登录中...未知网站类型错误")
             return
         xsrf = Match.xsrf(content)
         if not xsrf:
@@ -66,8 +66,8 @@ class Login(object):
         response = json.loads(result)
 
         if response['r'] == 0:
-            print u'登陆成功！'
-            print u'登陆账号:', account
+            print u'\nlogin successfully...'
+            print u'account:', account
             print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
             remenber_account = raw_input()      # TODO: 默认记住密码?
             if remenber_account == 'yes':
