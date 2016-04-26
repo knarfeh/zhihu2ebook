@@ -25,6 +25,7 @@ class EpubConfig(object):
     metadata_creator_uri = base_path + u'/OEBPS/opf/metadata/creator.xml'
     metadata_book_id_uri = base_path + u'/OEBPS/opf/metadata/book_id.xml'
     metadata_title_uri = base_path + u'/OEBPS/opf/metadata/title.xml'
+    metadata_language_uri = base_path + u'/OEBPS/opf/metadata/language.xml'
 
     ### manifest
     manifest_item_uri = base_path + u'/OEBPS/opf/manifest/item.xml'
@@ -54,8 +55,9 @@ class EpubConfig(object):
     directory_content_uri = base_path + u'/directory/content.html'
 
     # Default
-    book_id = u'create_by_yaozeyuan'
+    book_id = u'create_by_knarfeh'
     book_title = u'no_title'
-    creator = u'zhihuhelp'
-    uid = u'urn:uuid:create-by-yao-ze-yuan-Tsingtao'
+    creator = u'ee-book'
+    uid = u'urn:uuid:create-by-knarfeh'
     identifier = u''
+    language = u'zh'
