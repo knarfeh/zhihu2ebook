@@ -127,6 +127,7 @@ class Book(object):
         html_tmp_path = Path.html_pool_path + u'/'
         image_tmp_path = Path.image_pool_path + u'/'
         epub.set_creator(u'EEBookV0-1')
+        epub.set_language(u'zh')
         epub.set_book_id()
         epub.set_output_path(Path.result_path)
         epub.add_css(Path.base_path + u'/www/css/markdown.css')
