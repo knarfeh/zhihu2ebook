@@ -17,7 +17,7 @@ class AuthorInfo(ParserTools):
         if dom:
             self.dom = dom
             self.header_dom = dom.find('div', class_='zm-profile-header')
-            self.detail_dom = dom.find('div', class_='zm-profile-details-wrap')
+            self.detail_dom = dom.find('div', class_='zm-profile-header-operation')
             self.side_dom = dom.find('div', class_='zu-main-sidebar')
         return
 
@@ -44,7 +44,7 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_name(self):
-        name = self.dom.select('div.title-section a.name')
+        name = self.dom.select('div.title-section span.name')
         if not name:
             Debug.logger.debug(u'用户名未找到')
             return
@@ -68,7 +68,7 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_logo(self):
-        logo = self.header_dom.select('div.zm-profile-header-avatar-container img.avatar')
+        logo = self.header_dom.select('img.Avatar')
         if not logo:
             Debug.logger.debug(u'用户头像未找到')
             return
@@ -120,8 +120,8 @@ class AuthorInfo(ParserTools):
         return
 
     def parse_detail_info(self):
-        detail_items = ['agree', 'thanks', 'collected', 'shared']
-        detail = self.detail_dom.select('.zm-profile-module-desc span strong')
+        detail_items = ['agree', 'thanks']
+        detail = self.detail_dom.select('.zm-profile-header-info-list span strong')
         if not detail:
             Debug.logger.debug(u'用户赞同-感谢-被收藏数未找到')
             return

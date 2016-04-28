@@ -23,6 +23,6 @@
     "article_order_by_desc": false, 
     "author_answer_order_by": "agree_count", 
     "need_account": true, 
-    "debug": false,
+    "debug": false, 
     "picture_quality": 1
 }
