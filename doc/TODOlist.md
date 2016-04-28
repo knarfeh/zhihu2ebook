@@ -6,6 +6,8 @@
 * 专栏单篇文章
 * [知乎助手 Issues](https://github.com/YaoZeyuan/ZhihuHelp/issues)
 * #bug# 知乎某个用户的所有答案, 知乎网站用户的所有回答改版了，目前的Parser有点问题。
+* #bug# 页面改版,收藏夹也不能爬取了
+* #bug# 
 
 ## 新浪博客
 
