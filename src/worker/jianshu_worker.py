@@ -51,7 +51,7 @@ class JianshuAuthorWorker(PageWorker):
         """
         index_content = Http.get_content(target_url)
         parser = JianshuParser(index_content)
-        self.question_list += parser.get_jianshu_info_list()
+        self.question_list += parser.get_extra_info()
         article_num = self.question_list[0]['article_num']      # not collection, only one author
         article_list = self.parse_get_article_list(index_content)
         return article_num, article_list
