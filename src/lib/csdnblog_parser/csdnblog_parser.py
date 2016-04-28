@@ -16,7 +16,7 @@ class CsdnBlogParser(BaseParser):
         self.dom = BeautifulSoup(content, 'lxml')
         self.article_parser = CsdnBlogArticle(self.dom)
 
-    def get_csdnblog_info_list(self):
+    def get_extra_info(self):
         author_parser = CsdnBlogAuthorInfo()
         author_parser.set_dom(self.dom)
         return [author_parser.get_info()]
