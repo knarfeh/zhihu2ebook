@@ -301,7 +301,7 @@ class MainWindow(QtGui.QMainWindow):
         :return:
         """
         download = QtGui.QDialog()
-        ui = DownloadDialog(RecipeModel(), self.book_view)        # TODO: 将任务交给jobs模块,
+        ui = DownloadDialog(RecipeModel(), self.book_view)   # TODO: 将任务交给jobs模块,
 
         ui.exec_()
         self.update_library()
