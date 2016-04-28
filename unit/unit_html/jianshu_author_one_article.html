@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 7]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<!--[if !IE]><!--> <html> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="description"  content="（转自博客）介绍了这么久的Scheme，却没有讲过如何配置一个高效的Scheme的编程环境。有些人开始学习Scheme的时候感觉无从下手，所以今天讲一下它的配置。Scheme的配置有很多种方式，我不想介绍太多东西，免得有人看花了眼，所以这里只介绍一下我自己的配置。我不大喜欢像Quack一类的复杂的环境，因为它们经常有很多多余的功能，却缺少我想要的功能。一旦我想修改它们，又到处出问题。我的配置很简约，我用它写了几千行的超高难度的代码，翻来覆去的改，感觉效率非常高，也没有觉得缺少什么特别重要的东西。现在我就一步一步的介绍我的配置。...">
+  <meta property="wb:webmaster" content="294ec9de89e7fadb" />
+  <meta property="qc:admins" content="104102651453316562112116375" />
+  <meta property="qc:admins" content="11635613706305617" />
+  <meta property="qc:admins" content="1163561616621163056375" />
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4" />
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI" />
+  <meta http-equiv="mobile-agent" content="format=html5; url=http://www.jianshu.com/p/8893ff7f80a4">
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/3647308">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="Scheme 编程环境的设置" property="twitter:title">
+  <meta content="（转自博客）介绍了这么久的Scheme，却没有讲过如何配置一个高效的Scheme的编程环境。有些人开始学习Scheme的时候感觉无从下手，所以今天讲一下它的配置。Scheme的配置有很多种方式，我不想介绍太多东西，免得有人看花了眼，所以这里只介绍一下我自己的配置。我不大喜欢像Quack一类的复杂的环境，因为它们经常有很多多余的功能，却缺少我想要的功能。一旦我想修改它们，又到处出问题。我的配置很简约，我用它写了几千行的超高难度的代码，翻来覆去的改，感觉效率非常高，也没有觉得缺少什么特别重要的东西。现在我就一步一步的介绍我的配置。..." property="twitter:description">
+  <meta content="http://www.jianshu.com/p/8893ff7f80a4" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="Scheme 编程环境的设置">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://www.jianshu.com/p/8893ff7f80a4">
+  <meta property="og:description" content="（转自博客）介绍了这么久的Scheme，却没有讲过如何配置一个高效的Scheme的编程环境。有些人开始学习Scheme的时候感觉无从下手，所以今天讲一下它的配置。Scheme的配置有很多种方式，...">
+
+    <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/68562-9e261a1c09bd7225.gif" />
+    <meta property="og:image:width" content="513" />
+    <meta property="og:image:height" content="324" />
+    <meta property="og:image:type" content="image/gif" />
+    <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/68562-98e6ff0db2ec8c59.jpeg" />
+    <meta property="og:image:width" content="690" />
+    <meta property="og:image:height" content="272" />
+    <meta property="og:image:type" content="image/jpeg" />
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/3647308" />
+  <meta property="al:ios:app_store_id" content="888237539" />
+  <meta property="al:ios:app_name" content="简书" />
+
+  <meta property="al:android:url" content="jianshu://notes/3647308" />
+  <meta property="al:android:package" content="com.jianshu.haruki" />
+  <meta property="al:android:app_name" content="简书" />
+  <!-- End -->
+
+  <title>Scheme 编程环境的设置 - 简书</title>
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="03l1jGyq4eW3cUFMkNA5oMe4qDDWWtWElPmyNQYKeGm+iTTi8v0sX6rW7L7kY6iUqLQdJyc3rOA8MiADrWMRlg==" />
+  <!--[if lte IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/base-f935477e8faba16f29c6f9e4f0e1d032.css" />
+
+    <link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/reading-note-4158a6eeb7c4e4a9fd15332778cfb52c.css" />
+  <link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/base-read-mode-64acccf6966299cfa3d580140a2582fe.css" />
+  <script src="http://cdn-qn0.jianshu.io/assets/modernizr-613ea63b5aa2f0e2a1946e9c28c8eedb.js"></script>
+  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+  <!--[if IE 8]><link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/scaffolding/for_ie-7f1c477ffedc13c11315103e8787dc6c.css" /><![endif]-->
+  <!--[if lt IE 9]><link rel="stylesheet" media="all" href="http://cdn-qn0.jianshu.io/assets/scaffolding/for_ie-7f1c477ffedc13c11315103e8787dc6c.css" /><![endif]-->
+  <link href="http://baijii-common.b0.upaiyun.com/icons/favicon.ico" rel="icon">
+      <link rel="apple-touch-icon-precomposed" href="http://cdn-qn0.jianshu.io/assets/apple-touch-icons/57-b426758a1fcfb30486f20fd073c3b8ec.png" sizes="57x57" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn-qn0.jianshu.io/assets/apple-touch-icons/72-feca4b183b9d29fd188665785dc7a7f1.png" sizes="72x72" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn-qn0.jianshu.io/assets/apple-touch-icons/76-ba757f1ad3421192ce7192170393d2b0.png" sizes="76x76" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn-qn0.jianshu.io/assets/apple-touch-icons/114-8dae53b3bcea3f06bb139e329d1edab3.png" sizes="114x114" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn-qn0.jianshu.io/assets/apple-touch-icons/120-fa315ee0177dba4c55d4f66d4129b47f.png" sizes="120x120" />
+      <link rel="apple-touch-icon-precomposed" href="http://cdn-qn0.jianshu.io/assets/apple-touch-icons/152-052f5799bec8fb3aa624bdc72ef5bd1d.png" sizes="152x152" />
+    <meta id="current_user_id" value="228457"></meta>
+    <meta id="current_user_slug" value="272d1894fd69"></meta>
+  <!-- Baidu stats -->
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</head>
+
+<body class="post output zh cn mac mozilla reader-day-mode reader-font2 " data-js-module="note-show" data-locale="zh-CN">
+
+  <div class="navbar navbar-jianshu shrink">
+  <div class="dropdown">
+    <a class="dropdown-toggle logo" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0)">
+      简
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+      <li><a href="/collections"><i class="fa fa-th"></i> 专题</a></li>
+      <li><a href="/user_invitations"><i class="fa fa-money"></i> 发钱啦</a></li>
+        <li><a href="/timeline"><i class="fa fa-users"></i> 简友圈</a></li>
+        <li><a href="/writer#/"><i class="fa fa-pencil"></i> 写文章</a></li>
+    </ul>
+  </div>
+</div>
+<div class="navbar-user">
+    <a class="user avatar" data-toggle="dropdown" href="javascript:void(0)">
+      <img src="http://upload.jianshu.io/users/upload_avatars/228457/9d13b576fc8a.jpg?imageMogr/thumbnail/90x90/quality/100" alt="100" /> <b class="caret"></b>
+</a>    <ul class="dropdown-menu arrow-top" role="menu" aria-labelledby="dLabel">
+      <li>
+  <a href="/writer#/"><i class="fa fa-pencil"></i> 写文章</a>
+</li>
+<li>
+  <a target="_blank" href="/users/272d1894fd69"><i class="fa fa-user"></i> 我的主页</a>
+</li>
+  <li>
+    <a href="/favourites">
+      <i class="fa fa-heart"></i> 我喜欢的
+</a>  </li>
+  <li>
+    <a href="/bookmarks">
+      <i class="fa fa-bookmark"></i> 我的收藏
+</a>  </li>
+  <li>
+    <a href="/notifications">
+      <i class="fa fa-bell"></i> 提醒
+        <span class="label label-important">2</span>
+</a>  </li>
+  <li>
+    <a href="/chats">
+      <i class="fa fa-envelope"></i> 简信
+</a>  </li>
+  <li><a href="/settings"><i class="fa fa-cogs"></i> 设置</a></li>
+  <li>
+    <a href="/wallet">
+      <i class="fa fa-credit-card"></i> 钱包
+</a>  </li>
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="#"><i class="fa fa-question-circle"></i> 帮助</a>
+    <ul class="dropdown-menu">
+      <li><a href="http://www.jianshu.com/notebooks/547/latest" target="_blank">帮助中心</a></li>
+      <li><a target="_blank" href="/contact">联系我们</a></a></li>
+    </ul>
+  </li>
+  <li>
+    <a rel="nofollow" data-method="DELETE" href="/sign_out">
+      <i class="fa fa-sign-out"></i> 登 出
+</a>  </li>
+
+    </ul>
+    <a class="daytime set-view-mode pull-right" href="javascript:void(0)"><i class="fa fa-moon-o"></i></a>
+</div>
+<div class="navbar navbar-jianshu expanded">
+  <div class="dropdown">
+      <a class="active logo" role="button" data-original-title="个人主页" data-container="div.expanded" href="/">
+        <b>简</b><i class="fa fa-home"></i><span class="title">首页</span>
+</a>      <a data-toggle="tooltip" data-placement="right" data-original-title="专题" data-container="div.expanded" href="/collections">
+        <i class="fa fa-th"></i><span class="title">专题</span>
+</a>        <a data-toggle="tooltip" data-placement="right" data-original-title="简友圈" data-container="div.expanded" href="/timeline">
+          <i class="fa fa-users"></i><span class="title">简友圈</span>
+</a>        <a data-toggle="tooltip" data-placement="right" data-original-title="写文章" data-container="div.expanded" href="/writer#/">
+          <i class="fa fa-pencil"></i><span class="title">写文章</span>
+</a>    <a class="ad-selector" href="/apps">
+      <i class="fa fa-mobile"></i><span class="title">下载手机应用</span>
+</a>    <div class="ad-container ad-container-signed">
+      <div class="ad-pop">
+        <img class="ad-logo" src="http://cdn-qn0.jianshu.io/assets/apple-touch-icons/114-8dae53b3bcea3f06bb139e329d1edab3.png" alt="114" />
+        <p class="ad-title">简书</p>
+        <p class="ad-subtitle">交流故事，沟通想法</p>
+        <img class="ad-qrcode" src="http://cdn-qn0.jianshu.io/assets/app-page/download-app-qrcode-053849fa25f9b44573ef8dd3c118a20f.png" alt="Download app qrcode" />
+        <div>
+          <a class="ad-link" href="https://itunes.apple.com/cn/app/jian-shu/id888237539?ls=1&amp;mt=8">iOS</a>·
+          <a class="ad-link" href="http://downloads.jianshu.io/apps/haruki/JianShu-1.10.5.apk">Android</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-user">
+      <a data-toggle="tooltip" data-placement="right" data-original-title="我的主页" data-container="div.expanded" href="/users/272d1894fd69">
+        <i class="fa fa-user"></i><span class="title">我的主页</span>
+</a>
+        <a data-toggle="tooltip" data-placement="right" data-original-title="我的收藏" data-container="div.expanded" href="/bookmarks">
+          <i class="fa fa-bookmark"></i><span class="title">我的收藏</span>
+</a>
+        <a data-toggle="tooltip" data-placement="right" data-original-title="提醒" data-container="div.expanded" href="/notifications">
+
+          <i id="notify-icon" class="fa fa-bell new-messages"></i><span class="title">提醒</span>
+          <span class="messages-amount" id="notify-amount">2</span>
+</a>
+        <a data-toggle="tooltip" data-placement="right" data-original-title="简信" data-container="div.expanded" href="/chats">
+            <i id="chat-message-icon" class="fa fa-envelope"></i><span class="title">简信</span>
+</a>
+        <a href='#view-mode-modal' data-toggle='modal'><i class="fa fa-font"></i><span class="title">显示模式</span></a>
+
+        <a data-toggle="tooltip" data-placement="right" data-original-title="设置" data-container="div.expanded" href="/settings">
+          <i class="fa fa-cogs"></i><span class="title">设置</span>
+</a>
+        <a data-toggle="tooltip" data-placement="right" data-original-title="登 出" data-container="div.expanded" rel="nofollow" data-method="delete" href="/sign_out">
+          <i class="fa fa-sign-out"></i><span class="title">登 出</span>
+</a>
+          </div>
+  </div>
+
+
+    <div class="fixed-btn">
+    <a class="go-top hide-go-top" href="#"> <i class="fa fa-angle-up"></i></a>
+    <a class="qrcode" data-target="#bottom-qrcode" data-toggle="modal" href="javascript:void(0)"><i class="fa fa-qrcode"></i></a>
+    <a class="writer" href="/writer#/" data-toggle="tooltip" data-placement="left" title="写篇文章"><i class="fa fa-pencil"></i></a>
+    <!-- qrcode modal -->
+    <div id="bottom-qrcode" class="modal panel-modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <h4>下载简书移动应用</h4>
+      <div class="panel-body"><img src="http://cdn0.jianshu.io/assets/app-page/download-app-qrcode-85008f146773a25ce86bcc4d7858af68.png" alt="Download app qrcode" /></div>
+    </div>
+  </div>
+
+
+  <div id="show-note-container">
+
+
+<div class="post-bg" id="flag">
+  <div class="wrap-btn">
+    <!-- Notebook and collections button upper left -->
+      <div class="article-related pull-left">
+          <a class="collection-menu-btn" data-toggle="modal" data-target="#collection-menu" href="javascript:void(null);">
+            <i class="fa fa-th"></i>
+</a>          <a class="notebooks-menu-btn" data-toggle="modal" data-target="#notebooks-menu" href="javascript:void(null);"><i class="fa fa-list-ul"></i></a>
+        <div class="related-avatar-group activities"></div>
+      </div>
+    <!-- ******* -->
+
+      <a class="user avatar" data-toggle="dropdown" href="javascript:void(0)">
+    <img src="http://upload.jianshu.io/users/upload_avatars/228457/9d13b576fc8a.jpg?imageMogr/thumbnail/90x90/quality/100" alt="100" /> <b class="caret"></b>
+</a>  <ul class="dropdown-menu arrow-top" role="menu" aria-labelledby="dLabel">
+    <li>
+  <a href="/writer#/"><i class="fa fa-pencil"></i> 写文章</a>
+</li>
+<li>
+  <a target="_blank" href="/users/272d1894fd69"><i class="fa fa-user"></i> 我的主页</a>
+</li>
+  <li>
+    <a href="/favourites">
+      <i class="fa fa-heart"></i> 我喜欢的
+</a>  </li>
+  <li>
+    <a href="/bookmarks">
+      <i class="fa fa-bookmark"></i> 我的收藏
+</a>  </li>
+  <li>
+    <a href="/notifications">
+      <i class="fa fa-bell"></i> 提醒
+        <span class="label label-important">2</span>
+</a>  </li>
+  <li>
+    <a href="/chats">
+      <i class="fa fa-envelope"></i> 简信
+</a>  </li>
+  <li><a href="/settings"><i class="fa fa-cogs"></i> 设置</a></li>
+  <li>
+    <a href="/wallet">
+      <i class="fa fa-credit-card"></i> 钱包
+</a>  </li>
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="#"><i class="fa fa-question-circle"></i> 帮助</a>
+    <ul class="dropdown-menu">
+      <li><a href="http://www.jianshu.com/notebooks/547/latest" target="_blank">帮助中心</a></li>
+      <li><a target="_blank" href="/contact">联系我们</a></a></li>
+    </ul>
+  </li>
+  <li>
+    <a rel="nofollow" data-method="DELETE" href="/sign_out">
+      <i class="fa fa-sign-out"></i> 登 出
+</a>  </li>
+
+  </ul>
+
+
+    <!-- Buttons upper right -->
+      <div class="btn-group editor-article">
+                  <a class='daytime set-view-mode' href='javascript:void(0)'><i class="fa fa-moon-o"></i></a>
+        <span>
+
+
+
+
+            <a data-type="json" data-mcomponent="easy-bookmark" class="bookmark" data-remote="true" rel="nofollow" data-method="post" href="/notes/3647308/bookmark">
+    <i class="fa fa-bookmark-o"></i><span>收藏文章</span>
+</a>
+        </span>
+      </div>
+    <!-- ******* -->
+  </div>
+
+  <div class="container">
+    <!-- Article activities for width under 768px -->
+    <div class="related-avatar-group activities"></div>
+      <div class="article">
+        <div class="preview">
+          <div class="author-info">
+              <div class="btn btn-small follow following" id="follow_user_68562">
+    <a data-type="json" data-user-slug="b1dd2b2c87a8" data-remote="true" rel="nofollow" data-method="post" href="/users/b1dd2b2c87a8/toggle_like"><i class="fa fa-check"></i>  <span>正在关注</span></a>
+  </div>
+
+            <a class="avatar" href="/users/b1dd2b2c87a8">
+              <img src="http://upload.jianshu.io/users/upload_avatars/68562/1e4ed4125b3a.png?imageMogr/thumbnail/90x90/quality/100" alt="100" />
+</a>            <span class="label">
+                作者
+            </span>
+            <a class="author-name blue-link" href="/users/b1dd2b2c87a8">
+              <span>正义的花生</span>
+</a>              <span data-toggle='tooltip' data-original-title='最后编辑于 2016.04.21 04:12'>2016.04.20 05:30*</span>
+            <div>
+              <span>写了124384字</span>，<span>被7792人关注</span>，<span>获得了10687个喜欢</span>
+            </div>
+          </div>
+          <h1 class="title">Scheme 编程环境的设置</h1>
+          <div class="meta-top">
+            <span class="wordage"></span>
+            <span class="views-count"></span>
+            <span class="comments-count"></span>
+            <span class="likes-count"></span>
+          </div>
+
+          <!-- Collection/Bookmark/Share for width under 768px -->
+          <div class="article-share"></div>
+          <!-- -->
+
+          <div class="show-content"><p>（转自博客）</p>
+<div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/68562-9e261a1c09bd7225.gif?imageMogr2/auto-orient/strip" data-original-src="http://upload-images.jianshu.io/upload_images/68562-9e261a1c09bd7225.gif?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div>
+<p>介绍了这么久的 Scheme，却没有讲过如何配置一个高效的 Scheme 的编程环境。有些人开始学习 Scheme 的时候感觉无从下手，所以今天讲一下它的配置。</p>
+<p>Scheme 的配置有很多种方式，我不想介绍太多东西，免得有人看花了眼，所以这里只介绍一下我自己的配置。我不大喜欢像 <a href="http://www.neilvandyke.org/quack" target="_blank">Quack</a> 一类的复杂的环境，因为它们经常有很多多余的功能，却缺少我想要的功能。一旦我想修改它们，又到处出问题。我的配置很简约，我用它写了几千行的超高难度的代码，翻来覆去的改，感觉效率非常高，也没有觉得缺少什么特别重要的东西。</p>
+<p>现在我就一步一步的介绍我的配置。</p>
+<h3>安装 Scheme</h3>
+<p>世界上最好的 Scheme 实现是 Chez Scheme，但是它不免费也不开源。所以如果你不想破费，那就只好下载一个它的“免费版”，叫做 Petite Chez Scheme（petite 是法语里“小”的意思）。它可以在这里下载：</p>
+<p><a href="http://scheme.com/download" target="_blank">http://scheme.com/download</a></p>
+<p>这个页面挺长，上面都是正式版的 Chez Scheme，一点击就会叫你“联系销售人员”。要滚动到下面才能看见免费的版本。怎么安装我就不讲了，自己看说明应该很容易的。</p>
+<p>Petite 是一个完善的，高效的实现，你可以把它当成解释器使用。这个解释器的速度非常之快，甚至比很多别的 Scheme 实现编译后的代码还要快。但是它有一个问题，就是它给出的出错信息太简约了，以至于连出错的函数名字都不告诉你。这样写大一点的程序就会比较痛苦了（虽然我还是用它写了2000多行的编译器代码）。</p>
+<p>所以如果你想写稍微大点的东西，可以用 Racket。它可以在这里下载：</p>
+<p><a href="http://racket-lang.org" target="_blank">http://racket-lang.org</a></p>
+<p>安装应该很容易。Ubuntu 也自带了 Racket，所以可以直接让系统安装它。</p>
+<h3>设置 ParEdit mode</h3>
+<p>我编辑 Scheme 的时候都用 Emacs。我使用一个叫做 ParEdit mode 的插件。它可以让你“半结构化”式的编辑 Scheme 和其它的 Lisp 文件。开头你可能会有点不习惯，可是一旦习惯了，你就再也离不开它。</p>
+<p>ParEdit mode 可以在这里下载：</p>
+<p><a href="http://mumble.net/~campbell/emacs/paredit.el" target="_blank">http://mumble.net/~campbell/emacs/paredit.el</a></p>
+<p>下载之后，把它放到一个目录里，比如 ~/.emacs.d，然后打开 ~/.emacs 配置文件，加入如下设置：</p>
+<pre><code>(add-to-list 'load-path "~/.emacs.d")
+(autoload 'paredit-mode "paredit"
+  "Minor mode for pseudo-structurally editing Lisp code."
+  t)</code></pre>
+<p>这样，只要你使用 M-x paredit-mode 就可以自动载入这个模式。具体的操作方式可以看它的说明（按 C-h m 查看“模式帮助”），我下面也会简单说一下。</p>
+<h3>设置 scheme mode</h3>
+<p>我一般就用系统自带的 Scheme 模式，叫 cmuscheme。但是为了方便，我自己写了几个函数，用于在执行 Scheme 代码的时候自动启动解释器，并且打开解释器窗口。你基本只需要把下面的代码拷贝到你的 .emacs 文件里就行：</p>
+<pre><code>;;;;;;;;;;;;
+;; Scheme
+;;;;;;;;;;;;
+
+(require 'cmuscheme)
+(setq scheme-program-name "racket")         ;; 如果用 Petite 就改成 "petite"</code></pre>
+<pre><code>;; bypass the interactive question and start the default interpreter
+(defun scheme-proc ()
+  "Return the current Scheme process, starting one if necessary."
+  (unless (and scheme-buffer
+               (get-buffer scheme-buffer)
+               (comint-check-proc scheme-buffer))
+    (save-window-excursion
+      (run-scheme scheme-program-name)))
+  (or (scheme-get-process)
+      (error "No current process. See variable `scheme-buffer'")))</code></pre>
+<pre><code>(defun scheme-split-window ()
+  (cond
+   ((= 1 (count-windows))
+    (delete-other-windows)
+    (split-window-vertically (floor (* 0.68 (window-height))))
+    (other-window 1)
+    (switch-to-buffer "*scheme*")
+    (other-window 1))
+   ((not (find "*scheme*"
+               (mapcar (lambda (w) (buffer-name (window-buffer w)))
+                       (window-list))
+               :test 'equal))
+    (other-window 1)
+    (switch-to-buffer "*scheme*")
+    (other-window -1))))</code></pre>
+<pre><code>(defun scheme-send-last-sexp-split-window ()
+  (interactive)
+  (scheme-split-window)
+  (scheme-send-last-sexp))</code></pre>
+<pre><code>(defun scheme-send-definition-split-window ()
+  (interactive)
+  (scheme-split-window)
+  (scheme-send-definition))
+
+(add-hook 'scheme-mode-hook
+  (lambda ()
+    (paredit-mode 1)
+    (define-key scheme-mode-map (kbd "&lt;f5&gt;") 'scheme-send-last-sexp-split-window)
+    (define-key scheme-mode-map (kbd "&lt;f6&gt;") 'scheme-send-definition-split-window)))</code></pre>
+<p>我的配置会在加载 Scheme 文件的时候自动载入 ParEdit mode，并且把 F5 键绑定到“执行前面的S表达式”。这样设置的目的是，我只要把光标移动到一个S表达式之后，然后用一根手指头按 F5，就可以执行程序。够懒吧。</p>
+<h3>ParEdit mode 的简单使用方法</h3>
+<p>ParEdit mode 是一个很特殊的模式。它起作用的时候，你不能直接修改括号。这样所有的括号都保持完整的匹配，不可能出现语法错误。但是这样有一个问题，如果你要把一块代码放进另一块代码，或者从里面拿出来，就不是很方便了。</p>
+<p>为此，ParEdit mode 提供了几个非常高效的编辑方式。我平时只使用两个： </p>
+<ol>
+<li>
+<p><code>C-right</code>: 也就是按住 Ctrl 再按右箭头。它的作用是让光标右边的括号，“吞掉”下一个S表达式。</p>
+<pre><code>比如，`(a b c) (d e)`。你把光标放在 `(a b c)` 里面，然后按 `C-right`。结果就是 `(a b c (d e))`。也就是把 `(d e)` 被整个“吞进”了 `(a b c)` 里面。</code></pre>
+</li>
+<li>
+<p><code>M-r</code>: 去掉外层代码。</p>
+<p>这在你需要去掉外层的 let 等结构的时候非常有用。比如，如果你的代码看起来是这样：</p>
+<pre><code>(let ([x 10])
+  (* x 2))</code></pre>
+<p>当你把光标放在 <code>(* x 2)</code> 的最左边，然后按  <code>M-r</code>，结果就变成了</p>
+<pre><code>(* x 2)</code></pre>
+<p>也就是把外面的 <code>(let ([x 10]) ...)</code> 给“掀掉”了。</p>
+<p>其它的一些按键虽然也有用，不过我觉得这两个是最有用的，甚至不可缺少的。有些其他的自动匹配括号的模式，没有提供这种按键，所以用起来很别扭。</p>
+</li>
+</ol>
+<h3>设置括号颜色</h3>
+<p>很多人看见 Lisp 就怕了，就是因为它看起来括号太多。可是这样的语法，却是有很大的好处的（参考这篇博文《谈语法》）。如果你真的觉得括号碍眼，你可以稍微调整一下括号的颜色，比如淡灰色。这样括号看起来就没有那么显眼了。</p>
+<p>你只需要下载这个 el，放到你的 .emacs.d:</p>
+<p><a href="https://www.dropbox.com/s/v0ejctd1agrt95x/parenface.el" target="_blank">https://www.dropbox.com/s/v0ejctd1agrt95x/parenface.el</a></p>
+<p>然后在 .emacs 里面加入两行：</p>
+<pre><code>(require 'parenface)
+(set-face-foreground 'paren-face "DimGray")</code></pre>
+<p>然后再打开 Scheme 代码的时候，你就会看到是这个样子：</p>
+<div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/68562-98e6ff0db2ec8c59.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/68562-98e6ff0db2ec8c59.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2"><br><div class="image-caption"></div>
+</div>
+<p>好了，这就是我写 Scheme 的所有配置了。希望这些有所帮助。</p>
+</div>
+        </div>
+      </div>
+
+      <div class="visitor_edit">
+        <!-- further readings -->
+        <div id="further-readings" data-user-slug="0a12ae37aaa3" data-user-nickname="exuan">
+          <div id="further-reading-line" class="hide further-reading-line"></div>
+          <ul id="further-readings-list" class="reading-list unstyled"></ul>
+          <div id="further-reading-new" class="reading-edit">
+              <a id="further-reading-new-prompt" href="javascript:void(null)">
+                <i class="fa fa-plus-circle"></i> 推荐拓展阅读
+</a>            <div id="further-reading-form"></div>
+          </div>
+        </div>
+        <div class="pull-right">
+          <!-- abuse report -->
+          <div id="abuse-report" class="report_article dropdown pull-right" data-js-module="report">
+              <a data-toggle="dropdown" href="#"><i class="fa fa-flag-o"></i> 举报文章</a>
+              <ul class="dropdown-menu arrow-top">
+                <li><a data-type="json" data-remote="true" rel="nofollow" data-method="post" href="/notes/3647308/abuse_reports?type=ad">广告及垃圾信息</a></li>
+                <li><a data-type="json" data-remote="true" rel="nofollow" data-method="post" href="/notes/3647308/abuse_reports?type=plagiarism">抄袭或未授权转载</a></li>
+                <li><a data-toggle="modal" data-url="/notes/3647308/abuse_reports" href="#report-modal">其他</a></li>
+              </ul>
+          </div>
+          <!-- copyright -->
+          <div class="author-copyright pull-right" data-toggle="tooltip" data-html="true" title="转载请联系作者获得授权，并标注“简书作者”。">
+            <a><i class="fa fa-copyright"></i> 著作权归作者所有</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reward / Support Author -->
+
+      <!-- article meta bottom -->
+      <div class="meta-bottom clearfix">
+        <!--  Like Button -->
+        <div class="like ">
+            <div class="like-button">
+              <a class="like-content" data-remote="true" rel="nofollow" data-method="post" href="/notes/3647308/like">
+                <i class="fa fa-heart-o"></i>  喜欢
+</a></div>          <span id="likes-count" data-toggle="tooltip" data-placement="right" title="查看所有喜欢的用户">
+            <i class="fa fa-spinner fa-pulse"></i>
+</span>        </div>
+        <!--  share group -->
+        <div class="share-group pull-right">
+          <a href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;http://cwb.assets.jianshu.io/notes/images/3647308/weibo/image_9952b2726099.jpg&#39;, &#39;推荐 正义的花生 的文章《Scheme 编程环境的设置》（ 分享自 @简书 ）&#39;,&#39;http://www.jianshu.com/p/8893ff7f80a4&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-name="weibo">
+            <i class="fa fa-weibo"></i><span>分享到微博</span>
+          </a>
+          <a data-toggle="modal" href="#share-weixin-modal" data-name="weixin">
+            <i class="fa fa-weixin"></i><span>分享到微信</span>
+          </a>
+          <div class="more">
+            <a href="javascript:void(0)" data-toggle="dropdown">更多分享<i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-menu arrow-top">
+                <li><a href="http://cwb.assets.jianshu.io/notes/images/3647308/weibo/image_9952b2726099.jpg" target="_blank" data-name="changweibo"><i class="fa fa-arrow-circle-o-down"></i> 下载长微博图片</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;url=&#39;+e(&#39;http://www.jianshu.com/p/8893ff7f80a4&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 正义的花生 的文章《Scheme 编程环境的设置》（ 分享自 @jianshuio ）&#39;),x=function(){if(!window.open(r,&#39;tweibo&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="tweibo"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/tweibo.png">分享到腾讯微博</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;http://www.jianshu.com/p/8893ff7f80a4&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 正义的花生 的文章《Scheme 编程环境的设置》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="qzone"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/qzone.png">分享到QQ空间</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;http://www.jianshu.com/p/8893ff7f80a4&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 正义的花生 的文章《Scheme 编程环境的设置》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="twitter"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/twitter.png">分享到Twitter</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=http://www.jianshu.com/p/8893ff7f80a4&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="facebook"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/facebook.png">分享到Facebook</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;http://www.jianshu.com/p/8893ff7f80a4&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();" data-name="google_plus"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/google_plus.png">分享到Google+</a></li>
+                <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;http://www.jianshu.com/p/8893ff7f80a4&#39;)+&#39;&amp;title=&#39;+e(&#39;Scheme 编程环境的设置&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()" data-name="douban"><img src="http://baijii-common.b0.upaiyun.com/social_icons/32x32/douban.png">分享到豆瓣</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modals -->
+      <div id="share-weixin-modal" class="modal hide fade share-weixin-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  </div>
+  <div class="modal-body">
+    <h5>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h5>
+  </div>
+</div>
+
+      <div id="contribute-modal" tabindex="-1" class="arrow-top user-editor-actions modal hide fade">
+  <div class="modal-header">
+    <b>
+      添加到我管理的专题
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </b>
+  </div>
+  <div class="modal-body">
+    <div class="search">
+      <input type="text" name="search_term" id="search_term" class="input-large search-query" placeholder="搜索我管理的专题" data-search-collections-url="/collections/search?note_id=3647308" />
+    </div>
+    <ul class="add-list"></ul>
+  </div>
+</div>
+
+      <div id="notebooks-menu" class="panel notebooks-menu arrow-top modal hide fade"><img class="loader-tiny" src="http://baijii-common.b0.upaiyun.com/loaders/tiny.gif" alt="Tiny" /></div>
+      <div id="collection-menu" class="panel collection-menu arrow-top modal hide fade"><img class="loader-tiny" src="http://baijii-common.b0.upaiyun.com/loaders/tiny.gif" alt="Tiny" /></div>
+
+      <div id="likes-modal" class="modal modal_new support_list-modal fullscreen hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>喜欢的用户</h3>
+      </div>
+      <div class="modal-body">
+        <ul class="unstyled users">
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Comments -->
+    <div id="comments" class="comment-list clearfix">
+    </div>
+    <!-- -->
+
+  </div>
+
+  <script type='application/json' data-name='note'>
+    {"id":3647308,"abbr":"（转自博客）介绍了这么久的Scheme，却没有讲过如何配置一个高效的Scheme的编程环境。有些人开始学习Scheme的时候感觉无从下手，所以今天讲一下它的配置。Scheme的配置有很多种方式，我不想介绍太多东西，免得有人看花了眼，所以这里只介绍一下我自己的配置。我不大喜欢像Quack一类的复杂的环境，因为它们经常有很多多余的功能，却缺少我想要的功能。一旦我想修改它们，又到处出问题。我的配置很简约，我用它写了几千行的超高难度的代码，翻来覆去的改，感觉效率非常高，也没有觉得缺少什么特别重要的东西。现在我就一步一步的介绍我的配置。...","slug":"8893ff7f80a4","url":"http://www.jianshu.com/p/8893ff7f80a4","image_url":"http://cwb.assets.jianshu.io/notes/images/3647308/weibo/image_9952b2726099.jpg","wordage":1654,"has_further_readings":false,"views_count":2154,"likes_count":41,"comments_count":0,"rewards_total_count":0}
+  </script>
+
+  <script type='application/json' data-name='uuid'>
+    {"uuid":"f203e0e0-ef43-0133-2712-525400918cd7"}
+  </script>
+
+  <script type='application/json' data-name='author'>
+    {"id":68562,"nickname":"正义的花生","slug":"b1dd2b2c87a8","public_notes_count":36,"followers_count":7792,"total_likes_count":10687,"is_current_user":false,"is_signed_author":false}
+  </script>
+
+    <script type='application/json' data-name='current-user'>
+      {"id":228457,"slug":"272d1894fd69","nickname":"knarf","avatar_url":"http://upload.jianshu.io/users/upload_avatars/228457/9d13b576fc8a.jpg?imageMogr/thumbnail/90x90/quality/100","blocked_by_author":false,"blocked_user_ids":[],"balance_in_cent":0,"is_a_collection_editor":false}
+    </script>
+
+    <script type='application/json' data-name='comment-participants'>
+      []
+    </script>
+
+
+
+    <div class="include-collection">
+      <div class="content">
+        <h5>被以下专题收入，发现更多相似内容：</h5>
+        <ul id="all-collections" class="unstyled collections-list">
+            <li>
+              <a class="avatar" href="/collection/NEt52a"><img src="http://upload.jianshu.io/collections/images/16/computer_guy.jpg?imageMogr2/auto-orient/strip|imageView2/2/w/180" alt="180" /></a>              <div class="collections-info">
+                <h5>
+                  <a href="/collection/NEt52a">程序员</a>
+                </h5>
+
+  <div class="btn follow following" id=subscribe_collection_16>
+    <a data-type="json" data-collection-id="16" data-remote="true" rel="nofollow" data-method="post" href="/collections/16/unsubscribe">
+      <i class="fa fa-fw fa-check"></i>  <span>正在关注</span>
+</a>    <span>82.6K</span>
+  </div>
+
+                <p class="description">简书程序员大本营
+
+投稿须知：
+1.本专题仅收录与程序有关的文章。
+2.请在代码框里写代码，尽量保证可看性。
+
+关注简书官...</p>
+                <p>
+                  <a class="blue-link" href="/collection/NEt52a">11476篇文章</a> · 82658人关注
+                </p>
+              </div>
+            </li>
+            <li>
+              <a class="avatar" href="/collection/3sT4qY"><img src="http://upload.jianshu.io/collections/images/52/73e439125f963aa708f93f90b6cf2a9a.png?imageMogr2/auto-orient/strip|imageView2/2/w/180" alt="180" /></a>              <div class="collections-info">
+                <h5>
+                  <a href="/collection/3sT4qY">今日看点</a>
+                </h5>
+
+  <div class="btn btn-success follow" id=subscribe_collection_52>
+    <a data-type="json" data-collection-id="52" data-remote="true" rel="nofollow" data-method="post" href="/collections/52/subscribe">
+      <i class="fa fa-fw fa-plus"></i>  <span>添加关注</span>
+</a>    <span>10.0K</span>
+  </div>
+
+                <p class="description">本专题仅让编辑在特殊情况下使用，入选文章将立刻上首页。绕过推荐队列。
+
+使用场景：
+- 突发事件的相关内容，需要立刻推首页
+-...</p>
+                <p>
+                  <a class="blue-link" href="/collection/3sT4qY">5866篇文章</a> · 10028人关注
+                </p>
+              </div>
+            </li>
+            <li>
+              <a class="avatar" href="/collection/04deb061fa97"><img src="http://upload.jianshu.io/collections/images/11462/IMG_3711.JPG?imageMogr2/auto-orient/strip|imageView2/2/w/180" alt="180" /></a>              <div class="collections-info">
+                <h5>
+                  <a href="/collection/04deb061fa97">王垠</a>
+                </h5>
+
+  <div class="btn btn-success follow" id=subscribe_collection_11462>
+    <a data-type="json" data-collection-id="11462" data-remote="true" rel="nofollow" data-method="post" href="/collections/11462/subscribe">
+      <i class="fa fa-fw fa-plus"></i>  <span>添加关注</span>
+</a>    <span>265</span>
+  </div>
+
+                <p class="description">王垠</p>
+                <p>
+                  <a class="blue-link" href="/collection/04deb061fa97">55篇文章</a> · 265人关注
+                </p>
+              </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+  <!-- Modal -->
+</div>
+
+  </div>
+  <div id="flash" class="hide"></div>
+
+  <div id="view-mode-modal" tabindex="-1" class="modal hide read-modal" aria-hidden="false" data-js-module='view-mode-modal'>
+    <div class="btn-group change-background" data-toggle="buttons-radio">
+
+      <a class="btn btn-daytime active" data-mode="day" data-remote="true" rel="nofollow" data-method="put" href="/preferences?read_mode=day">
+        <i class="fa fa-sun-o"></i>
+</a>      <a class="btn btn-nighttime " data-mode="night" data-remote="true" rel="nofollow" data-method="put" href="/preferences?read_mode=night">
+        <i class="fa fa-moon-o"></i>
+</a>    </div>
+    <div class="btn-group change-font" data-toggle="buttons-radio">
+      <a class="btn font " data-font="font1" data-remote="true" rel="nofollow" data-method="put" href="/preferences?default_font=font1">宋体</a>
+      <a class="btn font hei active" data-font="font2" data-remote="true" rel="nofollow" data-method="put" href="/preferences?default_font=font2">黑体</a>
+    </div>
+    <div class="btn-group change-locale" data-toggle="buttons-radio">
+      <a class="btn font active" data-locale="zh-CN" data-remote="true" rel="nofollow" data-method="put" href="/preferences/set_locale?locale=zh-CN">简</a>
+      <a class="btn font hei " data-locale="zh-TW" data-remote="true" rel="nofollow" data-method="put" href="/preferences/set_locale?locale=zh-TW">繁</a>
+    </div>
+  </div>
+
+  <div id="report-modal" class="modal hide fade modal_report fullscreen" tabindex="-1" role="dialog"
+  aria-labelledby="reportModal" aria-hidden="true" data-js-module="report-modal">
+  <form id="report-form" data-type="json" action="javascript:void(0)" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+    <input type="hidden" name="type" id="type" value="other" />
+
+    <div class="modal-header">
+      <b>举报原因</b>
+    </div>
+    <div class="modal-body">
+      <textarea name="content" id="content" maxlength="2000" placeholder="写下你的举报原因...">
+</textarea>
+    </div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true" href="javascript:void(0)">取消</a>
+      <input type="submit" name="commit" value="确认" class="btn btn-info" />
+    </div>
+</form></div>
+
+
+  <script src="http://cdn-qn0.jianshu.io/assets/base-d268f0005c67dadb25e29097a6a5bb21.js"></script>
+
+  <script src="http://cdn-qn0.jianshu.io/assets/reading-base-9132a81390eb5b2cc4f21734b0e9cd08.js"></script>
+  <script src="http://cdn-qn0.jianshu.io/assets/reading/module_sets/note_show-12e94137c3593b4c6278c57fead5ad33.js"></script>
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-35169517-1']);
+  _gaq.push(['_setCustomVar', 2, 'User Type', 'Member', 1 ]);
+  _gaq.push(['_trackPageview']);
+
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

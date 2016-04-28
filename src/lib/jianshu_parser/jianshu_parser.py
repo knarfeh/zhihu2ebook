@@ -17,7 +17,7 @@ class JianshuParser(BaseParser):
         self.article_parser = JianshuArticle(self.dom)
         return
 
-    def get_jianshu_info_list(self):
+    def get_extra_info(self):
         author_parser = JianshuAuthorInfo()     # jianshu_author表中的信息
         author_parser.set_dom(self.dom)
         return [author_parser.get_info()]
