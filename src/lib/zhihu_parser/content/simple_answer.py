@@ -14,7 +14,7 @@ class SimpleAnswer(Answer):
             self.footer = dom.find('div', class_='zm-meta-panel')
             if self.body:
                 content = self.get_tag_content(self.body)
-                self.content = BeautifulSoup(Match.fix_html(content, 'zhihu'), 'html.parser')
+                self.content = BeautifulSoup(Match.fix_html(content, 'zhihu'), 'lxml')
             self.author_parser.set_dom(dom)
         return
 

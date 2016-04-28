@@ -8,7 +8,7 @@ from src.lib.parser_tools import ParserTools
 
 class BaseParser(ParserTools):
     def __init__(self, content):
-        self.dom = BeautifulSoup(content, 'html.parser')
+        self.dom = BeautifulSoup(content, 'lxml')
         self.answer_parser = SimpleAnswer()
 
     def get_answer_dom_list(self):

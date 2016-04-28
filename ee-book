@@ -13,8 +13,55 @@ from src.tools.match import Match
 from src.login import Login
 from src.constants import url_info
 
+from pycallgraph import Config
+from pycallgraph import GlobbingFilter
 from pycallgraph import PyCallGraph
 from pycallgraph.output import GraphvizOutput
+
+config = Config(max_depth=5)
+config.trace_filter = GlobbingFilter(exclude=[
+    'bs4.*',
+    'BeautifulSoup.*',
+    'pycallgraph.*',
+    '*.closeEvent',
+    '*.<module>',
+    'src.tools.match.*',
+    '*.EEBook.__init__',
+    'src.main.init_database',
+    'src.tools.config_load',
+    'src.utils.log.*',
+    'src.tools.path.*',
+    'src.tools.db.*',
+    'src.container.*',
+    'src.url_parser.*',
+    'src.tools.config.*',
+    'src.tools.html_creator.*',
+    '*.JianshuAuthorWorker.parse_content',
+    '*.JianshuAuthorWorker.save',
+    '*.JianshuAuthorWorker.__init__',
+    '*.JianshuAuthorWorker.create_save_config',
+    '*.JianshuAuthorWorker.add_property',
+    '*.JianshuAuthorWorker.start_create_work_list',
+    '*.JianshuAuthorWorker.start_worker',
+    '*.JianshuAuthorWorker.clear_work_set',
+    '*.JianshuAuthorWorker.start',
+    '*.print_in_single_line',
+    '*.http.set_cookie',
+    '*.html5lib.constants.*',
+    '*.create_single_html_book',
+    'src.container.initialbook.*',
+    '*.jianshu_parser.*',
+    '*.page_worker.*',
+    '*.controler.*',
+    '*.page_worker.*',
+    '*.Book.__init__',
+    '*.create_book_package',
+    '*.flatten',
+    '*.volume_book',
+    '*.book_to_html',
+    '*.Epub.__init__',
+    '*.set_output_path',
+])
 
 reload(sys)
 base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
@@ -66,6 +113,8 @@ if __name__ == '__main__':
             print(help_info)
             sys.exit()
         elif option in ('-g', '--gui'):
+            # graphviz = GraphvizOutput(output_file='filter_gui.png')
+            # with PyCallGraph(output=graphviz, config=config):
             from PyQt4.QtGui import QApplication
             from PyQt4.QtGui import QIcon
             from src.gui.ui import MainWindow
@@ -88,16 +137,18 @@ if __name__ == '__main__':
             login.start()
             sys.exit()
         elif option in ('-u', '--url'):
-            url = args
-            recipe_kind = Match.get_recipe_kind(url)
-            if recipe_kind == 'Unsupport type':
-                print("Unsupport type!")
-                print("Please try again.")
+            graphviz = GraphvizOutput(output_file='filter_exclude.png')
+            with PyCallGraph(output=graphviz, config=config):
+                url = args
+                recipe_kind = Match.get_recipe_kind(url)
+                if recipe_kind == 'Unsupport type':
+                    print("Unsupport type!")
+                    print("Please try again.")
+                    sys.exit()
+                print u"website type: " + str(recipe_kind)
+                game = EEBook(recipe_kind=recipe_kind, url=url)
+                game.begin()
                 sys.exit()
-            print u"website type: " + str(recipe_kind)
-            game = EEBook(recipe_kind=recipe_kind, url=url)
-            game.begin()
-            sys.exit()
         elif option in ('-i', '--info'):
             url = args
             recipe_kind = Match.get_recipe_kind(url)
@@ -117,6 +168,7 @@ if __name__ == '__main__':
             game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
             game.begin()
             sys.exit()
+
     # ./ee-book
     file_name = 'ReadList.txt'
     log.print_log(u'read from %s' % file_name)

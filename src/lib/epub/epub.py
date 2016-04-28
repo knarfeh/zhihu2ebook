@@ -120,6 +120,8 @@ class Epub(object):
                 Debug.print_in_single_line(u'将{}添加至电子书内'.format(filename))
                 epub.write(parent + '/' + filename, compress_type=zipfile.ZIP_STORED)
         epub.close()
+
+        print '\n', epub_name, u"制作成功!"
         return
 
     def create_chapter(self, src, title):
