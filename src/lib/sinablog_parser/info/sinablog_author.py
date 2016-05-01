@@ -48,7 +48,6 @@ class SinaBlogAuthorInfo(ParserTools):
         if not info_img:
             return
         info_img_href = ParserTools.get_attr(info_img[0], 'real_src')
-        Debug.logger.debug(u"info_img_href是??" + str(info_img_href))
         if not info_img_href:
             Debug.logger.debug(u"用户头像没有找到")
             # TODO: 加一个默认的头像

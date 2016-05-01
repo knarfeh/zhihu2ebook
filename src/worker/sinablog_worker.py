@@ -79,7 +79,7 @@ class sinablogAuthorWorker(PageWorker):
         href_profile = 'http://blog.sina.com.cn/s/profile_{}.html'.format(author_id)
         content_profile = Http.get_content(href_profile)
         parser = SinaBlogParser(content_profile)
-        self.question_list += parser.get_sinablog_info_list()
+        self.question_list += parser.get_extra_info()
         content_article_list = Http.get_content(href_article_list)
         article_num = int(self.parse_article_num(content_article_list))
         return article_num
