@@ -16,7 +16,7 @@ class SinaBlogParser(BaseParser):
 
         return
 
-    def get_sinablog_info_list(self):
+    def get_extra_info(self):
         author_parser = SinaBlogAuthorInfo()     # sinablog_info表中的信息
         author_parser.set_dom(self.dom)
         return [author_parser.get_info()]
