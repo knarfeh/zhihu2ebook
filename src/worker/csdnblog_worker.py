@@ -60,7 +60,7 @@ class csdnAuthorWorker(PageWorker):
         :return:
         """
         parser = CsdnBlogParser(index_content)
-        self.question_list += parser.get_csdnblog_info_list()
+        self.question_list += parser.get_extra_info()
         article_num = self.question_list[0]['article_num']
         article_list = self.parse_get_article_list(index_content)
         return article_num, article_list

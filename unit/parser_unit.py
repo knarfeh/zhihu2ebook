@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 import sys
 
+import unittest
+
 from src.lib.zhihu_parser.author import AuthorParser
 from src.lib.zhihu_parser.collection import CollectionParser
 from src.lib.zhihu_parser.question import QuestionParser
 from src.lib.zhihu_parser.topic import TopicParser
 
 from src.lib.jianshu_parser.jianshu_parser import JianshuParser
+
+from src.lib.csdnblog_parser.csdnblog_parser import CsdnBlogParser
+
+from src.lib.sinablog_parser.sinablog_parser import SinaBlogParser
 from src.tools.debug import Debug
 
 reload(sys)
@@ -14,8 +20,8 @@ sys.setdefaultencoding('utf8')
 
 sys.setrecursionlimit(1000000)  # 为了适应知乎上的长答案，需要专门设下递归深度限制。。。
 
-is_info = False
-kind = 'jianshu_author'  # 直接在这里替换类别即可完成测试。可供测试的类别见字典键值
+is_info = True
+kind = 'csdnblog_author'  # 直接在这里替换类别即可完成测试。可供测试的类别见字典键值
 
 unit = {
     'answer': {
@@ -52,6 +58,16 @@ unit = {
         'src_answer': './unit_html/jianshu_author_one_article.html',
         'src_info': './unit_html/jianshu_author.html',
         'parser': JianshuParser,
+    },
+    'csdnblog_author': {
+        'src_answer': './unit_html/csdnblog_author_one_article.html',
+        'src_info': './unit_html/csdnblog_author.html',
+        'parser': CsdnBlogParser,
+    },
+    'sinablog_author': {
+        'src_answer': './unit_html/sinablog_author_one_article.html',
+        'src_info': './unit_html/sinablog_author.html',
+        'parser': SinaBlogParser,
     }
 }
 if is_info:
@@ -63,16 +79,17 @@ content = open(src, 'r').read()
 parser = unit[kind]['parser'](content)
 
 
-if is_info:
-    Debug.print_dict(parser.get_extra_info())
-    print '----------------------'
-    print '=========================='
-else:
-    for answer in parser.get_answer_list():
-        Debug.print_dict(answer)
-        print '----------------------'
-    print '=========================='
+# if is_info:
+#     Debug.print_dict(parser.get_extra_info())
+#     print '----------------------'
+#     print '=========================='
+# else:
+#     for answer in parser.get_answer_list():
+#         Debug.print_dict(answer)
+#         print '----------------------'
+#     print '=========================='
 
     # for question in parser.get_question_info_list():
     #     Debug.print_dict(question)
     #     print '----------------------'
+

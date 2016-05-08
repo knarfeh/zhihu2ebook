@@ -82,8 +82,8 @@ class DownloadDialog(QDialog, Ui_Dialog):
             %(cb)s<br/>
             %(description)s
             </p>
-            ''' % dict(title='zhihu', cb='Created by: YaoZeyuan',
-                     description=u'https://github.com/YaoZeyuan/ZhihuHelp <br/>第一次使用,请登录!\
+            ''' % dict(title='zhihu', cb='Created by: Frank',
+                     description=u'https://github.com/knarfeh/EE-Book <br/>第一次使用,请登录!\
                       若不登录,将尝试用程序内置账号登陆,私人收藏夹将无法爬取'))
         elif url == 'jianshu':
             self.detail_box.setVisible(True)
@@ -129,7 +129,7 @@ class DownloadDialog(QDialog, Ui_Dialog):
         if not login.login(account=account, password=password, captcha=captcha):
             click_ok = QtGui.QMessageBox.information(self, u"登陆失败", u"啊哦，登录失败，可能需要输入验证码\n请尝试输入验证码")
             if click_ok:
-                login.get_captcha()
+                login.get_captcha(from_ui=True)
                 return
         Config.remember_account_set = True
         Config._save()

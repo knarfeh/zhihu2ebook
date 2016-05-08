@@ -94,7 +94,7 @@ class Login(object):
             return False
 
     @staticmethod
-    def get_captcha():
+    def get_captcha(from_ui=False):
         unix_time_stp = str(int(1000 * time.time()))[0:13]
         # 开始拉取验证码
         content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))
@@ -110,6 +110,8 @@ class Login(object):
             os.system(u'open "{}" &'.format(captcha_path).encode(sys.stdout.encoding))
         else:
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
+        if from_ui is True:
+            return
         captcha = raw_input()
         return captcha
 
