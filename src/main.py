@@ -72,9 +72,9 @@ class EEBook(object):
         程序运行的主函数
         :return: book file 的列表
         """
-        Debug.logger.debug(u"#Debug模式#: 不检查更新")
+        Debug.logger.debug(u"#Debug mode#: don't check update")
         self.init_config(recipe_kind=self.recipe_kind)
-        Debug.logger.info(u"开始读取ReadList.txt的内容")
+        Debug.logger.info(u"Reading ReadList.txt...")
         book_files = []
 
         if self.url is not None:
@@ -96,7 +96,7 @@ class EEBook(object):
         Path.reset_path()
 
         Debug.logger.info(u"开始制作第 {} 本电子书".format(counter))
-        Debug.logger.info(u"对记录 {} 进行分析".format(command))
+        Debug.logger.info(u"analysis {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
 
         if not task_package.is_work_list_empty():
@@ -117,10 +117,11 @@ class EEBook(object):
     @staticmethod
     def init_database():
         if Path.is_file(Path.db_path):
-            Debug.logger.debug(u"连接数据库...")
+            Debug.logger.debug(u"Connect to the database...")
+            Debug.logger.debug(u"db_path: " + str(Path.db_path))
             DB.set_conn(sqlite3.connect(Path.db_path))
         else:
-            Debug.logger.debug(u"新建数据库...")
+            Debug.logger.debug(u"Create db file...")
             DB.set_conn(sqlite3.connect(Path.db_path))
             with open(Path.sql_path) as sql_script:
                 DB.cursor.executescript(sql_script.read())

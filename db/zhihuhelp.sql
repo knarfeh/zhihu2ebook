@@ -135,16 +135,7 @@ CREATE TABLE Article (
   publish_date DATE          NOT NULL    DEFAULT '2000-01-01',
   PRIMARY KEY (href)
 );
-/*
-        # �û����
-        # ���У���ͬ�Ĵ�/ר�����£���ע���ղؼ�/ר��/���ⰴʱ��˳�����
-        # ֻ��¼����ͣ��Ŀ��(������޵Ĵ𰸵�ַ����ע������Ĵ𰸵�ַ)��ʱ��ͻ�ߡ�
-        # ������Ϣ���ݻ���ͺ�Ŀ��ȥ��Ӧ���в�
-        # ����ֻ����¼,��¼������
-        # activeType:��ע/��ͬ
-        # activeTarget:Ŀ����ַ,ʹ��ʱ������ȡ����
-        # TargetType:ר��/�ղؼ�/����/ר������/��
-*/
+
 CREATE TABLE userActive (
   account      VARCHAR(255) NOT NULL    DEFAULT '',
   activeTarget VARCHAR(255) NOT NULL    DEFAULT '',
