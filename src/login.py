@@ -28,7 +28,8 @@ class Login(object):
     def login(self, account, password, captcha=''):
         if self.recipe_kind == 'zhihu':
             # 知乎此处的r参数为一个13位的unix时间戳
-            content = Http.get_content('https://www.zhihu.com/')
+            unix_time_stp = str(int(1000 * time.time()))[0:13]
+            content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))  # 开始拉取验证码
         else:
             Debug.logger.error(u"登录中...未知网站类型错误")
             return
