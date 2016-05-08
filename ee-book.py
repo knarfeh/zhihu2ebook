@@ -93,15 +93,17 @@ if __name__ == '__main__':
                 print("Unsupport type!")
                 print("Please try again.")
                 sys.exit()
-            print(u'website type: ' + str(recipe_kind))
             game = EEBook(recipe_kind=recipe_kind, url=url)
             game.begin()
             sys.exit()
         elif option in ('-i', '--info'):
             url = args
-            recipe_kind = Match.get_recipe_kind(url)
-            info = url_info[recipe_kind]
-            print info
+            url_kind = Match.get_url_kind(url)
+            if url_kind == 'Unknow type':
+                print('Unsupport website or url type. \nPlease check url.')
+            else:
+                info = url_info[url_kind]
+                print(info)
             sys.exit()
         elif option in('-r', '--file'):
             file_name = args
@@ -110,9 +112,9 @@ if __name__ == '__main__':
                 line = read_list[0]
                 recipe_kind = Match.get_recipe_kind(line)
                 if recipe_kind == 'Unsupport type':
-                    print("Unsupport type")
+                    print('Unsupport website or url type. \nPlease check url.')
                     sys.exit()
-            print u"网址类型是:" + str(recipe_kind)
+            print(u"website type:" + str(recipe_kind))
             game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
             game.begin()
             sys.exit()
