@@ -137,13 +137,13 @@ class Book(object):
         # epub.add_css(Path.base_path + u'/www/css/article.css')    # TODO: 来自新浪,需要精简
         for book in book_package.book_list:
             page = book.page_list[0]
-            with open(html_tmp_path + page.filename, u'w') as html:
+            with open(html_tmp_path + page.filename, 'w') as html:
                 html.write(page.content)
             if '_' in page.title:
                 page.title = ''.join(page.title.split('_')[1:])  # 删除章节前缀
             epub.create_chapter(html_tmp_path + page.filename, page.title)
             for page in book.page_list[1:]:
-                with open(html_tmp_path + page.filename, u'w') as html:
+                with open(html_tmp_path + page.filename, 'w') as html:
                     html.write(page.content)
                 epub.add_html(html_tmp_path + page.filename, page.title)
             epub.finish_chapter()
