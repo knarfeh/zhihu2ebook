@@ -124,7 +124,8 @@ class Match(object):
 
         # for SinaBlog
         if recipe_kind in Type.sinablog:
-            print 'fix_html??' + str(recipe_kind)
+            from src.tools.debug import Debug
+            Debug.logger.debug(u'fix_html: ' + str(recipe_kind))
             for item in re.findall(r'\<span class="img2"\>.*?\</span\>', content):
                 content = content.replace(item, '')
             for item in re.findall(r'\<script\>.*?\</script\>', content, re.S):
@@ -141,12 +142,33 @@ class Match(object):
         return content
 
     @staticmethod
-    def detect(command):
+    def detect_recipe_kind(command):
+        u"""
+
+        :param command:
+        :return: command_type, e.g. sinablog_author, answer, column
+        """
         for command_type in Type.type_list:
             result = getattr(Match, command_type)(command)
             if result:
                 return command_type
         return 'unknown'
+
+    @staticmethod
+    def get_url_kind(url):
+        u"""
+        for --info, Similar to get_recipe_kind, but accept more general type
+        :param url:
+        :return: website kind,
+        """
+        split_url = url.split('#')[0]           # remove comment of raw url
+        split_url = split_url.split('$')[0]     # the first one determine type
+
+        kind = 'Unknow type'
+        for keyword in Type.key_word_to_website_type.keys():
+            if split_url.find(keyword) >= 0:
+                kind = Type.key_word_to_website_type[keyword]
+        return kind
 
     @staticmethod
     def get_recipe_kind(url):
@@ -155,12 +177,12 @@ class Match(object):
         :param url: one line
         :return: website kind, e.g. 'zhihu', 'jianshu', 'sinablog', 'csdnblog'
         """
-        split_url = url.split('#')[0]    # remove comment
-        split_url = split_url.split('$')[0]    # the first one determine type
-        url_type = Match.detect(split_url)
+        split_url = url.split('#')[0]           # remove comment of raw url
+        split_url = split_url.split('$')[0]     # the first one determine type
+        url_type = Match.detect_recipe_kind(split_url)
 
         recipe_kind = 'Unsupport type'
-        for website in Type.website_type:
+        for website in Type.website_type.keys():
             if url_type in getattr(Type, website):
                 recipe_kind = website
         return recipe_kind
