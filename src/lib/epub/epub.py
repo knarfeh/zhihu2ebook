@@ -117,11 +117,11 @@ class Epub(object):
             for filename in filenames:
                 if filename in [epub_name, 'mimetype']:
                     continue
-                Debug.print_in_single_line(u'将{}添加至电子书内'.format(filename))
+                Debug.print_in_single_line(u'add {} to e-book'.format(filename))
                 epub.write(parent + '/' + filename, compress_type=zipfile.ZIP_STORED)
         epub.close()
 
-        print '\n', epub_name, u"制作成功!"
+        print u'\n\n', u'电子书', epub_name, u"制作成功!"
         return
 
     def create_chapter(self, src, title):
