@@ -6,7 +6,6 @@ from src.tools.config import Config
 from src.tools.db import DB
 from src.tools.match import Match
 from src.tools.type import Type
-from src.tools.debug import Debug
 
 
 class InitialBook(object):
