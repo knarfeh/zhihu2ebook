@@ -17,11 +17,16 @@ class Type(object):
     topic_info = 'topic_info'
     column_info = 'column_info'
 
-
     zhihu_article_type_list = ['article', 'column', ]
 
     question_answer_type_list = ['answer', 'question']
-    question_type_list = ['answer', 'question', 'author', 'collection', 'topic', ]
+    question_type_list = [
+        'answer',
+        'question',
+        'author',
+        'collection',
+        'topic',
+    ]
     zhihu = question_answer_type_list + question_type_list + zhihu_article_type_list
 
     # sinablog
@@ -47,7 +52,13 @@ class Type(object):
     csdnblog_article_type_list = ['csdn']
     csdnblog = [csdnblog_author, csdnblog_article, csdnblog_info]
 
-    article_type_list = ['article', 'column', 'sinablog_author', 'jianshu_author', 'csdnblog_author']
+    article_type_list = [
+        'article',
+        'column',
+        'sinablog_author',
+        'jianshu_author',
+        'csdnblog_author'
+    ]
 
     # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了） TODO how's that?
     type_list = question_type_list + article_type_list
@@ -62,11 +73,17 @@ class Type(object):
         'jianshu_info': jianshu_info,
         'csdnblog_info': csdnblog_info
     }
-    pass
 
     website_type = {
         'zhihu': zhihu,
         'jianshu': jianshu,
         'sinablog': sinablog,
         'csdnblog': csdnblog
+    }
+
+    key_word_to_website_type = {
+        'zhihu.com': 'zhihu',
+        'jianshu.com': 'jianshu',
+        'blog.sina.com.cn': 'sinablog',
+        'blog.csdn.net': 'csdnblog'
     }
