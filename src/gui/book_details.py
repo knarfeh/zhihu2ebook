@@ -91,6 +91,7 @@ def open_url(qurl):
         qurl = QUrl(qurl)
     QDesktopServices.openUrl(qurl)
 
+
 def fit_image(width, height, pwidth, pheight):
     u"""
     fit image in box of width pwidth and height pheight
