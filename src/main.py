@@ -26,7 +26,7 @@ class EEBook(object):
         self.recipe_kind = recipe_kind
         self.read_list = read_list
         self.url = url
-        log.warning_log(u"website type: " + str(self.recipe_kind))
+        log.warning_log(u"website type: " + str(self.recipe_kind) + '\n')
         Debug.logger.debug(u"read_list: " + str(self.read_list))
         Debug.logger.debug(u"url: " + str(self.url))
 
@@ -99,9 +99,9 @@ class EEBook(object):
         Debug.logger.info(u"analysis {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
 
-        if not task_package.is_work_list_empty():
-            worker_factory(task_package.work_list)  # 执行抓取程序
-            Debug.logger.info(u"网页信息抓取完毕")
+        # if not task_package.is_work_list_empty():
+        #     worker_factory(task_package.work_list)  # 执行抓取程序
+        #     Debug.logger.info(u"网页信息抓取完毕")
 
         file_name_set = None
         if not task_package.is_book_list_empty():

@@ -177,7 +177,6 @@ class UrlParser(object):
             task.book.sql.info_extra = 'creator_id = "{}"'.format(sinablog_author_id)
             task.book.sql.article_extra = 'author_id = "{}"'.format(sinablog_author_id)
             task.book.author_id = sinablog_author_id
-            # Debug.logger.debug(u"在parse_sinablog中, task.book.author_id为" + str(task.book.author_id))
             return task
 
         def parse_jianshu_author(command):
@@ -225,15 +224,21 @@ class UrlParser(object):
                 Debug.logger.info(u"""无法解析记录:{}所属网址类型,请检查后重试。""".format(command))
             return
 
-        parser = {'answer': parse_answer, 'question': parse_question, 'author': parse_author,
-                  'collection': parse_collection, 'topic': parse_topic, 'article': parse_article,
-                  'column': parse_column,
-                  'sinablog_author': parse_sinablog_author,
-                  'jianshu_author': parse_jianshu_author,
-                  'csdnblog_author': parse_csdnblog_author,
-                  'unknown': parse_error, }
-        kind = Match.detect(raw_command)
+        parser = {
+            'answer': parse_answer,
+            'question': parse_question,
+            'author': parse_author,
+            'collection': parse_collection,
+            'topic': parse_topic,
+            'article': parse_article,
+            'column': parse_column,
+            'sinablog_author': parse_sinablog_author,
+            'jianshu_author': parse_jianshu_author,
+            'csdnblog_author': parse_csdnblog_author,
+            'unknown': parse_error,
+        }
 
+        kind = Match.detect_recipe_kind(raw_command)
         return parser[kind](raw_command)
 
     @staticmethod

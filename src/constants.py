@@ -74,7 +74,7 @@ url_info = {
     'zhihu': zhihu_info,
     'jianshu': jianshu_info,
     'sinablog': sinablog_info,
-    'csdnblog': csdnblog_info
+    'csdnblog': csdnblog_info,
 }
 
 _plat = sys.platform.lower()
