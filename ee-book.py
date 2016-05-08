@@ -14,7 +14,7 @@ from src.login import Login
 from src.constants import url_info
 
 reload(sys)
-# base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
+base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
 
 # print base_path
 # sys.path.append(base_path + '/src/lib')
@@ -39,8 +39,7 @@ help_info += '''Starup options:
 
 help_info += '''Run options:
 -g | --gui                      Graphical user interface. under developing.
--u | --url <URL>                URL to download, if not setted, read from text file
-TODO:
+-u | --url <URL>                URL to download, if not setted, read from ReadList.txt(default)
 -r | --file <file-path>         Read from the given file. Notice: only one kind could be accepted in one file
 '''
 
