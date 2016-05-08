@@ -169,7 +169,7 @@ class OPF(Base):
         if not 'creator' in self.metadata_completed:
             self.set_creator()
         if not 'book_id' in self.metadata_completed:
-            print u'请先设置book_id!'
+            print u'please set book_id first'
             exit()
         return
 
