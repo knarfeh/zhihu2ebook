@@ -17,14 +17,14 @@
 
 get help info:  
 
-```shell
-python ee-book -h
+```console
+$ python ee-book -h
 ```
 
 for example:  
 
-```shell
-python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
+```console
+$ python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
 after a while, you will get the e-book:   
@@ -45,7 +45,7 @@ after a while, you will get the e-book:
 
 ### Setting up a development environment for EE-Book 
 
-```shell
+```Console
 $ sudo pip install -r requirements.txt
 ```
 
