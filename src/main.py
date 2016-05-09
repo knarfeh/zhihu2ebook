@@ -43,7 +43,7 @@ class EEBook(object):
             login = Login(recipe_kind='zhihu')
         else:
             return
-        # !!!!!发布的时候把Config.remember_account改成false!!!!!,使得第一次需要登录,之后用cookie即可
+        # !!!!!发布的时候把Config.remember_account改成false!!!!!,第一次需要登录,之后用cookie即可
         # 登陆成功了,自动记录账户
         if Config.remember_account_set:
             Debug.logger.info(u'检测到有设置文件，直接使用之前的设置')
@@ -99,9 +99,9 @@ class EEBook(object):
         Debug.logger.info(u"analysis {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
 
-        # if not task_package.is_work_list_empty():
-        #     worker_factory(task_package.work_list)  # 执行抓取程序
-        #     Debug.logger.info(u"网页信息抓取完毕")
+        if not task_package.is_work_list_empty():
+            worker_factory(task_package.work_list)  # 执行抓取程序
+            Debug.logger.info(u"网页信息抓取完毕")
 
         file_name_set = None
         if not task_package.is_book_list_empty():

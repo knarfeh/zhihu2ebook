@@ -19,17 +19,18 @@ from src.tools.path import Path
 
 
 class Login(object):
-    def __init__(self, recipe_kind):
+    def __init__(self, recipe_kind, from_ui=False):
         self.recipe_kind = recipe_kind
         self.cookieJar = cookielib.LWPCookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
         urllib2.install_opener(self.opener)
+        self.from_ui = from_ui
 
     def login(self, account, password, captcha=''):
         if self.recipe_kind == 'zhihu':
             # 知乎此处的r参数为一个13位的unix时间戳
             unix_time_stp = str(int(1000 * time.time()))[0:13]
-            content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))  # 开始拉取验证码
+            content = Http.get_content('https://www.zhihu.com/')
         else:
             Debug.logger.error(u"登录中...未知网站类型错误")
             return
@@ -43,10 +44,20 @@ class Login(object):
         cookie = Http.make_cookie(name='_xsrf', value=xsrf, domain='www.zhihu.com')
         self.cookieJar.set_cookie(cookie)
         if captcha:
-            post_data = {'_xsrf': xsrf, 'email': account, 'password': password, 'remember_me': True,
-                         'captcha': captcha}
+            post_data = {
+                '_xsrf': xsrf,
+                'email': account,
+                'password': password,
+                'remember_me': True,
+                'captcha': captcha
+            }
         else:
-            post_data = {'_xsrf': xsrf, 'email': account, 'password': password, 'remember_me': True}
+            post_data = {
+                '_xsrf': xsrf,
+                'email': account,
+                'password': password,
+                'remember_me': True
+            }
 
         header = {
             'Accept': '*/*',
@@ -69,12 +80,14 @@ class Login(object):
         if response['r'] == 0:
             print u'\nlogin successfully...'
             print u'account:', account
-            print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
-            remenber_account = raw_input()      # TODO: 默认记住密码?
+            if self.from_ui is not True:
+                print u'请问是否需要记住帐号密码？输入yes记住，输入其它任意字符跳过，回车确认'
+                remenber_account = raw_input()      # 从图形界面登录默认记住密码
+            else:
+                remenber_account = 'yes'
             if remenber_account == 'yes':
                 Config.account, Config.password, Config.remember_account = account, password, True
                 print u'帐号密码已保存,可通过修改config.json修改设置'
-                pass
             else:
                 Config.account, Config.password, Config.remember_account_set = '', '', False
                 print u'跳过保存环节，进入下一流程'
@@ -101,9 +114,10 @@ class Login(object):
         content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))
         captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
 
-        with open(captcha_path, 'wb') as image:
-            image.write(content)
-        print u'请输入您所看到的验证码'
+        image = open(captcha_path, 'wb')
+        image.write(content)
+        image.close()
+
         print u'验证码在助手所处的文件夹中'
         print u'验证码位置:'
         print captcha_path
@@ -113,6 +127,8 @@ class Login(object):
             webbrowser.get().open_new_tab(u'file:///' + captcha_path)
         if from_ui is True:
             return
+
+        print u'请输入您所看到的验证码:'
         captcha = raw_input()
         return captcha
 
