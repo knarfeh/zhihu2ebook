@@ -29,14 +29,11 @@ class DownloadDialog(QDialog, Ui_Dialog):
     def __init__(self, recipe_model, book_view, parent=None):
         QDialog.__init__(self, parent)
         self.now_url = ''
-
         self.book_view = book_view
 
         self.setAttribute(Qt.WA_DeleteOnClose)      # 每次关闭对话框删除对话框所占的内存
         self.setupUi(self)
-
         self.recipe_model = recipe_model
-
         self.recipe_model.showing_count = 3     # TODO, 改掉这里的硬编码
         self.count_label.setText(
             # NOTE: Number of news sources
@@ -85,6 +82,8 @@ class DownloadDialog(QDialog, Ui_Dialog):
             ''' % dict(title='zhihu', cb='Created by: Frank',
                      description=u'https://github.com/knarfeh/EE-Book <br/>第一次使用,请登录!\
                       若不登录,将尝试用程序内置账号登陆,私人收藏夹将无法爬取'))
+            self.zhihu = EEBook(recipe_kind='zhihu')    # 目前只有知乎需要登陆 需要将Path初始化
+            self.login = Login(recipe_kind='zhihu', from_ui=True)
         elif url == 'jianshu':
             self.detail_box.setVisible(True)
             self.account.setVisible(False)
@@ -122,18 +121,17 @@ class DownloadDialog(QDialog, Ui_Dialog):
         password = str(self.password.text())
         captcha = str(self.captcha.text())
 
-        zhihu = EEBook(recipe_kind='zhihu')    # 目前只有知乎需要登陆 需要将Path初始化
-
-        login = Login(recipe_kind='zhihu')
-
-        if not login.login(account=account, password=password, captcha=captcha):
+        if not self.login.login(account=account, password=password, captcha=captcha):
             click_ok = QtGui.QMessageBox.information(self, u"登陆失败", u"啊哦，登录失败，可能需要输入验证码\n请尝试输入验证码")
             if click_ok:
-                login.get_captcha(from_ui=True)
+                self.login.get_captcha(from_ui=True)
                 return
         Config.remember_account_set = True
         Config._save()
         QtGui.QMessageBox.information(self, u"登陆成功", u"恭喜, 登陆成功, 登陆信息已经保存")
+        self.username.setText('')
+        self.password.setText('')
+        self.captcha.setText('')
 
     def download_button_clicked(self):
         tags = str(self.custom_tags.text())

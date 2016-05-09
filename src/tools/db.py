@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from debug import Debug
 from src.tools.type import Type
 
 
