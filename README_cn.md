@@ -17,14 +17,14 @@
 
 获得帮助信息:  
 
-```shell
-python ee-book -h
+```console
+$ python ee-book -h
 ```
 
 举个例子:  
 
-```shell
-python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
+```console
+$ python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
 稍等片刻, 你就可以得到电子书了:  
@@ -45,7 +45,7 @@ python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
 
 ### 建立 EE-Book 的开发环境
 
-```shell
+```Console
 $ sudo pip install -r requirements.txt
 ```
 
