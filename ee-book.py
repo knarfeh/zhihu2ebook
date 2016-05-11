@@ -23,8 +23,8 @@ base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
 sys.setdefaultencoding('utf-8')
 sys.setrecursionlimit(100000)  # 为BS解析知乎上的长答案增加递归深度限制
 
-short_options = 'Vhgu:r:i:l:'
-long_options = ['version', 'help', 'url', 'gui', 'info', 'login']
+short_options = 'Vhgu:r:i:l:c:d'
+long_options = ['version', 'help', 'url', 'gui', 'info', 'login', 'cookies']
 
 
 help_info = 'Usage: ee-book [OPTION]... [URL]... \n\n'
@@ -34,6 +34,8 @@ help_info += '''Starup options:
 -h | --help                     Print help and exit
 -i | --info                     Print information of URLs
 -l | --login <URL>              Login via command line
+#TODO
+-c | --cookies <COOKIES_FILE>   Load cookies.txt or cookies.sqlite.
 \n
 '''
 
@@ -45,6 +47,7 @@ help_info += '''Run options:
 
 
 if __name__ == '__main__':
+    debug = False
     def version():
         log.info_log('version %s' % __version__)
 
@@ -57,6 +60,9 @@ if __name__ == '__main__':
         if option in ('-V', '--version'):
             version()
             sys.exit()
+        elif option in ('-d', '--debug'):
+            print u"debug is true"
+            debug = True
         elif option in ('-h', '--help'):
             version()
             print(help_info)
@@ -92,7 +98,7 @@ if __name__ == '__main__':
                 print("Unsupport type!")
                 print("Please try again.")
                 sys.exit()
-            game = EEBook(recipe_kind=recipe_kind, url=url)
+            game = EEBook(recipe_kind=recipe_kind, url=url, debug=debug)
             game.begin()
             sys.exit()
         elif option in ('-i', '--info'):
@@ -117,17 +123,25 @@ if __name__ == '__main__':
             game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
             game.begin()
             sys.exit()
+        elif option in('-c', '--cookies'):
+            cookie_file = args
+            print("TODO")
+            # with open(cookie_file) as f:
+            #     content = f.read()
+            # game = EEBook(recipe_kind='zhihu')
+            # from src.tools.db import DB
+            # from src.tools.extra_tools import ExtraTools
+            # DB.execute('delete from LoginRecord')  # 登陆成功后清除数据库中原有的登录记录，避免下次登陆时取到旧记录
+            # data = dict()
+            # data['account'] = 'zhihu2ebook@hotmail.com'
+            # data['password'] = 'Zhihu2Ebook'
+            # data['recordDate'] = ExtraTools.get_today()
+            # data['cookieStr'] = content
+            # DB.save(data, 'LoginRecord')
+            # DB.commit()
+            sys.exit()
 
-    from PyQt4.QtGui import QApplication
-    from PyQt4.QtGui import QIcon
-    from src.gui.ui import MainWindow
-    from src.resources import qrc_resources
-    app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon(":/icon.png"))
-    app.setApplicationName('EE-Book')
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+
 
 
 
