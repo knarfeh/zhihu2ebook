@@ -15,18 +15,24 @@ from src.utils import log
 
 
 class EEBook(object):
-    def __init__(self, recipe_kind='Notset', read_list='ReadList.txt', url=None):
+    def __init__(self, recipe_kind='Notset', read_list='ReadList.txt', url=None, debug=False):
         u"""
         配置文件使用$符区隔，同一行内的配置文件归并至一本电子书内
         :param recipe_kind:
-        :param read_list_txt_file: default value: ReadList.txt
+        :param read_list: default value: ReadList.txt
         :param url:
+        :param debug:
         :return:
         """
         self.recipe_kind = recipe_kind
         self.read_list = read_list
         self.url = url
         log.warning_log(u"website type: " + str(self.recipe_kind) + '\n')
+        import logging
+        if debug is True:
+            Debug.logger.setLevel(logging.DEBUG)
+        else:
+            Debug.logger.setLevel(logging.INFO)
         Debug.logger.debug(u"read_list: " + str(self.read_list))
         Debug.logger.debug(u"url: " + str(self.url))
 
