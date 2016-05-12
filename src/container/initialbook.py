@@ -138,10 +138,10 @@ class InitialBook(object):
     def set_info(self, info):
         self.info.update(info)
         if self.kind == Type.csdnblog_author:
-            self.epub.title = u'csdn博客_{}({})'.format(info['creator_name'], info['creator_id'])
+            self.epub.title = u'csdn博客作者_{}({})文章集锦'.format(info['creator_name'], info['creator_id'])
             self.epub.id = info['creator_id']
         elif self.kind == Type.jianshu_author:              # 该博客所有的博文
-            self.epub.title = u'简书_{}({})'.format(info['creator_name'], info['creator_id'])
+            self.epub.title = u'简书作者_{}({})文章集锦'.format(info['creator_name'], info['creator_id'])
             self.epub.id = info['creator_id']
         elif self.kind == Type.jianshu_article:    # 单篇博文 TODO
             self.epub.title = u'简书博文集锦({})'.format(info['title'])
