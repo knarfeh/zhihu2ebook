@@ -24,7 +24,7 @@ sys.setdefaultencoding('utf-8')
 sys.setrecursionlimit(100000)  # 为BS解析知乎上的长答案增加递归深度限制
 
 short_options = 'Vhgu:r:i:l:c:d'
-long_options = ['version', 'help', 'url', 'gui', 'info', 'login', 'cookies']
+long_options = ['version', 'help', 'url', 'gui', 'info', 'login', 'cookies', 'debug']
 
 
 help_info = 'Usage: ee-book [OPTION]... [URL]... \n\n'
@@ -34,8 +34,8 @@ help_info += '''Starup options:
 -h | --help                     Print help and exit
 -i | --info                     Print information of URLs
 -l | --login <URL>              Login via command line
-#TODO
 -c | --cookies <COOKIES_FILE>   Load cookies.txt or cookies.sqlite.
+-d | --debug                    Show traceback and other debug info.
 \n
 '''
 
@@ -106,6 +106,7 @@ if __name__ == '__main__':
             url_kind = Match.get_url_kind(url)
             if url_kind == 'Unknow type':
                 print('Unsupport website or url type. \nPlease check url.')
+                print(u"\n在座的朋友,对这个项目感兴趣? 来fork https://github.com/knarfeh/EE-Book 吧 ←_←")
             else:
                 info = url_info[url_kind]
                 print(info)
