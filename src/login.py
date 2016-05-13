@@ -112,7 +112,7 @@ class Login(object):
         unix_time_stp = str(int(1000 * time.time()))[0:13]
         # 开始拉取验证码
         content = Http.get_content('https://www.zhihu.com/captcha.gif?r={}&type=login'.format(unix_time_stp))
-        captcha_path = Path.base_path + u'/我是登陆知乎时的验证码.gif'
+        captcha_path = Path.cwd_path + u'/我是登陆知乎时的验证码.gif'
 
         image = open(captcha_path, 'wb')
         image.write(content)
