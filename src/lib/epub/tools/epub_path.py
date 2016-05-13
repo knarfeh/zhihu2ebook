@@ -35,7 +35,7 @@ class EpubPath(object):
 
     @staticmethod
     def init_epub_path(work_path):
-        """
+        u"""
         设置工作地址，根据该路径进行创建文件夹，生成epub，压缩等操作
         """
         EpubPath.set_work_path(work_path)

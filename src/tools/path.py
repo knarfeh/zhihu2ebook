@@ -9,7 +9,8 @@ class Path(object):
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数
     不能在开头from src.tools.debug import Debug
     """
-    base_path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
+    cwd_path = unicode(os.getcwd())
+    in_base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
     config_path = u''     # 根据recipe_kind确定config_path
     db_path = u''         # 根据recipe_kind确定
@@ -19,11 +20,11 @@ class Path(object):
     result_path = u''
     www_css = u''
 
-    read_list_path = base_path + '/ReadList.txt'
+    read_list_path = cwd_path + '/ReadList.txt'
 
     @staticmethod
     def reset_path():
-        Path.chdir(Path.base_path)
+        Path.chdir(Path.cwd_path)
         return
 
     @staticmethod
@@ -102,41 +103,43 @@ class Path(object):
         初始化路径,不需要实例化 Path 就能执行
         :return:
         """
-        Path.base_path = Path.get_pwd()
+        Path.cwd_path = Path.get_pwd()    # TODO 删掉Path这个函数
 
-        Path.www_css = Path.base_path + str(u'/www/css')
-        Path.www_image = Path.base_path + str(u'/www/images')
+        Path.www_css = Path.in_base_path + str(u'/www/css')
+        Path.www_image = Path.in_base_path + str(u'/www/images')
 
         if recipe_kind == 'jianshu':    # TODO: 用循环解决
-            Path.config_path = Path.base_path + str(u'/config/jianshu_config.json')
-            Path.db_path = Path.base_path + str(u'/db/jianshu_db_002.sqlite')
-            Path.sql_path = Path.base_path + str(u'/db/jianshu.sql')
+            Path.config_path = Path.in_base_path + str(u'/config/jianshu_config.json')
+            Path.sql_path = Path.in_base_path + str(u'/db/jianshu.sql')
+            Path.db_path = Path.cwd_path + str(u'/db/jianshu_db_002.sqlite')
         elif recipe_kind == 'zhihu':
-            Path.config_path = Path.base_path + str(u'/config/zhihu_config.json')
-            Path.db_path = Path.base_path + str(u'/db/zhihuDB_173.sqlite')
-            Path.sql_path = Path.base_path + str(u'/db/zhihuhelp.sql')
+            Path.config_path = Path.in_base_path + str(u'/config/zhihu_config.json')
+            Path.sql_path = Path.in_base_path + str(u'/db/zhihuhelp.sql')
+            Path.db_path = Path.cwd_path + str(u'/db/zhihuDB_173.sqlite')
         elif recipe_kind == 'sinablog':
-            Path.config_path = Path.base_path + str(u'/config/sinablog_config.json')
-            Path.db_path = Path.base_path + str(u'/db/sinablog_db_001.sqlite')
-            Path.sql_path = Path.base_path + str(u'/db/sinablog.sql')
+            Path.config_path = Path.in_base_path + str(u'/config/sinablog_config.json')
+            Path.sql_path = Path.in_base_path + str(u'/db/sinablog.sql')
+            Path.db_path = Path.cwd_path + str(u'/db/sinablog_db_001.sqlite')
         elif recipe_kind == 'csdnblog':
-            Path.config_path = Path.base_path + str(u'/config/csdn_config.json')
-            Path.db_path = Path.base_path + str(u'/db/csdn_db_001.sqlite')
-            Path.sql_path = Path.base_path + str(u'/db/csdnblog.sql')
+            Path.config_path = Path.in_base_path + str(u'/config/csdn_config.json')
+            Path.sql_path = Path.in_base_path + str(u'/db/csdnblog.sql')
+            Path.db_path = Path.cwd_path + str(u'/db/csdn_db_001.sqlite')
 
-        Path.html_pool_path = Path.base_path + str(u'/e-books_tmp_source/网页池')
-        Path.image_pool_path = Path.base_path + str(u'/e-books_tmp_source/图片池')
-        Path.result_path = Path.base_path + str(u'/e-books_produced')
+        Path.html_pool_path = Path.cwd_path + str(u'/e-books_tmp_source/html')
+        Path.image_pool_path = Path.cwd_path + str(u'/e-books_tmp_source/picture')
+        Path.result_path = Path.cwd_path + str(u'/e-books_produced')
         return
 
     @staticmethod
     def init_work_directory():
+        print(u"realpath:" + os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
         Path.reset_path()
+        Path.mkdir(u'./db')
         Path.mkdir(u'./e-books_tmp_source')
         Path.mkdir(u'./e-books_produced')
         Path.chdir(u'./e-books_tmp_source')
-        Path.mkdir(u'./网页池')
-        Path.mkdir(u'./图片池')
+        Path.mkdir(u'./html')
+        Path.mkdir(u'./picture')
         Path.reset_path()
         return
 

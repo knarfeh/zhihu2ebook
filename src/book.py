@@ -122,7 +122,7 @@ class Book(object):
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧
             return
-        Path.chdir(Path.base_path + u'/e-books_tmp_source')
+        Path.chdir(Path.in_base_path + u'/e-books_tmp_source')
         epub = Epub(title)
         html_tmp_path = Path.html_pool_path + u'/'
         image_tmp_path = Path.image_pool_path + u'/'
@@ -130,11 +130,11 @@ class Book(object):
         epub.set_language(u'zh')
         epub.set_book_id()
         epub.set_output_path(Path.result_path)
-        epub.add_css(Path.base_path + u'/www/css/markdown.css')
-        epub.add_css(Path.base_path + u'/www/css/customer.css')
-        epub.add_css(Path.base_path + u'/www/css/normalize.css')
-        epub.add_css(Path.base_path + u'/www/css/bootstrap.css')
-        # epub.add_css(Path.base_path + u'/www/css/article.css')    # TODO: 来自新浪,需要精简
+        epub.add_css(Path.in_base_path + u'/www/css/markdown.css')
+        epub.add_css(Path.in_base_path + u'/www/css/customer.css')
+        epub.add_css(Path.in_base_path + u'/www/css/normalize.css')
+        epub.add_css(Path.in_base_path + u'/www/css/bootstrap.css')
+        # epub.add_css(Path.in_base_path + u'/www/css/article.css')    # TODO: 来自新浪,需要精简
         for book in book_package.book_list:
             page = book.page_list[0]
             with open(html_tmp_path + page.filename, 'w') as html:
