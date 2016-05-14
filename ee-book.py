@@ -95,10 +95,10 @@ def main():
             if recipe_kind == 'Unsupport type':
                 print("Unsupported type!\n Please try again.")
                 sys.exit()
-            print(u"recipe_kind" + recipe_kind)
-            print(u"url:" + url)
-            # game = EEBook(recipe_kind=recipe_kind, url=url, debug=debug)
-            # game.begin()
+            # print(u"recipe_kind" + recipe_kind)
+            # print(u"url:" + url)
+            game = EEBook(recipe_kind=recipe_kind, url=url, debug=debug)
+            game.begin()
             sys.exit()
         elif option in ('-i', '--info'):
             url = args

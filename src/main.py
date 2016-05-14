@@ -33,10 +33,11 @@ class EEBook(object):
             Debug.logger.setLevel(logging.DEBUG)
         else:
             Debug.logger.setLevel(logging.INFO)
+
         Debug.logger.debug(u"read_list: " + str(self.read_list))
         Debug.logger.debug(u"url: " + str(self.url))
-
         Debug.logger.debug(u"recipe type:" + str(recipe_kind))
+
         Path.init_base_path(recipe_kind)        # 设置路径
         Path.init_work_directory()              # 创建路径
         self.init_database()                    # 初始化数据库
@@ -45,7 +46,7 @@ class EEBook(object):
 
     @staticmethod
     def init_config(recipe_kind):
-        if recipe_kind == 'zhihu':      # TODO: 改掉硬编码
+        if recipe_kind == 'zhihu':      # TODO: 再有一个需要登录的网站, 改掉硬编码
             login = Login(recipe_kind='zhihu')
         else:
             return
@@ -80,28 +81,31 @@ class EEBook(object):
         """
         Debug.logger.debug(u"#Debug mode#: don't check update")
         self.init_config(recipe_kind=self.recipe_kind)
-        Debug.logger.info(u"Reading ReadList.txt...")
+        if self.url is None:
+            Debug.logger.debug(u"Reading ReadList.txt...")
+        else:
+            Debug.logger.debug(u"Got url")
         book_files = []
-
         if self.url is not None:
             file_name = self.create_book(self.url, 1)
             book_files.append(file_name)
             return book_files
 
+        counter = 1
         with open(self.read_list, 'r') as read_list:
-            counter = 1
             for line in read_list:
                 line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
                 file_name = self.create_book(line, counter)
                 book_files.append(file_name)
                 counter += 1
+
         return book_files
 
     @staticmethod
     def create_book(command, counter):
         Path.reset_path()
 
-        Debug.logger.info(u"开始制作第 {} 本电子书".format(counter))
+        Debug.logger.info(u"Ready to make No.{} e-book".format(counter))
         Debug.logger.info(u"analysis {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
 

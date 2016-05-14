@@ -9,8 +9,8 @@ class Path(object):
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数
     不能在开头from src.tools.debug import Debug
     """
-    cwd_path = unicode(os.getcwd())
-    in_base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+    cwd_path = unicode(os.getcwd())    # 执行命令的路径
+    in_base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))  # 项目路径
 
     config_path = u''     # 根据recipe_kind确定config_path
     db_path = u''         # 根据recipe_kind确定
@@ -132,7 +132,6 @@ class Path(object):
 
     @staticmethod
     def init_work_directory():
-        print(u"realpath:" + os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
         Path.reset_path()
         Path.mkdir(u'./db')
         Path.mkdir(u'./e-books_tmp_source')
