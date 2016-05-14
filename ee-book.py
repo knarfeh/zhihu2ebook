@@ -14,10 +14,7 @@ from src.login import Login
 from src.constants import url_info
 
 reload(sys)
-base_path = unicode(os.path.abspath('.').decode(sys.stdout.encoding))
-
-# print base_path
-# sys.path.append(base_path + '/src/lib')
+base_path = unicode(os.getcwd())
 
 # Python早期版本可以直接用sys.setdefaultencoding('utf-8')，新版本需要先reload一下
 sys.setdefaultencoding('utf-8')
@@ -46,46 +43,47 @@ help_info += '''Run options:
 '''
 
 
-if __name__ == '__main__':
+def main():
     debug = False
+
     def version():
         log.info_log('version %s' % __version__)
-
     try:
         opts, args = getopt.getopt(sys.argv[1:], short_options, long_options)
     except getopt.GetoptError as err:
-        log.error_log(u"try ee-book --help for more options")
+        log.error_log(u"Try ee-book --help for more options")
         sys.exit(2)
     for option, args in opts:
         if option in ('-V', '--version'):
             version()
             sys.exit()
         elif option in ('-d', '--debug'):
-            print u"debug is true"
+            print u"Debug mode..."
             debug = True
         elif option in ('-h', '--help'):
             version()
             print(help_info)
             sys.exit()
         elif option in ('-g', '--gui'):
+            print(u"Under developing...")
+            sys.exit()
             # graphviz = GraphvizOutput(output_file='filter_gui.png')
             # with PyCallGraph(output=graphviz, config=config):
-            from PyQt4.QtGui import QApplication
-            from PyQt4.QtGui import QIcon
-            from src.gui.ui import MainWindow
-            from src.resources import qrc_resources
-            app = QApplication(sys.argv)
-            app.setWindowIcon(QIcon(":/icon.png"))
-            app.setApplicationName('EE-Book')
-            window = MainWindow()
-            window.show()
-            sys.exit(app.exec_())
+            # from PyQt4.QtGui import QApplication
+            # from PyQt4.QtGui import QIcon
+            # from src.gui.ui import MainWindow
+            # from src.resources import qrc_resources
+            # app = QApplication(sys.argv)
+            # app.setWindowIcon(QIcon(":/icon.png"))
+            # app.setApplicationName('EE-Book')
+            # window = MainWindow()
+            # window.show()
+            # sys.exit(app.exec_())
         elif option in ('-l', '--login'):
             url = args
-            recipe_kind = Match.get_recipe_kind(url)
+            recipe_kind = Match.get_url_kind(url)
             if recipe_kind != 'zhihu':
-                print("Unsupport type! Only zhihu are supported now")
-                print("Please try again.")
+                print("Unsupport type! Only zhihu are supported now.\n Please try again.")
                 sys.exit()
             zhihu = EEBook(recipe_kind=recipe_kind)    # Init path, e.g. config, only zhihu are supported now
             login = Login(recipe_kind=recipe_kind)
@@ -95,8 +93,7 @@ if __name__ == '__main__':
             url = args
             recipe_kind = Match.get_recipe_kind(url)
             if recipe_kind == 'Unsupport type':
-                print("Unsupport type!")
-                print("Please try again.")
+                print("Unsupported type!\n Please try again.")
                 sys.exit()
             game = EEBook(recipe_kind=recipe_kind, url=url, debug=debug)
             game.begin()
@@ -104,9 +101,8 @@ if __name__ == '__main__':
         elif option in ('-i', '--info'):
             url = args
             url_kind = Match.get_url_kind(url)
-            if url_kind == 'Unknow type':
-                print('Unsupport website or url type. \nPlease check url.')
-                print(u"\n在座的朋友,对这个项目感兴趣? 来fork https://github.com/knarfeh/EE-Book 吧 ←_←")
+            if url_kind == 'Unknown type':
+                print('Unsupported website or url type. \nPlease check url.')
             else:
                 info = url_info[url_kind]
                 print(info)
@@ -118,7 +114,7 @@ if __name__ == '__main__':
                 line = read_list[0]
                 recipe_kind = Match.get_recipe_kind(line)
                 if recipe_kind == 'Unsupport type':
-                    print('Unsupport website or url type. \nPlease check url.')
+                    print('Unsupported website or url type. \nPlease check url.')
                     sys.exit()
             print(u"website type:" + str(recipe_kind))
             game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
@@ -126,7 +122,8 @@ if __name__ == '__main__':
             sys.exit()
         elif option in('-c', '--cookies'):
             cookie_file = args
-            print("TODO")
+            print("Cookie_file:" + cookie_file)
+            print("TODO: read from cookie to login")
             # with open(cookie_file) as f:
             #     content = f.read()
             # game = EEBook(recipe_kind='zhihu')
@@ -141,6 +138,10 @@ if __name__ == '__main__':
             # DB.save(data, 'LoginRecord')
             # DB.commit()
             sys.exit()
+
+
+if __name__ == '__main__':
+    main()
 
 
 

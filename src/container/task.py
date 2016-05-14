@@ -71,7 +71,7 @@ class TaskPackage(object):
         return
 
     # TODO: merge_sinablog 和 merge_jianshu 都可以合并, 但要合并 csdnblog.sql, jianshu.sql
-    # 这里有一个矛盾,如果合并了, jianshu 中如果要写其他的类型???比如文集类型
+    # 当然这里有一个矛盾,如果合并了, jianshu 中如果要写其他的类型???比如文集类型
     def merge_sinablog_article_book_list(self, book_type):
         book_list = self.book_list[Type.sinablog_author]
         book = InitialBook()

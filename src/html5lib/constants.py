@@ -564,7 +564,6 @@ entities = {
     "Ugrave": "\xd9",
     "Ugrave;": "\xd9",
     "Umacr;": "\u016a",
-    "UnderBar;": "_",
     "UnderBrace;": "\u23df",
     "UnderBracket;": "\u23b5",
     "UnderParenthesis;": "\u23dd",
@@ -2241,3 +2240,5 @@ entities_reverse = {value: key for key, value in entities.items()}
 entities_reverse.pop('_')
 entities_reverse.pop('(')
 entities_reverse.pop(')')
+entities_reverse.pop('\n')
+entities_reverse.pop('\t')
