@@ -5,6 +5,7 @@ from src.tools.type import Type
 
 
 class Match(object):
+    # zhihu
     @staticmethod
     def xsrf(content=''):
         xsrf = re.search(r'(?<=name="_xsrf" value=")[^"]*(?="/>)', content)
@@ -12,7 +13,6 @@ class Match(object):
             return '_xsrf=' + xsrf.group(0)
         return ''
 
-    # zhihu
     @staticmethod
     def answer(content=''):
         return re.search(r'(?<=zhihu\.com/)question/(?P<question_id>\d{8})/answer/(?P<answer_id>\d{8})', content)

@@ -135,7 +135,7 @@ class HtmlCreator(object):
         article['description'] = ''
         # TODO: 改掉硬编码
         if str(recipe) in (Type.sinablog+Type.jianshu+Type.csdnblog):
-            article['agree'] = '无'
+            article['agree'] = u'暂无数据'
         result = {
             'answer': self.create_answer(article),
             'question': self.get_template('info', 'title').format(**article)
@@ -173,11 +173,11 @@ class HtmlCreator(object):
             result['title'] = u'知乎文章集锦'
             result['description'] = u''
         elif kind == Type.author:
-            result['title'] = u'{name}的知乎回答集锦({author_id})'.format(**info)
+            result['title'] = u'知乎_{name}的知乎回答集锦({author_id})'.format(**info)
         elif kind == Type.collection:
-            result['title'] = u'收藏夹_{title}({collection_id})'.format(**info)
+            result['title'] = u'知乎_收藏夹_{title}({collection_id})'.format(**info)
         elif kind == Type.column:
-            result['title'] = u'{creator_name}的专栏_{name}({column_id})'.format(**info)
+            result['title'] = u'知乎_{creator_name}的专栏_{name}({column_id})'.format(**info)
         elif kind == Type.topic:
             result['title'] = u'知乎_话题_{title}({topic_id})'.format(**info)
         return result
