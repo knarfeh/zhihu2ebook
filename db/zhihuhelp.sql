@@ -136,7 +136,7 @@ CREATE TABLE Article (
   PRIMARY KEY (href)
 );
 
-CREATE TABLE userActive (
+CREATE TABLE UserActive (
   account      VARCHAR(255) NOT NULL    DEFAULT '',
   activeTarget VARCHAR(255) NOT NULL    DEFAULT '',
   activeType   VARCHAR(255) NOT NULL    DEFAULT '',

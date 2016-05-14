@@ -34,3 +34,12 @@ CREATE TABLE LoginRecord (
   cookieStr  VARCHAR(50000) DEFAULT '',
   PRIMARY KEY (account)
 );
+
+CREATE TABLE jianshu_collection (
+  collection_fake_id    VARCHAR(50) NOT NULL,
+  collection_real_id    VARCHAR(50) NOT NULL,
+  title                 VARCHAR(255),
+  description           VARCHAR(1000),
+  follower              INT(20)     NOT NULL DEFAULT 0,
+  PRIMARY KEY (collection_fake_id)
+)
