@@ -56,6 +56,15 @@ class Match(object):
         return re.search(r'(?<=jianshu\.com/users/)(?P<jianshu_id>[^/\n\r]*)(/latest_articles)', content)
 
     @staticmethod
+    def jianshu_collection(content=''):
+        u"""
+
+        :param content: jianshu collection 地址
+        :return: re.match object
+        """
+        return re.search(r'(?<=jianshu\.com/collection/)(?P<collection_id>[^/\n\r]*)', content)
+
+    @staticmethod
     def jianshu_article_id(content=''):
         u"""
 

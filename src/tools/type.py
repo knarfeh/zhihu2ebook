@@ -41,9 +41,10 @@ class Type(object):
     # jianshu    # TODO, 目前只有latest_articles一种, 还可以写collections, notebook等等
     jianshu_article = 'jianshu_article'     # TODO: 单篇文章
     jianshu_author = 'jianshu_author'       # 简书某博主文章的集锦
+    jianshu_collection = 'jianshu_collection'
     jianshu_info = 'jianshu_info'
 
-    jianshu = [jianshu_article, jianshu_author, jianshu_info]
+    jianshu = [jianshu_article, jianshu_author, jianshu_collection, jianshu_info]
 
     # csdn
     csdnblog_article = 'csdnblog_article'
@@ -57,6 +58,7 @@ class Type(object):
         'column',
         'sinablog_author',
         'jianshu_author',
+        'jianshu_collection',
         'csdnblog_author'
     ]
 
