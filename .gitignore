@@ -231,8 +231,12 @@ e-books_tmp_source/
 
 *.sqlite
 
+library.json
+
 bookdata/
 
 test_idea.py
 
 page_worker_back.py
+
+library.json
