@@ -46,7 +46,7 @@ class SinaBlogArticle(ParserTools):
         article_body = str(article_body)
         self.info['content'] = article_body
 
-    def parse_author_id(self):   # TODO 这个部分可以不重复的
+    def parse_author_id(self):
         u"""
         获得author_id
         :return:
@@ -72,7 +72,6 @@ class SinaBlogArticle(ParserTools):
         author_name = self.dom.select('div.info_nm span strong')       # 获得creator_name
         if not author_name:
             Debug.logger.debug(u"没有找到博主姓名")
-            # TODO: 变量命名可以改一下
             return
         author_name = author_name[0].get_text().replace(' ', '').replace('\n', '').replace('\t', '').replace('\r', '')
         self.info['author_name'] = author_name

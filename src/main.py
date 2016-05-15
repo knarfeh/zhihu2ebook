@@ -92,13 +92,20 @@ class EEBook(object):
             return book_files
 
         counter = 1
-        with open(self.read_list, 'r') as read_list:
-            for line in read_list:
-                line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
-                file_name = self.create_book(line, counter)
-                book_files.append(file_name)
-                counter += 1
-
+        try:
+            with open(self.read_list, 'r') as read_list:
+                for line in read_list:
+                    line = line.replace(' ', '').replace('\r', '').replace('\n', '').replace('\t', '')  # 移除空白字符
+                    file_name = self.create_book(line, counter)
+                    book_files.append(file_name)
+                    counter += 1
+        except IOError as e:
+            Debug.logger.debug(u"\nCreating " + self.read_list + "...")
+            with open(self.read_list, 'w') as read_list:
+                read_list.close()
+        if 1 == counter:
+            print(u"\nOops! No content in " + self.read_list + u". Please check it out.")
+            return
         return book_files
 
     @staticmethod

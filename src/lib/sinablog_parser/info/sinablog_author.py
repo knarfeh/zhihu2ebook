@@ -62,9 +62,14 @@ class SinaBlogAuthorInfo(ParserTools):
         description = self.dom.select('table.personTable tbody tr td p')
         if not description:
             Debug.logger.debug(u"没有找到个人简介")
-            # TODO: 完善一下..
+            # #dev log# bug report: https://github.com/knarfeh/SinaBlog2e-book/issues/1
+            # 暂时的解决方式: 目前电子书内没有用到博主个人描述这一信息,这个问题的优先级不高,暂时不添加这一信息
+            # 新浪博客的页面结构确实够混乱的,如果页面规律清晰可见当然花一点时间解决就可以了.不管怎么样,先放一放
             return
-        description = description[1].get_text().replace(' ', '').replace('\n', '').replace('\t', '').replace('\r', '')
+        try:
+            description = description[1].get_text().replace(' ', '').replace('\n', '').replace('\t', '').replace('\r', '')
+        except IndexError:
+            description = u"暂未添加"
         self.info['description'] = description
 
     def parse_creator_name(self):
