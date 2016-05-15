@@ -144,8 +144,10 @@ class PageWorker(object):
         """
         a = list(self.work_set)
         a.sort()
-        argv = {'func': self.worker,  # 所有待存入数据库中的数据都应当是list
-                'iterable': a, }
+        argv = {
+            'func': self.worker,  # 所有待存入数据库中的数据都应当是list
+            'iterable': a,
+        }
         Control.control_center(argv, self.work_set)
         Debug.logger.info(u"所有内容抓取完毕，开始对页面进行解析")
         i = 0

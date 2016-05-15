@@ -150,6 +150,30 @@ def main():
             # DB.save(data, 'LoginRecord')
             # DB.commit()
             sys.exit()
+    file_name = 'ReadList.txt'
+    log.print_log(u'read from %s' % file_name)
+
+    counter = 1
+    try:
+        with open(file_name, 'r') as read_list:
+            line = read_list[0]
+            recipe_kind = Match.get_recipe_kind(line)
+            counter += 1
+            if recipe_kind == 'Unsupport type':
+                print('Unsupported website or url type. \nPlease check url.')
+                sys.exit()
+    except IOError as e:
+        Debug.logger.debug(u"\nCreating " + file_name + "...")
+        with open(file_name, 'w') as read_list:
+            read_list.close()
+    if 1 == counter:
+        print(u"\nOops! No content in " + file_name + u". Please check it out.")
+        sys.exit()
+
+    print(u"website type:" + str(recipe_kind))
+    game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
+    game.begin()
+    sys.exit()
 
 
 if __name__ == '__main__':
