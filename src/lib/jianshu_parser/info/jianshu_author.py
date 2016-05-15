@@ -1,11 +1,14 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+
+
 from src.lib.parser_tools import ParserTools
 from src.tools.debug import Debug
 
 
 class JianshuAuthorInfo(ParserTools):
     u"""
-    在http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles的页面进行解析, 获得作者基本信息
+    对 http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles 这样的页面进行解析, 获得作者基本信息
     """
 
     def __init__(self, dom=None):
@@ -58,18 +61,16 @@ class JianshuAuthorInfo(ParserTools):
         article_num = self.dom.select('ul.clearfix li b')
         if not article_num:
             Debug.logger.info(u"没有找到文章的数量")
-            # TODO: 变量名可以改一下
         article_num = article_num[2].get_text()      # 第3个是文章数量
         Debug.logger.debug(u"文章数量为:" + str(article_num))
         self.info['article_num'] = int(article_num)
-
 
     def parse_logo(self):
         u"""
 
         :return:
         """
-        pass      # TODO
+        pass
 
     def parse_description(self):
         u"""

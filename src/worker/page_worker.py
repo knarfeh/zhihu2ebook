@@ -63,7 +63,10 @@ class PageWorker(object):
         key 即为表名
         :return:
         """
-        config = {'Answer': self.answer_list, 'Question': self.question_list, }
+        config = {
+            'Answer': self.answer_list,
+            'Question': self.question_list,
+        }
         return config
 
     def clear_index(self):
@@ -78,6 +81,8 @@ class PageWorker(object):
         for key in save_config:
             for item in save_config[key]:
                 if item:
+                    print(u"item?" + str(item))
+                    print(u"key?" + str(key))
                     DB.save(item, key)
         DB.commit()
         return
@@ -108,7 +113,10 @@ class PageWorker(object):
 
     def start_create_work_list(self):
         self.clear_work_set()
-        argv = {'func': self.create_work_set, 'iterable': self.task_set, }
+        argv = {
+            'func': self.create_work_set,
+            'iterable': self.task_set,
+        }
         Control.control_center(argv, self.task_set)
         return
 
@@ -162,6 +170,9 @@ class PageWorker(object):
         return
 
     def start_catch_info(self):
-        argv = {'func': self.catch_info, 'iterable': self.info_url_set, }
+        argv = {
+            'func': self.catch_info,
+            'iterable': self.info_url_set,
+        }
         Control.control_center(argv, self.info_url_set)
         return

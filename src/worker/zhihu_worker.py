@@ -98,13 +98,20 @@ class CollectionWorker(PageWorker):
 
     def add_collection_index(self, collection_id, answer_list):
         for answer in answer_list:
-            data = {'href': answer['href'], 'collection_id': collection_id, }
+            data = {
+                'href': answer['href'],
+                'collection_id': collection_id,
+            }
             self.collection_index_list.append(data)
         return
 
     def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'CollectionInfo': self.info_list,
-                  'CollectionIndex': self.collection_index_list, }
+        config = {
+            'Answer': self.answer_list,
+            'Question': self.question_list,
+            'CollectionInfo': self.info_list,
+            'CollectionIndex': self.collection_index_list,
+        }
         return config
 
 

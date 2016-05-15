@@ -10,10 +10,11 @@ class CollectionInfo(ParserTools):
 
     def __init__(self, dom=None):
         self.set_dom(dom)
+        self.info = {}
+        self.dom = None
         return
 
     def set_dom(self, dom):
-        self.info = {}
         if dom:
             self.dom = dom
         return

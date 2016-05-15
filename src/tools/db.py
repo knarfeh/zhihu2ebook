@@ -29,6 +29,8 @@ class DB(object):
         sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
                                                                               columns=','.join(data.keys()),
                                                                               items=(',?' * len(data.keys()))[1:])
+        print(u"sql?" + str(sql))
+        print(u"tuple??" + str(tuple(data.values())))
         DB.cursor.execute(sql, tuple(data.values()))
         return
 
@@ -75,6 +77,9 @@ class DB(object):
                 'article_id', 'author_hash', 'author_name', 'author_sign', 'author_id',
                 'href', 'title', 'content', 'comment', 'agree',
                 'publish_date'
+            ),
+            Type.jianshu_collection: (
+                'collection_fake_id', 'collection_real_id', 'title', 'description', 'follower'
             ),
             # sinablog
             Type.sinablog_info: (
