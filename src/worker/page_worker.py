@@ -32,7 +32,7 @@ class PageWorker(object):
 
         # 添加扩展属性
         self.add_property()
-        Config._load()          # TODO: 可能对性能有影响,有没有更好的方式?
+        Config._load()          # TODO: 可能对性能有影响,改成运行时的环境变量?
         if Config.need_account:
             Debug.logger.debug("Need cookie")
             Http.set_cookie()

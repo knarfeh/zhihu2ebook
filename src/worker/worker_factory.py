@@ -5,6 +5,7 @@ from src.worker.zhihu_worker import (QuestionWorker, AuthorWorker, CollectionWor
                                      TopicWorker, ColumnWorker)
 from src.worker.sinablog_worker import sinablogAuthorWorker
 from src.worker.jianshu_worker import JianshuAuthorWorker
+from src.worker.jianshu_worker import JianshuCollectionWorker
 from src.worker.csdnblog_worker import csdnAuthorWorker
 
 
@@ -19,6 +20,7 @@ def worker_factory(task):
         'article': ColumnWorker,
         'sinablog_author': sinablogAuthorWorker,
         'jianshu_author': JianshuAuthorWorker,
+        'jianshu_collection': JianshuCollectionWorker,
         'csdnblog_author': csdnAuthorWorker
     }
     for key in task:

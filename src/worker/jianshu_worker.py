@@ -14,7 +14,7 @@ from src.lib.parser_tools import ParserTools
 
 class JianshuAuthorWorker(PageWorker):
     u"""
-    简书的worker
+    for jianshu author
     """
     def create_save_config(self):
         config = {
@@ -83,3 +83,12 @@ class JianshuAuthorWorker(PageWorker):
             for item in article_list:
                 self.work_set.add(item)
         return
+
+
+class JianshuCollectionWorker(PageWorker):
+    u"""
+    for jianshu collection
+    """
+
+
+
