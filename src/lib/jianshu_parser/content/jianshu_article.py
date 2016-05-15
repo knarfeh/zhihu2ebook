@@ -26,7 +26,7 @@ class JianshuArticle(ParserTools):
         self.parse_article_id()         # 获得article_id
         self.parse_article_title()      # 文章title
         self.parse_answer_content()     # 获得博文的内容
-        # self.parse_href()
+        self.parse_href()
         # self.parse_comment()          # TODO
         self.parse_publish_date()
         return self.info
@@ -70,6 +70,14 @@ class JianshuArticle(ParserTools):
             Debug.logger.info(u"没有找到文章内容")
             return
         self.info['content'] = content
+
+    def parse_href(self):
+        content = str(self.dom.find("meta", property="twitter:url")['content'])
+        # TODO: test the code
+        if not content:
+            Debug.logger.info(u"没有找到文章href")
+            return
+        self.info['href'] = content
 
     def parse_publish_date(self):
         content = str(self.dom.find("div", class_="author-info").findAll("span")[3].get_text())
