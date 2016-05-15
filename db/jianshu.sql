@@ -42,4 +42,10 @@ CREATE TABLE jianshu_collection (
   description           VARCHAR(1000),
   follower              INT(20)     NOT NULL DEFAULT 0,
   PRIMARY KEY (collection_fake_id)
+);
+
+CREATE TABLE jianshu_collection_index (
+  collection_fake_id    VARCHAR(50) NOT NULL,
+  href                  VARCHAR(50) NOT NULL,
+  PRIMARY KEY (collection_fake_id, href)
 )

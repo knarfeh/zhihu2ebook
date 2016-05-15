@@ -9,16 +9,14 @@ class UrlParser(object):
     通过Parser类，生成任务列表以及查询列表，统一存放于urlInfo中
     task结构
     *   work_list
-        *   'answer', 'question', 'author', 'collection', 'topic', 'article', 'column'
-            *   按kind分类
-            *   分类后为一列表，其内是同类目下所有待抓取的网页链接
-            *   抓取时不用考虑抓取顺序，所以可以按类别归并后一块抓取
+        *   按kind分类
+        *   分类后为一列表，其内是同类目下所有待抓取的网页链接
+        *   抓取时不用考虑抓取顺序，所以可以按类别归并后一块抓取
     *   book_list
-        *   'answer', 'question', 'author', 'collection', 'topic', 'article', 'column'
-            *   按kind分类
-            *   列表中为book信息，每一个book对应一本单独的电子书
-            *   应该将同一book_list里的所有book输出到同一本电子书内，这样才符合当时的本意
-            *   那就按章节进行区分吧，由RawBook负责进行生成处理
+        *   按kind分类
+        *   列表中为book信息，每一个book对应一本单独的电子书
+        *   TODO 将同一book_list里的所有book输出到同一本电子书内
+        *   按章节进行区分，由RawBook负责进行生成处理
     """
     def __init__(self):
         pass
@@ -32,10 +30,11 @@ class UrlParser(object):
         """
         command = command.split('#')[0]             # remove_comment
         command_list = command.split('$')           # split_command
-        Debug.logger.debug(u"[debug]command_list:" + str(command_list))
+        Debug.logger.debug(u"#Debug mode# command_list:" + str(command_list))
         raw_task_list = []
         for command in command_list:
             raw_task = UrlParser.parse_command(command)
+            # return
             if raw_task:
                 raw_task_list.append(raw_task)
 
@@ -116,6 +115,11 @@ class UrlParser(object):
             task.book.sql.answer = 'select * from Answer where href in (select href from \
             CollectionIndex where collection_id = "{}")'.format(collection_id)
             return task
+
+        def parse_jianshu_collection(command):
+            result = Match.jianshu_collection(command)
+            collection_id = result.group('collection_id')
+            task = SingleTask()
 
         def parse_topic(command):
             result = Match.topic(command)
@@ -234,6 +238,7 @@ class UrlParser(object):
             'column': parse_column,
             'sinablog_author': parse_sinablog_author,
             'jianshu_author': parse_jianshu_author,
+            'jianshu_collection': parse_jianshu_collection,
             'csdnblog_author': parse_csdnblog_author,
             'unknown': parse_error,
         }
