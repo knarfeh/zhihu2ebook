@@ -34,7 +34,6 @@ class UrlParser(object):
         raw_task_list = []
         for command in command_list:
             raw_task = UrlParser.parse_command(command)
-            # return
             if raw_task:
                 raw_task_list.append(raw_task)
 
@@ -109,7 +108,8 @@ class UrlParser(object):
             task.spider.href = 'https://www.zhihu.com/collection/{}'.format(collection_id)
             task.book.kind = 'collection'
             task.book.sql.info = 'select * from CollectionInfo where collection_id = "{}"'.format(
-                collection_id)
+                collection_id
+            )
             task.book.sql.question = 'select * from Question where question_id in (select question_id from \
             Answer where href in (select href from CollectionIndex where collection_id = "{}"))'.format(collection_id)
             task.book.sql.answer = 'select * from Answer where href in (select href from \
@@ -120,6 +120,15 @@ class UrlParser(object):
             result = Match.jianshu_collection(command)
             collection_id = result.group('collection_id')
             task = SingleTask()
+            task.kind = 'jianshu_collection'
+            task.spider.href = 'http://www.jianshu.com/collection/{}'.format(collection_id)
+            task.book.kind = 'jianshu_collection'
+            task.book.sql.info = 'select * from jianshu_collection where collection_fake_id = "{}"'.format(
+                collection_id
+            )
+            task.book.sql.answer = 'select * from jianshu_article where href in (select href from ' + \
+                'jianshu_collection_index where collection_fake_id = "{}")'.format(collection_id)
+            return task
 
         def parse_topic(command):
             result = Match.topic(command)
@@ -129,10 +138,10 @@ class UrlParser(object):
             task.spider.href = 'https://www.zhihu.com/topic/{}'.format(topic_id)
             task.book.kind = 'topic'
             task.book.sql.info = 'select * from TopicInfo where topic_id = "{}"'.format(topic_id)
-            task.book.sql.question = 'select * from Question where question_id in (select question_id from \
-            Answer where href in (select href from TopicIndex where topic_id = "{}"))'.format(topic_id)
-            task.book.sql.answer = 'select * from Answer where href in (select href from \
-            TopicIndex where topic_id = "{}")'.format(topic_id)
+            task.book.sql.question = 'select * from Question where question_id in (select question_id from' + \
+                'Answer where href in (select href from TopicIndex where topic_id = "{}"))'.format(topic_id)
+            task.book.sql.answer = 'select * from Answer where href in (select href from ' + \
+                'TopicIndex where topic_id = "{}")'.format(topic_id)
             return task
 
         def parse_article(command):

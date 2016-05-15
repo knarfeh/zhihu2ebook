@@ -43,6 +43,10 @@ class TaskPackage(object):
         return
 
     def get_task(self):
+        u"""
+        jianshu_collection could not be merge
+        :return:
+        """
         if Type.csdnblog_author in self.book_list:
             self.merge_csdnblog_article_book_list(book_type=Type.csdnblog_author)
         if Type.jianshu_author in self.book_list:
@@ -58,20 +62,19 @@ class TaskPackage(object):
         return self
 
     def merge_jianshu_article_book_list(self, book_type):
-        book_list = self.book_list[Type.jianshu_author]
+        book_list = self.book_list[book_type]
         book = InitialBook()
         info_extra = [item.sql.info_extra for item in book_list]
         article_extra = [item.sql.article_extra for item in book_list]
         book.kind = book_type
-        book.author_id = '_'.join([item.author_id for item in book_list])
+        print str([item.author_id for item in book_list])
+        # book.author_id = '_'.join([item.author_id for item in book_list])
         book.sql.info = 'select * from jianshu_info where ({})'.format(' or '.join(info_extra))
         book.sql.article = 'select * from jianshu_article where ({})'.format(' or '.join(article_extra))
         book.sql.answer = 'select * from jianshu_article where ({})'.format(' or '.join(article_extra))
         self.book_list[book_type] = [book]
         return
 
-    # TODO: merge_sinablog 和 merge_jianshu 都可以合并, 但要合并 csdnblog.sql, jianshu.sql
-    # 当然这里有一个矛盾,如果合并了, jianshu 中如果要写其他的类型???比如文集类型
     def merge_sinablog_article_book_list(self, book_type):
         book_list = self.book_list[Type.sinablog_author]
         book = InitialBook()
