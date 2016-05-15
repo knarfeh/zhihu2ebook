@@ -66,10 +66,7 @@ class SinaBlogAuthorInfo(ParserTools):
             # 暂时的解决方式: 目前电子书内没有用到博主个人描述这一信息,这个问题的优先级不高,暂时不添加这一信息
             # 新浪博客的页面结构确实够混乱的,如果页面规律清晰可见当然花一点时间解决就可以了.不管怎么样,先放一放
             return
-        try:
-            description = description[1].get_text().replace(' ', '').replace('\n', '').replace('\t', '').replace('\r', '')
-        except IndexError:
-            description = u"暂未添加"
+        description = u"EE-Book: 暂未添加"
         self.info['description'] = description
 
     def parse_creator_name(self):
@@ -80,7 +77,6 @@ class SinaBlogAuthorInfo(ParserTools):
         creator_name = self.dom.select('div.info_nm span strong')       # 获得creator_name
         if not creator_name:
             Debug.logger.debug(u"没有找到博主姓名")
-            # TODO: 变量命名可以改一下
             return
         creator_name = creator_name[0].get_text().replace(' ', '').replace('\n', '').replace('\t', '').replace('\r', '')
         self.info['creator_name'] = creator_name

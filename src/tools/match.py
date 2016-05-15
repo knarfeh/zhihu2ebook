@@ -134,7 +134,6 @@ class Match(object):
         # for SinaBlog
         if recipe_kind in Type.sinablog:
             from src.tools.debug import Debug
-            Debug.logger.debug(u'fix_html for sinablog: ' + str(recipe_kind))
             for item in re.findall(r'\<span class="img2"\>.*?\</span\>', content):
                 content = content.replace(item, '')
             for item in re.findall(r'\<script\>.*?\</script\>', content, re.S):
