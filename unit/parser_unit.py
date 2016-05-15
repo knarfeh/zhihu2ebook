@@ -8,7 +8,7 @@ from src.lib.zhihu_parser.collection import CollectionParser
 from src.lib.zhihu_parser.question import QuestionParser
 from src.lib.zhihu_parser.topic import TopicParser
 
-from src.lib.jianshu_parser.jianshu_parser import JianshuParser
+from src.lib.jianshu_parser.author import JianshuAuthorParser
 
 from src.lib.csdnblog_parser.csdnblog_parser import CsdnBlogParser
 
@@ -57,7 +57,7 @@ unit = {
     'jianshu_author': {
         'src_answer': './unit_html/jianshu_author_one_article.html',
         'src_info': './unit_html/jianshu_author.html',
-        'parser': JianshuParser,
+        'parser': JianshuAuthorParser,
     },
     'csdnblog_author': {
         'src_answer': './unit_html/csdnblog_author_one_article.html',

@@ -7,7 +7,8 @@ from src.tools.http import Http
 from src.tools.match import Match
 
 from src.worker.page_worker import PageWorker
-from src.lib.jianshu_parser.jianshu_parser import JianshuParser
+from src.lib.jianshu_parser.author import JianshuAuthorParser
+from src.lib.jianshu_parser.collection import JianshuCollectionParser
 
 from src.lib.parser_tools import ParserTools
 
@@ -24,7 +25,7 @@ class JianshuAuthorWorker(PageWorker):
         return config
 
     def parse_content(self, content):
-        parser = JianshuParser(content)
+        parser = JianshuAuthorParser(content)
         self.answer_list += parser.get_answer_list()
 
     @staticmethod
@@ -50,7 +51,7 @@ class JianshuAuthorWorker(PageWorker):
         :return:
         """
         index_content = Http.get_content(target_url)
-        parser = JianshuParser(index_content)
+        parser = JianshuAuthorParser(index_content)
         self.question_list += parser.get_extra_info()
         article_num = self.question_list[0]['article_num']      # not collection, only one author
         article_list = self.parse_get_article_list(index_content)
@@ -89,6 +90,43 @@ class JianshuCollectionWorker(PageWorker):
     u"""
     for jianshu collection
     """
+    def add_property(self):
+        self.collection_index_list = []
+
+    def create_work_set(self, target_url):
+        pass
+
+    def catch_info(self, target_url):
+        if target_url in self.info_url_complete_set:
+            return
+        content = Http.get_content(target_url)
+        if not content:
+            return
+        self.info_url_complete_set.add(target_url)
+        parser = JianshuCollectionParser(content)
+        print(u"parser info??" + str(parser.get_extra_info()))
+        self.info_list.append(parser.get_extra_info())
+        return
+
+    def parse_content(self, content):
+        pass
+
+    def add_collection_index(self, collection_id, answer_list):
+        for answer in answer_list:
+            data = {
+                'href': answer['href'],
+                'collection_fake_id': collection_id,
+            }
+            self.collection_index_list.append(data)
+        return
+
+    def create_save_config(self):
+        config = {
+            'Answer': self.answer_list,
+            'jianshu_collection': self.info_list,
+            'jianshu_collection_index': self.collection_index_list,
+        }
+        return config
 
 
 
