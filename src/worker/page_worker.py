@@ -81,8 +81,6 @@ class PageWorker(object):
         for key in save_config:
             for item in save_config[key]:
                 if item:
-                    print(u"item?" + str(item))
-                    print(u"key?" + str(key))
                     DB.save(item, key)
         DB.commit()
         return
@@ -124,7 +122,6 @@ class PageWorker(object):
         if target_url in self.work_complete_set:
             # 自动跳过已抓取成功的网址
             return
-
         Debug.logger.info(u'开始抓取{}的内容'.format(target_url))
         content = Http.get_content(target_url)
         if not content:
@@ -150,11 +147,11 @@ class PageWorker(object):
         work_set是所有的需要抓取的页面(单篇的文章)
         :return:
         """
-        a = list(self.work_set)
-        a.sort()
+        work_wet_list = list(self.work_set)
+        work_wet_list.sort()
         argv = {
             'func': self.worker,  # 所有待存入数据库中的数据都应当是list
-            'iterable': a,
+            'iterable': work_wet_list,
         }
         Control.control_center(argv, self.work_set)
         Debug.logger.info(u"所有内容抓取完毕，开始对页面进行解析")

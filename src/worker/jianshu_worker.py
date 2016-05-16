@@ -93,8 +93,38 @@ class JianshuCollectionWorker(PageWorker):
     def add_property(self):
         self.collection_index_list = []
 
+    @staticmethod
+    def parse_max_page(content):
+        soup = BeautifulSoup(content, 'lxml')
+        article_num = soup.select("div.header p.author a.blue-link ")[0].get_text().split(u'篇文章')[0]
+        return int(article_num)
+
     def create_work_set(self, target_url):
-        pass
+        if target_url in self.task_complete_set:
+            return
+        content = Http.get_content(target_url)
+        if not content:
+            return
+        self.task_complete_set.add(target_url)
+        real_id = self.info_list[0]['collection_real_id']
+        fake_id = self.info_list[0]['collection_fake_id']
+        article_num = self.parse_max_page(content)
+
+        if article_num % 9 != 0:
+            page_num = article_num/9 + 1      # 9 href on one page
+        else:
+            page_num = article_num / 9
+
+        for page in range(page_num):
+            url = 'http://www.jianshu.com/collections/' + str(real_id) + '/notes?order_by=added_at&page={}'.format(page+1)
+            content = Http.get_content(url)
+            parser = JianshuCollectionParser(content)
+            article_list = parser.get_article_list()
+            self.add_collection_index(fake_id, article_list)
+            for item in article_list:
+                self.work_set.add(item)
+        return
+
 
     def catch_info(self, target_url):
         if target_url in self.info_url_complete_set:
@@ -104,17 +134,17 @@ class JianshuCollectionWorker(PageWorker):
             return
         self.info_url_complete_set.add(target_url)
         parser = JianshuCollectionParser(content)
-        print(u"parser info??" + str(parser.get_extra_info()))
         self.info_list.append(parser.get_extra_info())
         return
 
     def parse_content(self, content):
-        pass
+        parser = JianshuAuthorParser(content)
+        self.answer_list += parser.get_answer_list()
 
-    def add_collection_index(self, collection_id, answer_list):
-        for answer in answer_list:
+    def add_collection_index(self, collection_id, article_list):
+        for item in article_list:
             data = {
-                'href': answer['href'],
+                'href': item,
                 'collection_fake_id': collection_id,
             }
             self.collection_index_list.append(data)
@@ -122,7 +152,7 @@ class JianshuCollectionWorker(PageWorker):
 
     def create_save_config(self):
         config = {
-            'Answer': self.answer_list,
+            'jianshu_article': self.answer_list,
             'jianshu_collection': self.info_list,
             'jianshu_collection_index': self.collection_index_list,
         }

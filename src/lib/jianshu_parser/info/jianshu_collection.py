@@ -33,28 +33,43 @@ class JianshuCollectionInfo(ParserTools):
         return self.info
 
     def parse_base_info(self):
+        self.parse_collection_real_id()
         self.parse_title()
         self.parse_collection_fake_id()
-        self.parse_collection_real_id()
         self.parse_description()
-        self.parse_follower()
+        # self.parse_follower()         # WTF? not working?
+        return
 
     def parse_title(self):
-        title = None
+        title = str(self.dom.find("div", class_="header").h3.a.get_text())
         if not title:
             Debug.logger.debug(u'专题标题未找到')
-            # return
-        self.info['title'] = 'testtesttest'
+        self.info['title'] = title
+        return
 
     def parse_collection_fake_id(self):
-        self.info['collection_fake_id'] = 'testlalala'
+        href = str(self.get_attr(self.dom.find("div", class_="header").h3.a, 'href'))
+        collection_fake_id = str((href.split('/')[2])).strip()
+        self.info['collection_fake_id'] = collection_fake_id
+        return
 
     def parse_collection_real_id(self):
-        self.info['collection_real_id'] = 'tsdfsaf'
+        u"""
+        Need test
+        :return:
+        """
+        real_id = self.get_attr(self.dom.select("div.header img.avatar")[0], "src").split("/")[5]
+        self.info['collection_real_id'] = real_id
+        return
 
     def parse_description(self):
-        pass
+        href = self.dom.find("div", class_="description").p.get_text().strip()
+        self.info['description'] = unicode(href)
+        return
 
     def parse_follower(self):
-        pass
-
+        following = self.dom.find("div", class_="following")
+        span = following.select('span')[1]
+        fo_num = span.get_text()
+        self.info['follower'] = fo_num
+        return
