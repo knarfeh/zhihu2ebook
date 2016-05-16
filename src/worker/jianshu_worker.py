@@ -155,4 +155,10 @@ class JianshuCollectionWorker(PageWorker):
         return config
 
 
+class JianshuNotebooksWorker(PageWorker):
+    u"""
+    for jianshu notebook
+    """
+    pass
+
 
