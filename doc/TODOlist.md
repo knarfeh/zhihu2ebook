@@ -1,6 +1,6 @@
 ## EE-Book
 
-* 写一个个人博客的通用类型。如yinwang，macshuo.com这种, 做到只需要添加一个page_worker类型自动导入
+* 写一个个人博客的通用类型。如yinwang，macshuo.com这种, 做到可以自动自动导入，只需要写Parser就行
 * 构建日志系统
 * 优化后台代码，使得添加模块变得简单、快捷
 

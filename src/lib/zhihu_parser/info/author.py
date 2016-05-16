@@ -10,10 +10,14 @@ class AuthorInfo(ParserTools):
 
     def __init__(self, dom=None):
         self.set_dom(dom)
+        self.info = {}
+        self.dom = None
+        self.header_dom = None
+        self.detail_dom = None
+        self.side_dom = None
         return
 
     def set_dom(self, dom):
-        self.info = {}
         if dom:
             self.dom = dom
             self.header_dom = dom.find('div', class_='zm-profile-header')

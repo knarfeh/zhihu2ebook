@@ -29,8 +29,6 @@ class DB(object):
         sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
                                                                               columns=','.join(data.keys()),
                                                                               items=(',?' * len(data.keys()))[1:])
-        print(u"sql?" + str(sql))
-        print(u"tuple??" + str(tuple(data.values())))
         DB.cursor.execute(sql, tuple(data.values()))
         return
 

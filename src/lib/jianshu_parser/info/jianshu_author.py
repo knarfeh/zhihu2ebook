@@ -14,6 +14,7 @@ class JianshuAuthorInfo(ParserTools):
     def __init__(self, dom=None):
         self.set_dom(dom)
         self.info = {}
+        self.dom = None
         return
 
     def set_dom(self, dom):
@@ -36,7 +37,7 @@ class JianshuAuthorInfo(ParserTools):
         self.parse_creator_name()
         # self.parse_sign()
         self.parse_description()
-        # self.parse_logo()       # TODO
+        # self.parse_logo()
         # self.parse_gender()
         self.parse_article_count()
 

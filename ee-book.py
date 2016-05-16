@@ -114,6 +114,7 @@ def main():
             counter = 1
             try:
                 with open(file_name, 'r') as read_list:
+                    read_list = read_list.readlines()
                     line = read_list[0]
                     recipe_kind = Match.get_recipe_kind(line)
                     counter += 1
@@ -156,6 +157,7 @@ def main():
     counter = 1
     try:
         with open(file_name, 'r') as read_list:
+            read_list = read_list.readlines()
             line = read_list[0]
             recipe_kind = Match.get_recipe_kind(line)
             counter += 1
