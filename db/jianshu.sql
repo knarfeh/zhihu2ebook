@@ -48,4 +48,19 @@ CREATE TABLE jianshu_collection_index (
   collection_fake_id    VARCHAR(50) NOT NULL,
   href                  VARCHAR(50) NOT NULL,
   PRIMARY KEY (collection_fake_id, href)
-)
+);
+
+CREATE TABLE jianshu_notebooks_info (
+  notebooks_id          VARCHAR(50) NOT NULL,
+  author_name           VARCHAR(255)  NOT NULL,
+  title                 VARCHAR(255),
+  description           VARCHAR(1000),
+  follower              INT(20)     NOT NULL DEFAULT 0,
+  PRIMARY KEY (notebooks_id)
+);
+
+CREATE TABLE jianshu_notebooks_index (
+  notebooks_id          VARCHAR(50) NOT NULL,
+  href                  VARCHAR(50) NOT NULL,
+  PRIMARY KEY (notebooks_id, href)
+);

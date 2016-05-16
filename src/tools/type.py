@@ -17,9 +17,14 @@ class Type(object):
     topic_info = 'topic_info'
     column_info = 'column_info'
 
-    zhihu_article_type_list = ['article', 'column', ]
-
-    question_answer_type_list = ['answer', 'question']
+    zhihu_article_type_list = [
+        'article',
+        'column',
+    ]
+    question_answer_type_list = [
+        'answer',
+        'question'
+    ]
     question_type_list = [
         'answer',
         'question',
@@ -31,24 +36,34 @@ class Type(object):
 
     # sinablog
     sinablog_article = 'sinablog_article'       # 类型是单篇的文章
-    sinablog_author = 'sinablog_author'                       # 类型是文章的集锦
+    sinablog_author = 'sinablog_author'         # 类型是文章的集锦
     sinablog_info = 'sinablog_info'             # 新浪博客的一些基本信息,如作者id
 
     sinablog_article_type_list = ['sinablog']
 
-    sinablog = [sinablog_article, sinablog_author, sinablog_info]   # TODO: rename
+    sinablog = [sinablog_article, sinablog_author, sinablog_info]
 
-    # jianshu    # TODO, 目前只有latest_articles一种, 还可以写collections, notebook等等
+    # jianshu
     jianshu_article = 'jianshu_article'     # TODO: 单篇文章
-    jianshu_author = 'jianshu_author'       # 简书某博主文章的集锦
+    jianshu_author = 'jianshu_author'
+    jianshu_info = 'jianshu_info'
     jianshu_collection = 'jianshu_collection'
     jianshu_collection_info = 'jianshu_collection_info'
-    jianshu_info = 'jianshu_info'
+    jianshu_notebooks = 'jianshu_notebooks'
+    jianshu_notebooks_info = 'jianshu_notebooks'
 
-    jianshu = [jianshu_article, jianshu_author, jianshu_collection, jianshu_collection_info, jianshu_info]
+    jianshu = [
+        jianshu_article,
+        jianshu_author,
+        jianshu_info,
+        jianshu_collection,
+        jianshu_collection_info,
+        jianshu_notebooks,
+        jianshu_notebooks_info,
+    ]
 
     # csdn
-    csdnblog_article = 'csdnblog_article'
+    csdnblog_article = 'csdnblog_article'    # TODO: 单篇文章
     csdnblog_author = 'csdnblog_author'
     csdnblog_info = 'csdnblog_info'
     csdnblog_article_type_list = ['csdn']
@@ -60,6 +75,7 @@ class Type(object):
         'sinablog_author',
         'jianshu_author',
         'jianshu_collection',
+        'jianshu_notebooks',
         'csdnblog_author'
     ]
 
@@ -72,10 +88,8 @@ class Type(object):
         collection: collection_info,
         topic: topic_info,
 
-        'sinablog_info': sinablog_info,
-        'jianshu_info': jianshu_info,
-        'jianshu_collection': jianshu_collection_info,
-        'csdnblog_info': csdnblog_info
+        jianshu_collection: jianshu_collection_info,
+        jianshu_notebooks: jianshu_notebooks_info,
     }
 
     website_type = {
@@ -85,6 +99,7 @@ class Type(object):
         'csdnblog': csdnblog
     }
 
+    # for --info option
     key_word_to_website_type = {
         'zhihu.com': 'zhihu',
         'jianshu.com': 'jianshu',

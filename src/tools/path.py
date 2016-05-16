@@ -50,7 +50,7 @@ class Path(object):
             os.mkdir(path)
         except OSError:
             from src.tools.debug import Debug
-            Debug.logger.debug(u'目录 ' + str(path) + str(u' 已存在'))
+            Debug.logger.debug(u'directory ' + str(path) + str(u' already exists'))
             pass
         return
 
@@ -65,7 +65,7 @@ class Path(object):
             os.chdir(path)
         except OSError:
             from src.tools.debug import Debug
-            Debug.logger.debug(u'指定目录不存在，自动创建之')
+            Debug.logger.debug(u'path does not exist，creating it....')
             Path.mkdir(path)
             os.chdir(path)
         return
@@ -85,7 +85,7 @@ class Path(object):
     def copy(src, dst):
         if not os.path.exists(src):
             from src.tools.debug import Debug
-            Debug.logger.debug('{}不存在，自动跳过'.format(src))
+            Debug.logger.debug('{}does not exist，skip it'.format(src))
             return
         if os.path.isdir(src):
             shutil.copytree(src, dst)
