@@ -42,9 +42,10 @@ class Type(object):
     jianshu_article = 'jianshu_article'     # TODO: 单篇文章
     jianshu_author = 'jianshu_author'       # 简书某博主文章的集锦
     jianshu_collection = 'jianshu_collection'
+    jianshu_collection_info = 'jianshu_collection_info'
     jianshu_info = 'jianshu_info'
 
-    jianshu = [jianshu_article, jianshu_author, jianshu_collection, jianshu_info]
+    jianshu = [jianshu_article, jianshu_author, jianshu_collection, jianshu_collection_info, jianshu_info]
 
     # csdn
     csdnblog_article = 'csdnblog_article'
@@ -73,6 +74,7 @@ class Type(object):
 
         'sinablog_info': sinablog_info,
         'jianshu_info': jianshu_info,
+        'jianshu_collection': jianshu_collection_info,
         'csdnblog_info': csdnblog_info
     }
 

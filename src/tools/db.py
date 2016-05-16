@@ -76,7 +76,7 @@ class DB(object):
                 'href', 'title', 'content', 'comment', 'agree',
                 'publish_date'
             ),
-            Type.jianshu_collection: (
+            Type.jianshu_collection_info: (
                 'collection_fake_id', 'collection_real_id', 'title', 'description', 'follower'
             ),
             # sinablog
