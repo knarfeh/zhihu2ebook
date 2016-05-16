@@ -30,7 +30,7 @@ class UrlParser(object):
         """
         command = command.split('#')[0]             # remove_comment
         command_list = command.split('$')           # split_command
-        Debug.logger.debug(u"#Debug mode# command_list:" + str(command_list))
+        Debug.logger.debug(u"#DEBUG MODE# command_list:" + str(command_list))
         raw_task_list = []
         for command in command_list:
             raw_task = UrlParser.parse_command(command)
@@ -116,20 +116,6 @@ class UrlParser(object):
             CollectionIndex where collection_id = "{}")'.format(collection_id)
             return task
 
-        def parse_jianshu_collection(command):
-            result = Match.jianshu_collection(command)
-            collection_id = result.group('collection_id')
-            task = SingleTask()
-            task.kind = 'jianshu_collection'
-            task.spider.href = 'http://www.jianshu.com/collection/{}'.format(collection_id)
-            task.book.kind = 'jianshu_collection'
-            task.book.sql.info = 'select * from jianshu_collection_info where collection_fake_id = "{}"'.format(
-                collection_id
-            )
-            task.book.sql.answer = 'select * from jianshu_article where href in (select href from ' + \
-                'jianshu_collection_index where collection_fake_id = "{}")'.format(collection_id)
-            return task
-
         def parse_topic(command):
             result = Match.topic(command)
             topic_id = result.group('topic_id')
@@ -200,7 +186,6 @@ class UrlParser(object):
             """
             result = Match.jianshu_author(command)
             jianshu_id = result.group('jianshu_id')
-            Debug.logger.debug(u"jianshu_id:" + str(jianshu_id))
 
             task = SingleTask()
             task.author_id = jianshu_id
@@ -210,6 +195,34 @@ class UrlParser(object):
             task.book.sql.info_extra = 'creator_id = "{}"'.format(jianshu_id)
             task.book.sql.article_extra = 'author_id = "{}"'.format(jianshu_id)
             task.book.author_id = jianshu_id
+            return task
+
+        def parse_jianshu_collection(command):
+            result = Match.jianshu_collection(command)
+            collection_id = result.group('collection_id')
+            task = SingleTask()
+            task.kind = 'jianshu_collection'
+            task.spider.href = 'http://www.jianshu.com/collection/{}'.format(collection_id)
+            task.book.kind = 'jianshu_collection'
+            task.book.sql.info = 'select * from jianshu_collection_info where collection_fake_id = "{}"'.format(
+                collection_id
+            )
+            task.book.sql.answer = 'select * from jianshu_article where href in (select href from ' + \
+                'jianshu_collection_index where collection_fake_id = "{}")'.format(collection_id)
+            return task
+
+        def parse_jianshu_notebooks(command):
+            result = Match.jianshu_notebooks(command)
+            notebooks_id = result.group('notebooks_id')
+            task = SingleTask()
+            task.kind = 'jianshu_notebooks'
+            task.spider.href = 'http://www.jianshu.com/notebooks/{}/latest'.format(notebooks_id)  # config file???
+            task.book.kind = 'jianshu_notebooks'
+            task.book.sql.info = 'select * from jianshu_notebooks_info where notebooks_id = "{}"'.format(
+                notebooks_id
+            )
+            task.book.sql.answer = 'select * from jianshu_article where href in (select href from ' + \
+                'jianshu_notebooks_index where notebooks_id = "{}")'.format(notebooks_id)
             return task
 
         def parse_csdnblog_author(command):
@@ -234,7 +247,7 @@ class UrlParser(object):
 
         def parse_error(command):
             if command:
-                Debug.logger.info(u"""无法解析记录:{}所属网址类型,请检查后重试。""".format(command))
+                Debug.logger.info(u"""Could not analysis:{}, please check it out and try again。""".format(command))
             return
 
         parser = {
@@ -248,6 +261,7 @@ class UrlParser(object):
             'sinablog_author': parse_sinablog_author,
             'jianshu_author': parse_jianshu_author,
             'jianshu_collection': parse_jianshu_collection,
+            'jianshu_notebooks': parse_jianshu_notebooks,
             'csdnblog_author': parse_csdnblog_author,
             'unknown': parse_error,
         }

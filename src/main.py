@@ -79,12 +79,12 @@ class EEBook(object):
         程序运行的主函数
         :return: book file 的列表
         """
-        Debug.logger.debug(u"#Debug mode#: don't check update")
+        Debug.logger.debug(u"#DEBUG MODE#: don't check update")
         self.init_config(recipe_kind=self.recipe_kind)
         if self.url is None:
             Debug.logger.debug(u"Reading ReadList.txt...")
         else:
-            Debug.logger.debug(u"Got url")
+            Debug.logger.debug(u"Got url: " + str(self.url))
         book_files = []
         if self.url is not None:
             file_name = self.create_book(self.url, 1)
@@ -113,23 +113,40 @@ class EEBook(object):
         Path.reset_path()
 
         Debug.logger.info(u"Ready to make No.{} e-book".format(counter))
-        Debug.logger.info(u"analysis {} ".format(command))
+        Debug.logger.info(u"Analysis {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
+
+        Debug.logger.debug(u"#Debug:#task_package是:" + str(task_package))
+        from src.tools.type import Type
+        Debug.logger.debug(u"task_package的book_list的长度为:" + str(len(task_package.book_list)))
+        Debug.logger.debug(u"task_package:" + str(task_package))
+        Debug.logger.debug(u"task_package.work_list:" + str(task_package.work_list))
+        Debug.logger.debug(u"task_package.book_list.kind:" + str((task_package.book_list[Type.jianshu_notebooks][0]).kind))
+        Debug.logger.debug(u"task_package.book_list.info:" + str((task_package.book_list[Type.jianshu_notebooks][0]).info))
+        Debug.logger.debug(u"task_package.book_list.article_list:" + str((task_package.book_list[Type.jianshu_notebooks][0]).article_list))
+        Debug.logger.debug(u"task_package.book_list.page_list:" + str((task_package.book_list[Type.jianshu_notebooks][0]).page_list))
+        Debug.logger.debug(u"task_package.book_list.sql.question:" + str((task_package.book_list[Type.jianshu_notebooks][0]).sql.question))
+        Debug.logger.debug(u"task_package.book_list.sql.answer:" + str((task_package.book_list[Type.jianshu_notebooks][0]).sql.answer))
+        Debug.logger.debug(u"task_package.book_list.sql.info:" + str((task_package.book_list[Type.jianshu_notebooks][0]).sql.info))
+        Debug.logger.debug(u"task_package.book_list.epub.article_count:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.article_count))
+        Debug.logger.debug(u"task_package.book_list.epub.answer_count:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.answer_count))
+        Debug.logger.debug(u"task_package.book_list.epub.agree_count:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.agree_count))
+        Debug.logger.debug(u"task_package.book_list.epub.title:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.title))
 
         if not task_package.is_work_list_empty():
             worker_factory(task_package.work_list)  # 执行抓取程序
-            Debug.logger.info(u"网页信息抓取完毕")
+            Debug.logger.info(u"Complete fetching from web")
 
-        file_name_set = None
-        if not task_package.is_book_list_empty():
-            Debug.logger.info(u"开始从数据库中生成电子书")
-            book = Book(task_package.book_list)
-            file_name_set = book.create()
-        if file_name_set is not None:
-            file_name_set2list = list(file_name_set)
-            file_name = '-'.join(file_name_set2list[0:3])
-            return file_name
-        return u"Oops! epub file produced"
+        # file_name_set = None
+        # if not task_package.is_book_list_empty():
+        #     Debug.logger.info(u"Start generating e-book from the database")
+        #     book = Book(task_package.book_list)
+        #     file_name_set = book.create()
+        # if file_name_set is not None:
+        #     file_name_set2list = list(file_name_set)
+        #     file_name = '-'.join(file_name_set2list[0:3])
+        #     return file_name
+        return u"Oops! no epub file produced"
 
     @staticmethod
     def init_database():
