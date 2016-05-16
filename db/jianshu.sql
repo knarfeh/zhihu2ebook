@@ -35,7 +35,7 @@ CREATE TABLE LoginRecord (
   PRIMARY KEY (account)
 );
 
-CREATE TABLE jianshu_collection (
+CREATE TABLE jianshu_collection_info (
   collection_fake_id    VARCHAR(50) NOT NULL,
   collection_real_id    VARCHAR(50) NOT NULL,
   title                 VARCHAR(255),

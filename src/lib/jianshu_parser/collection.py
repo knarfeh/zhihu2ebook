@@ -11,10 +11,8 @@ class JianshuCollectionParser(BaseParser):
 
     def get_article_list(self):
         article_list = self.dom.select("div h4.title a")
-        a_list = list()
-        for item in article_list:
-            a_list.append('http://jianshu.com' + self.get_attr(item, 'href'))
-        return a_list
+        article_href_list = map(lambda x: 'http://www.jianshu.com'+self.get_attr(x, 'href'), article_list)
+        return article_href_list
 
     def get_extra_info(self):
         author_parser = JianshuCollectionInfo()

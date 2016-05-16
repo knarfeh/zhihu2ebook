@@ -36,12 +36,8 @@ class JianshuAuthorWorker(PageWorker):
         :return:
         """
         soup = BeautifulSoup(article_list_content, "lxml")
-        article_href_list = []
-
         article_list = soup.select('h4.title a')
-        for item in range(len(article_list)):
-            article_href = 'http://www.jianshu.com' + str(ParserTools.get_attr(article_list[item], 'href'))
-            article_href_list.append(article_href)
+        article_href_list = map(lambda x: 'http://www.jianshu.com'+ParserTools.get_attr(x, 'href'), article_list)
         return article_href_list
 
     def get_jianshu_question_list(self, target_url):
@@ -153,7 +149,7 @@ class JianshuCollectionWorker(PageWorker):
     def create_save_config(self):
         config = {
             'jianshu_article': self.answer_list,
-            'jianshu_collection': self.info_list,
+            'jianshu_collection_info': self.info_list,
             'jianshu_collection_index': self.collection_index_list,
         }
         return config

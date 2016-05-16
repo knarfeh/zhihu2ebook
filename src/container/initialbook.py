@@ -143,6 +143,9 @@ class InitialBook(object):
         elif self.kind == Type.jianshu_author:              # 该博客所有的博文
             self.epub.title = u'简书作者_{}({})文章集锦'.format(info['creator_name'], info['creator_id'])
             self.epub.id = info['creator_id']
+        elif self.kind == Type.jianshu_collection:
+            self.epub.title = u'简书专题_{}({})'.format(info['title'], info['collection_fake_id'])
+            self.epub.id = info['collection_fake_id']
         elif self.kind == Type.jianshu_article:    # 单篇博文 TODO
             self.epub.title = u'简书博文集锦({})'.format(info['title'])
             self.epub.id = info['id']       # TODO
@@ -161,19 +164,19 @@ class InitialBook(object):
         elif self.kind == Type.article:
             self.epub.title = u'知乎专栏文章集锦({})'.format(info['title'])
             self.epub.id = info['id']
-
-        if self.kind == Type.topic:
-            self.epub.title = u'话题_{}({})'.format(info['title'], info['topic_id'])
+        elif self.kind == Type.topic:
+            self.epub.title = u'知乎话题_{}({})'.format(info['title'], info['topic_id'])
             self.epub.id = info['topic_id']
-        if self.kind == Type.collection:
-            self.epub.title = u'收藏夹_{}({})'.format(info['title'], info['collection_id'])
+        elif self.kind == Type.collection:
+            self.epub.title = u'知乎收藏夹_{}({})'.format(info['title'], info['collection_id'])
             self.epub.id = info['collection_id']
-        if self.kind == Type.author:
-            self.epub.title = u'作者_{}({})'.format(info['name'], info['author_id'])
+        elif self.kind == Type.author:
+            self.epub.title = u'知乎作者_{}({})'.format(info['name'], info['author_id'])
             self.epub.id = info['author_id']
-        if self.kind == Type.column:
-            self.epub.title = u'专栏_{}({})'.format(info['name'], info['column_id'])
+        elif self.kind == Type.column:
+            self.epub.title = u'知乎专栏_{}({})'.format(info['name'], info['column_id'])
             self.epub.id = info['column_id']
+
         from src.html5lib.constants import entities_reverse
         self.epub.title = Match.replace_words(self.epub.title, entities_reverse)
         return
@@ -219,7 +222,7 @@ class InitialBook(object):
             article['char_count'] = len(article['content'])
             article['answer_count'] = 1
             # TODO
-            if self.kind in [Type.jianshu_author, Type.sinablog_author, Type.csdnblog_author]:
+            if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.sinablog_author, Type.csdnblog_author]:
                 article['agree_count'] = "没有赞同数"     # article['agree']
             else:
                 article['agree_count'] = article['agree']
@@ -228,7 +231,7 @@ class InitialBook(object):
 
             return article
 
-        if self.kind == Type.jianshu_author:
+        if self.kind in [Type.jianshu_author, Type.jianshu_collection]:
             article_list = [DB.wrap(Type.jianshu_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         elif self.kind == Type.sinablog_author:
             article_list = [DB.wrap(Type.sinablog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
@@ -241,7 +244,7 @@ class InitialBook(object):
 
     def set_article_list(self, article_list):
         self.clear_property()
-        if self.kind == Type.jianshu_author:      # jianshu类型
+        if self.kind in [Type.jianshu_author, Type.jianshu_collection]:      # jianshu类型
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.char_count += article['char_count']

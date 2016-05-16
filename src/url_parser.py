@@ -123,7 +123,7 @@ class UrlParser(object):
             task.kind = 'jianshu_collection'
             task.spider.href = 'http://www.jianshu.com/collection/{}'.format(collection_id)
             task.book.kind = 'jianshu_collection'
-            task.book.sql.info = 'select * from jianshu_collection where collection_fake_id = "{}"'.format(
+            task.book.sql.info = 'select * from jianshu_collection_info where collection_fake_id = "{}"'.format(
                 collection_id
             )
             task.book.sql.answer = 'select * from jianshu_article where href in (select href from ' + \
