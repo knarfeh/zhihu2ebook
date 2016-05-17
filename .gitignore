@@ -233,10 +233,10 @@ e-books_tmp_source/
 
 library.json
 
-bookdata/
-
 test_idea.py
 
 page_worker_back.py
 
 test.html
+
+unit/
