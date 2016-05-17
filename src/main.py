@@ -117,25 +117,9 @@ class EEBook(object):
         task_package = UrlParser.get_task(command)  # 分析命令
 
         Debug.logger.debug(u"#Debug:#task_package是:" + str(task_package))
-        from src.tools.type import Type
-        # Debug.logger.debug(u"task_package的book_list的长度为:" + str(len(task_package.book_list)))
-        # Debug.logger.debug(u"task_package:" + str(task_package))
-        # Debug.logger.debug(u"task_package.work_list:" + str(task_package.work_list))
-        # Debug.logger.debug(u"task_package.book_list.kind:" + str((task_package.book_list[Type.jianshu_notebooks][0]).kind))
-        # Debug.logger.debug(u"task_package.book_list.info:" + str((task_package.book_list[Type.jianshu_notebooks][0]).info))
-        # Debug.logger.debug(u"task_package.book_list.article_list:" + str((task_package.book_list[Type.jianshu_notebooks][0]).article_list))
-        # Debug.logger.debug(u"task_package.book_list.page_list:" + str((task_package.book_list[Type.jianshu_notebooks][0]).page_list))
-        # Debug.logger.debug(u"task_package.book_list.sql.question:" + str((task_package.book_list[Type.jianshu_notebooks][0]).sql.question))
-        # Debug.logger.debug(u"task_package.book_list.sql.answer:" + str((task_package.book_list[Type.jianshu_notebooks][0]).sql.answer))
-        # Debug.logger.debug(u"task_package.book_list.sql.info:" + str((task_package.book_list[Type.jianshu_notebooks][0]).sql.info))
-        # Debug.logger.debug(u"task_package.book_list.epub.article_count:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.article_count))
-        # Debug.logger.debug(u"task_package.book_list.epub.answer_count:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.answer_count))
-        # Debug.logger.debug(u"task_package.book_list.epub.agree_count:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.agree_count))
-        # Debug.logger.debug(u"task_package.book_list.epub.title:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.title))
-
-        # if not task_package.is_work_list_empty():
-        #     worker_factory(task_package.work_list)  # 执行抓取程序
-        #     Debug.logger.info(u"Complete fetching from web")
+        if not task_package.is_work_list_empty():
+            worker_factory(task_package.work_list)  # 执行抓取程序
+            Debug.logger.info(u"Complete fetching from web")
 
         file_name_set = None
         if not task_package.is_book_list_empty():

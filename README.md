@@ -8,10 +8,14 @@
 
 ## Supported Sites (UPDATING!)
 
-* [https://www.zhihu.com/](https://www.zhihu.com/)
-* [https://www.jianshu.com/](https://www.jianshu.com/)
-* [http://blog.sina.com.cn/](http://blog.sina.com.cn/)
-* [http://blog.csdn.net/](http://blog.csdn.net/)
+| website | home page                                | supported type                           |
+| :------ | ---------------------------------------- | ---------------------------------------- |
+| 知乎      | [www.zhihu.com](http://www.zhihu.com)    | **问题:** `zhihu.com/question/{question_id}`<br/>**答案:** `zhihu.com/question/{question_id}/answer/{answer_id}`<br/>**话题:** `zhihu.com/topic/{topic_id}`<br/>**用户的全部回答:** `zhihu.com/people/{people_id}` or `zhihu.com/people/{people_id}/answers`<br/>**收藏夹:** `zhihu.com/collection/{collection_id}` <br/> **专栏:** `zhuanlan.zhihu.com/{zhuanlan_id}` |
+| 简书      | [www.jianshu.com](http://www.jianshu.com) | **用户的所有文章:** `jianshu.com/users/{people_id}/latest_articles`<br/>**专题:** `jianshu.com/collection/{collection_id}`<br/>**文集:** `jianshu.com/notebooks/{notebooks_id}/latest` or `jianshu.com/notebooks/{notebooks_id}/top` |
+| csdn博客  | [blog.csdn.net](http://blog.csdn.net)    | **用户的所有文章:** `blog.sina.com.cn/u/{people_id}` |
+| 新浪博客    | [blog.sina.com.cn](http://blog.sina.com.cn/) | **用户的所有文章:** `blog.csdn.net/{people_id}` |
+
+
 
 ## Usage
 
@@ -24,7 +28,7 @@ $ python ee-book -h
 for example:  
 
 ```console
-$ python ee-book -u http://www.jianshu.com/users/b1dd2b2c87a8/latest_articles
+$ python ee-book -u jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
 after a while, you will get the e-book:   
@@ -69,4 +73,3 @@ $ sudo pip install -r requirements.txt
 ## License
 
 EE-Book is licensed under the terms of [MIT license](./LICENSE).
-

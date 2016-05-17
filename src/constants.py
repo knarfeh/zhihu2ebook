@@ -17,13 +17,12 @@ u"""
 Various run time constants.
 """
 
-info_meta = u"""站点:         {website}
-标题:         {title}
-描述:         {desc}
-是否需要登录?   {need_login}
-
-支持的类型:
-
+info_meta = u"""site:          {website}
+title:         {title}
+description:   {desc}
+need login?    {need_login}
+=============================================================
+supported type:
 {supported_type}
 """
 
@@ -32,22 +31,25 @@ zhihu = {
     'title': u'知乎',
     'desc': u'与世界分享你的知识、经验和见解',
     'need_login': u'是!',
-    'supported_type': u"""问题: http://www.zhihu.com/question/{question_id}
-答案: http://www.zhihu.com/question/{question_id}/answer/{answer_id}
-话题: http://www.zhihu.com/topic/{topic_id}
-用户的全部回答: http://www.zhihu.com/people/{people_id}
-            http://www.zhihu.com/people/{people_id}/answers
-收藏夹: http://www.zhihu.com/collection/{collection_id}
-专栏: http://zhuanlan.zhihu.com/{zhuanlan_id}"""
+    'supported_type': u"""问题: zhihu.com/question/{question_id}
+答案: zhihu.com/question/{question_id}/answer/{answer_id}
+话题: zhihu.com/topic/{topic_id}
+用户的全部回答: zhihu.com/people/{people_id}
+             zhihu.com/people/{people_id}/answers
+收藏夹: zhihu.com/collection/{collection_id}
+专栏: zhuanlan.zhihu.com/{zhuanlan_id}"""
 }
 
 jianshu = {
-    'website': 'http://www.zhihu.com',
+    'website': 'http://www.jianshu.com',
     'title': u'简书',
     'desc': u"""交流故事，沟通想法
-             一个基于内容分享的社区""",
+                一个基于内容分享的社区""",
     'need_login': u'否',
-    'supported_type': u"""用户的所有文章: http://www.jianshu.com/users/{people_id}/latest_articles"""
+    'supported_type': u"""用户的所有文章: jianshu.com/users/{people_id}/latest_articles
+专题: jianshu.com/collection/{collection_id}
+文集: jianshu.com/notebooks/{notebooks_id}/latest or
+      jianshu.com/notebooks/{notebooks_id}/top"""
 }
 
 sinablog = {
@@ -55,7 +57,7 @@ sinablog = {
     'title': u'新浪博客',
     'desc': u"""全中国最主流，最具人气的博客频道。拥有最耀眼的娱乐明星博客、最知性的名人博客、最动人的情感博客，最自我的草根博客""",
     'need_login': u'否',
-    'supported_type': u"""用户的所有文章: http://blog.sina.com.cn/u/{people_id}"""
+    'supported_type': u"""用户的所有文章: blog.sina.com.cn/u/{people_id}"""
 }
 
 csdnblog_info = {
@@ -63,7 +65,7 @@ csdnblog_info = {
     'title': u'csdn博客',
     'desc': u"""""",
     'need_login': u'否',
-    'supported_type': u"""用户的所有文章: http://blog.csdn.net/{people_id}"""
+    'supported_type': u"""用户的所有文章: blog.csdn.net/{people_id}"""
 }
 
 zhihu_info = info_meta.format(**zhihu)
