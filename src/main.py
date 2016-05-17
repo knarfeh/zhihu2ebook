@@ -133,19 +133,19 @@ class EEBook(object):
         # Debug.logger.debug(u"task_package.book_list.epub.agree_count:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.agree_count))
         # Debug.logger.debug(u"task_package.book_list.epub.title:" + str((task_package.book_list[Type.jianshu_notebooks][0]).epub.title))
 
-        if not task_package.is_work_list_empty():
-            worker_factory(task_package.work_list)  # 执行抓取程序
-            Debug.logger.info(u"Complete fetching from web")
+        # if not task_package.is_work_list_empty():
+        #     worker_factory(task_package.work_list)  # 执行抓取程序
+        #     Debug.logger.info(u"Complete fetching from web")
 
-        # file_name_set = None
-        # if not task_package.is_book_list_empty():
-        #     Debug.logger.info(u"Start generating e-book from the database")
-        #     book = Book(task_package.book_list)
-        #     file_name_set = book.create()
-        # if file_name_set is not None:
-        #     file_name_set2list = list(file_name_set)
-        #     file_name = '-'.join(file_name_set2list[0:3])
-        #     return file_name
+        file_name_set = None
+        if not task_package.is_book_list_empty():
+            Debug.logger.info(u"Start generating e-book from the database")
+            book = Book(task_package.book_list)
+            file_name_set = book.create()
+        if file_name_set is not None:
+            file_name_set2list = list(file_name_set)
+            file_name = '-'.join(file_name_set2list[0:3])
+            return file_name
         return u"Oops! no epub file produced"
 
     @staticmethod

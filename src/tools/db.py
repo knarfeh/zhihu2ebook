@@ -79,6 +79,9 @@ class DB(object):
             Type.jianshu_collection_info: (
                 'collection_fake_id', 'collection_real_id', 'title', 'description', 'follower'
             ),
+            Type.jianshu_notebooks_info: (
+                'notebooks_id', 'author_name', 'title', 'description', 'follower',
+            ),
             # sinablog
             Type.sinablog_info: (
                 'creator_id', 'creator_hash', 'creator_name', 'creator_sign', 'creator_logo',
@@ -111,7 +114,6 @@ class DB(object):
                 'followee', 'follower', 'followed_column', 'followed_topic', 'viewed',
                 'gender', 'weibo',
             ),
-
             Type.collection_info: (
                 'collection_id', 'title', 'description', 'follower', 'comment',
             ),
