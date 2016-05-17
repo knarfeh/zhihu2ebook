@@ -116,10 +116,10 @@ class EEBook(object):
         Debug.logger.info(u"Analysis {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
 
-        # Debug.logger.debug(u"#Debug:#task_package是:" + str(task_package))
-        # if not task_package.is_work_list_empty():
-        #     worker_factory(task_package.work_list)  # 执行抓取程序
-        #     Debug.logger.info(u"Complete fetching from web")
+        Debug.logger.debug(u"#Debug:#task_package是:" + str(task_package))
+        if not task_package.is_work_list_empty():
+            worker_factory(task_package.work_list)  # 执行抓取程序
+            Debug.logger.info(u"Complete fetching from web")
 
         from src.tools.type import Type
         Debug.logger.info(u"task_package的book_list的长度为:" + str(len(task_package.book_list)))
