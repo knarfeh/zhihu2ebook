@@ -146,6 +146,9 @@ class InitialBook(object):
         elif self.kind == Type.jianshu_collection:
             self.epub.title = u'简书专题_{}({})'.format(info['title'], info['collection_fake_id'])
             self.epub.id = info['collection_fake_id']
+        elif self.kind == Type.jianshu_notebooks:
+            self.epub.title = u'简书文集_{}({})'.format(info['title'], info['notebooks_id'])
+            self.epub.id = info['notebooks_id']
         elif self.kind == Type.jianshu_article:    # 单篇博文 TODO
             self.epub.title = u'简书博文集锦({})'.format(info['title'])
             self.epub.id = info['id']       # TODO
@@ -222,7 +225,8 @@ class InitialBook(object):
             article['char_count'] = len(article['content'])
             article['answer_count'] = 1
             # TODO
-            if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.sinablog_author, Type.csdnblog_author]:
+            if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks,
+                             Type.sinablog_author, Type.csdnblog_author]:
                 article['agree_count'] = "没有赞同数"     # article['agree']
             else:
                 article['agree_count'] = article['agree']
@@ -231,7 +235,7 @@ class InitialBook(object):
 
             return article
 
-        if self.kind in [Type.jianshu_author, Type.jianshu_collection]:
+        if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks]:
             article_list = [DB.wrap(Type.jianshu_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         elif self.kind == Type.sinablog_author:
             article_list = [DB.wrap(Type.sinablog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
@@ -244,7 +248,7 @@ class InitialBook(object):
 
     def set_article_list(self, article_list):
         self.clear_property()
-        if self.kind in [Type.jianshu_author, Type.jianshu_collection]:      # jianshu类型
+        if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks]:      # jianshu类型
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.char_count += article['char_count']

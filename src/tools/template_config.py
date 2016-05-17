@@ -34,6 +34,7 @@ class TemplateConfig(object):
     front_page_sinablog_author_uri = front_page_info_template_path + u'/sinablog_author.html'
     front_page_jianshu_author_uri = front_page_info_template_path + u'/jianshu_author.html'
     front_page_jianshu_collection_uri = front_page_info_template_path + u'/jianshu_collection.html'
+    front_page_jianshu_notebooks_uri = front_page_info_template_path + u'/jianshu_notebooks.html'
     front_page_csdnblog_author_uri = front_page_info_template_path + u'/csdnblog_author.html'
 
     front_page_base_uri = front_page_template_path + u'/base.html'
