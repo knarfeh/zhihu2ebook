@@ -104,7 +104,7 @@ class EEBook(object):
             with open(self.read_list, 'w') as read_list:
                 read_list.close()
         if 1 == counter:
-            print(u"\nOops! No content in " + self.read_list + u". Please check it out.")
+            print(u"\nOops! No content in " + self.read_list + ". Please check it out.")
             return
         return book_files
 
@@ -116,20 +116,36 @@ class EEBook(object):
         Debug.logger.info(u"Analysis {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
 
-        Debug.logger.debug(u"#Debug:#task_package是:" + str(task_package))
-        if not task_package.is_work_list_empty():
-            worker_factory(task_package.work_list)  # 执行抓取程序
-            Debug.logger.info(u"Complete fetching from web")
+        # Debug.logger.debug(u"#Debug:#task_package是:" + str(task_package))
+        # if not task_package.is_work_list_empty():
+        #     worker_factory(task_package.work_list)  # 执行抓取程序
+        #     Debug.logger.info(u"Complete fetching from web")
+
+        from src.tools.type import Type
+        Debug.logger.info(u"task_package的book_list的长度为:" + str(len(task_package.book_list)))
+        Debug.logger.info(u"task_package:" + str(task_package))
+        Debug.logger.info(u"task_package.work_list:" + str(task_package.work_list))
+        Debug.logger.info(u"task_package.book_list.kind:" + str((task_package.book_list[Type.cnblogs_author][0]).kind))
+        Debug.logger.info(u"task_package.book_list.info:" + str((task_package.book_list[Type.cnblogs_author][0]).info))
+        Debug.logger.info(u"task_package.book_list.article_list:" + str((task_package.book_list[Type.cnblogs_author][0]).article_list))
+        Debug.logger.info(u"task_package.book_list.page_list:" + str((task_package.book_list[Type.cnblogs_author][0]).page_list))
+        Debug.logger.info(u"task_package.book_list.sql.info_extra:" + str((task_package.book_list[Type.cnblogs_author][0]).sql.info_extra))
+        Debug.logger.info(u"task_package.book_list.sql.article_extra:" + str((task_package.book_list[Type.cnblogs_author][0]).sql.article_extra))
+        Debug.logger.info(u"task_package.book_list.sql.info:" + str((task_package.book_list[Type.cnblogs_author][0]).sql.info))
+        Debug.logger.info(u"task_package.book_list.epub.article_count:" + str((task_package.book_list[Type.cnblogs_author][0]).epub.article_count))
+        Debug.logger.info(u"task_package.book_list.epub.answer_count:" + str((task_package.book_list[Type.cnblogs_author][0]).epub.answer_count))
+        Debug.logger.info(u"task_package.book_list.epub.agree_count:" + str((task_package.book_list[Type.cnblogs_author][0]).epub.agree_count))
+        Debug.logger.info(u"task_package.book_list.epub.title:" + str((task_package.book_list[Type.cnblogs_author][0]).epub.title))
 
         file_name_set = None
-        if not task_package.is_book_list_empty():
-            Debug.logger.info(u"Start generating e-book from the database")
-            book = Book(task_package.book_list)
-            file_name_set = book.create()
-        if file_name_set is not None:
-            file_name_set2list = list(file_name_set)
-            file_name = '-'.join(file_name_set2list[0:3])
-            return file_name
+        # if not task_package.is_book_list_empty():
+        #     Debug.logger.info(u"Start generating e-book from the database")
+        #     book = Book(task_package.book_list)
+        #     file_name_set = book.create()
+        # if file_name_set is not None:
+        #     file_name_set2list = list(file_name_set)
+        #     file_name = '-'.join(file_name_set2list[0:3])
+        #     return file_name
         return u"Oops! no epub file produced"
 
     @staticmethod

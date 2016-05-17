@@ -103,6 +103,16 @@ class Match(object):
         """
         return re.search(r'(?<=blog\.sina\.com\.cn/s/articlelist_)(?P<sinablog_people_id>[^/\n\r]*)(_0_1\.)', content)
 
+    # cnblogs
+    @staticmethod
+    def cnblogs_author(content=''):
+        u"""
+
+        :param content: cnblogs 博主主页地址, http://www.cnblogs.com/buptzym/
+        :return:
+        """
+        return re.search(r'(?<=cnblogs\.com/)(?P<cnblogs_id>[^/\n\r]*)(/)', content)
+
     # csdn
     @staticmethod
     def csdnblog_author(content=''):

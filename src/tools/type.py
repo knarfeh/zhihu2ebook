@@ -39,9 +39,14 @@ class Type(object):
     sinablog_author = 'sinablog_author'         # 类型是文章的集锦
     sinablog_info = 'sinablog_info'             # 新浪博客的一些基本信息,如作者id
 
-    sinablog_article_type_list = ['sinablog']
-
     sinablog = [sinablog_article, sinablog_author, sinablog_info]
+
+    # cnblogs
+    cnblogs_article = 'cnblogs_article'
+    cnblogs_author = 'cnblogs_author'
+    cnblogs_info = 'cnblogs_info'
+
+    cnblogs = [cnblogs_article, cnblogs_author, cnblogs_info]
 
     # jianshu
     jianshu_article = 'jianshu_article'     # TODO: 单篇文章
@@ -73,6 +78,7 @@ class Type(object):
         'article',
         'column',
         'sinablog_author',
+        'cnblogs_author',
         'jianshu_author',
         'jianshu_collection',
         'jianshu_notebooks',
@@ -96,7 +102,8 @@ class Type(object):
         'zhihu': zhihu,
         'jianshu': jianshu,
         'sinablog': sinablog,
-        'csdnblog': csdnblog
+        'csdnblog': csdnblog,
+        'cnblogs': cnblogs,
     }
 
     # for --info option

@@ -225,6 +225,23 @@ class UrlParser(object):
                 'jianshu_notebooks_index where notebooks_id = "{}")'.format(notebooks_id)
             return task
 
+        def parse_cnblogs_author(command):
+            u"""
+
+            :param command: home page, e.g. http://www.cnblogs.com/buptzym/
+            :return:
+            """
+            result = Match.cnblogs_author(command)
+            cnblogs_author_id = result.group('cnblogs_id')
+            task = SingleTask()
+            task.kind = 'cnblogs_author'
+            task.spider.href = 'http://www.cnblogs.com/{}/'.format(cnblogs_author_id)
+            task.book.kind = 'cnblogs_author'
+            task.book.sql.info_extra = 'creator_id = "{}"'.format(cnblogs_author_id)
+            task.book.sql.article_extra = 'author_id = "{}"'.format(cnblogs_author_id)
+            task.book.author_id = cnblogs_author_id
+            return task
+
         def parse_csdnblog_author(command):
             u"""
 
@@ -233,10 +250,9 @@ class UrlParser(object):
             """
             result = Match.csdnblog_author(command)
             csdnblog_author_id = result.group('csdnblog_author_id')
-            Debug.logger.debug(u"csdnblog_id:" + str(csdnblog_author_id))
 
             task = SingleTask()
-            task.author_id = csdnblog_author_id
+            task.author_id = csdnblog_author_id     # ??? don't need?
             task.kind = 'csdnblog_author'
             task.spider.href = 'http://blog.csdn.net/{}'.format(csdnblog_author_id)
             task.book.kind = 'csdnblog_author'
@@ -259,6 +275,7 @@ class UrlParser(object):
             'article': parse_article,
             'column': parse_column,
             'sinablog_author': parse_sinablog_author,
+            'cnblogs_author': parse_cnblogs_author,
             'jianshu_author': parse_jianshu_author,
             'jianshu_collection': parse_jianshu_collection,
             'jianshu_notebooks': parse_jianshu_notebooks,

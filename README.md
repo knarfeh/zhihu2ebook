@@ -50,7 +50,7 @@ after a while, you will get the e-book:
 ### Setting up a development environment for EE-Book 
 
 ```Console
-$ sudo pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 [install pyqt4](https://riverbankcomputing.com/software/pyqt/download/)

@@ -50,7 +50,7 @@ $ python ee-book -u jianshu.com/users/b1dd2b2c87a8/latest_articles
 ### 建立 EE-Book 的开发环境
 
 ```Console
-$ sudo pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 [安装 pyqt4](https://riverbankcomputing.com/software/pyqt/download/)
