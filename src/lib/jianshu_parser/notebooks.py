@@ -4,10 +4,10 @@
 from bs4 import BeautifulSoup
 
 from src.lib.jianshu_parser.base import BaseParser
-from src.lib.jianshu_parser.info.jianshu_collection import JianshuCollectionInfo
+from src.lib.jianshu_parser.info.jianshu_notebooks import JianshuNotebooksInfo
 
 
-class JianshuCollectionParser(BaseParser):
+class JianshuNotebooksParser(BaseParser):
 
     def get_article_list(self):
         article_list = self.dom.select("div h4.title a")
@@ -15,6 +15,6 @@ class JianshuCollectionParser(BaseParser):
         return article_href_list
 
     def get_extra_info(self):
-        parser = JianshuCollectionInfo()
+        parser = JianshuNotebooksInfo()
         parser.set_dom(self.dom)
         return parser.get_info()

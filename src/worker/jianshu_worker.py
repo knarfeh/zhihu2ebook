@@ -9,6 +9,7 @@ from src.tools.match import Match
 from src.worker.page_worker import PageWorker
 from src.lib.jianshu_parser.author import JianshuAuthorParser
 from src.lib.jianshu_parser.collection import JianshuCollectionParser
+from src.lib.jianshu_parser.notebooks import JianshuNotebooksParser
 
 from src.lib.parser_tools import ParserTools
 
@@ -92,8 +93,12 @@ class JianshuCollectionWorker(PageWorker):
     @staticmethod
     def parse_max_page(content):
         soup = BeautifulSoup(content, 'lxml')
-        article_num = soup.select("div.header p.author a.blue-link ")[0].get_text().split(u'篇文章')[0]
-        return int(article_num)
+        article_num = int(soup.select("div.header p.author a.blue-link ")[0].get_text().split(u'篇文章')[0])
+        if article_num % 9 != 0:
+            page_num = article_num/9 + 1      # 9 href on one page
+        else:
+            page_num = article_num / 9
+        return page_num
 
     def create_work_set(self, target_url):
         if target_url in self.task_complete_set:
@@ -104,23 +109,16 @@ class JianshuCollectionWorker(PageWorker):
         self.task_complete_set.add(target_url)
         real_id = self.info_list[0]['collection_real_id']
         fake_id = self.info_list[0]['collection_fake_id']
-        article_num = self.parse_max_page(content)
-
-        if article_num % 9 != 0:
-            page_num = article_num/9 + 1      # 9 href on one page
-        else:
-            page_num = article_num / 9
+        page_num = self.parse_max_page(content)
 
         for page in range(page_num):
             url = 'http://www.jianshu.com/collections/' + str(real_id) + '/notes?order_by=added_at&page={}'.format(page+1)
             content = Http.get_content(url)
-            parser = JianshuCollectionParser(content)
-            article_list = parser.get_article_list()
+            article_list = JianshuCollectionParser(content).get_article_list()
             self.add_collection_index(fake_id, article_list)
             for item in article_list:
                 self.work_set.add(item)
         return
-
 
     def catch_info(self, target_url):
         if target_url in self.info_url_complete_set:
@@ -159,6 +157,69 @@ class JianshuNotebooksWorker(PageWorker):
     u"""
     for jianshu notebook
     """
-    pass
+    def add_property(self):
+        self.notebooks_index_list = []
+
+    @staticmethod
+    def parse_max_page(content):
+        soup = BeautifulSoup(content, 'lxml')
+        article_num = int((soup.select("div.aside ul.meta a")[0].get_text().split(u"篇文章")[0].strip()))
+        print u"article_num:" + str(article_num)
+        if article_num % 9 != 0:
+            page_num = article_num/9 + 1      # 9 href on one page
+        else:
+            page_num = article_num / 9
+        return page_num
+
+    def create_work_set(self, target_url):
+        if target_url in self.task_complete_set:
+            return
+        content = Http.get_content(target_url)
+        if not content:
+            return
+        self.task_complete_set.add(target_url)
+        notebooks_id = self.info_list[0]['notebooks_id']
+        page_num = self.parse_max_page(content)
+        print u"page_num???" + str(page_num)
+        for page in range(page_num):
+            url = 'http://www.jianshu.com/notebooks/627726/latest?page={}'.format(page+1)
+            content = Http.get_content(url)
+            article_list = JianshuNotebooksParser(content).get_article_list()
+            self.add_notebooks_index(notebooks_id, article_list)
+            for item in article_list:
+                self.work_set.add(item)
+        return
+
+    def catch_info(self, target_url):
+        if target_url in self.info_url_complete_set:
+            return
+        content = Http.get_content(target_url)
+        if not content:
+            return
+        self.info_url_complete_set.add(target_url)
+        parser = JianshuNotebooksParser(content)
+        self.info_list.append(parser.get_extra_info())
+        return
+
+    def parse_content(self, content):
+        parser = JianshuAuthorParser(content)
+        self.answer_list += parser.get_answer_list()
+
+    def add_notebooks_index(self, notebooks_id, article_list):
+        for item in article_list:
+            data = {
+                'href': item,
+                'notebooks_id': notebooks_id,
+            }
+            self.notebooks_index_list.append(data)
+        return
+
+    def create_save_config(self):
+        config = {
+            'jianshu_article': self.answer_list,
+            'jianshu_notebooks_info': self.info_list,
+            'jianshu_notebooks_index': self.notebooks_index_list,
+        }
+        return config
 
 
