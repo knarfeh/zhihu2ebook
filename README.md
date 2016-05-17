@@ -1,5 +1,7 @@
 # EE-Book
 
+[![Join the chat at https://gitter.im/knarfeh/EE-Book](https://badges.gitter.im/knarfeh/EE-Book.svg)](https://gitter.im/knarfeh/EE-Book?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [中文](./README_cn.md) | [English](./README.md)
 
 *Note*: Due to personal reason, there will be no big changes in the next two months, Only a few small patches.   --2016.04.19  
