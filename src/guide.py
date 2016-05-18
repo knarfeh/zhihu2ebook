@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import re
 
+from getpass import getpass
+
 from src.utils import log
+
 
 
 def set_account(recipe_kind):
@@ -20,8 +23,7 @@ def set_account(recipe_kind):
                 print u'抱歉，输入的账号不规范...\n请输入正确的知乎登录邮箱\n'
                 print u'请重新输入账号，回车确认'
                 account = raw_input()
-            print u'请输入密码，回车确认'
-            password = raw_input()
+            password = getpass(u'请输入密码，回车确认:')
             while len(password) < 6:
                 print u'密码长度不正确，密码至少6位'
                 print u'请重新输入密码，回车确认'

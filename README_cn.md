@@ -14,7 +14,7 @@
 | 简书      | [www.jianshu.com](http://www.jianshu.com) | **用户的所有文章:** `jianshu.com/users/{people_id}/latest_articles`<br/>**专题:** `jianshu.com/collection/{collection_id}`<br/>**文集:** `jianshu.com/notebooks/{notebooks_id}/latest` or `jianshu.com/notebooks/{notebooks_id}/top` |
 | csdn博客  | [blog.csdn.net](http://blog.csdn.net)    | **用户的所有文章:** `blog.sina.com.cn/u/{people_id}` |
 | 新浪博客    | [blog.sina.com.cn](http://blog.sina.com.cn/) | **用户的所有文章:** `blog.csdn.net/{people_id}` |
-
+| 博客园     | [www.cnblogs.com/](http://www.cnblogs.com/) | **用户的所有文章:** `cnblogs.com/{people_id}/`  |
 
 
 ## 用法

@@ -87,7 +87,7 @@ class Login(object):
                 remenber_account = 'yes'
             if remenber_account == 'yes':
                 Config.account, Config.password, Config.remember_account = account, password, True
-                print u'帐号密码已保存,可通过修改config.json修改设置'
+                print u'帐号密码已保存,可通过修改./config/zhihu_config.json修改设置'
             else:
                 Config.account, Config.password, Config.remember_account_set = '', '', False
                 print u'跳过保存环节，进入下一流程'
