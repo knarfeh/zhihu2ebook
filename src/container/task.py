@@ -44,7 +44,7 @@ class TaskPackage(object):
 
     def get_task(self):
         u"""
-        jianshu_collection could not be merge
+        jianshu_collection could not be merge, TODO: remove jianshu
         :return:
         """
         if Type.csdnblog_author in self.book_list:

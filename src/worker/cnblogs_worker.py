@@ -35,13 +35,12 @@ class CnblogsAuthorWorker(PageWorker):
         self.info_url_complete_set.add(target_url)
         parser = CnblogsAuthorParser(content)
         self.info_list.append(parser.get_extra_info())
-        print u"info_list???" + str(self.info_list)
         return
 
     def create_save_config(self):
         config = {
             'cnblogs_article': self.answer_list,
-            'cnblogs_info': self.info_list
+            'cnblogs_author_info': self.info_list
         }
         return config
 
@@ -54,20 +53,16 @@ class CnblogsAuthorWorker(PageWorker):
             return
 
         self.task_complete_set.add(target_url)
-        print u"target_url" + str(target_url)
         url = target_url + '?page=2'      # there are page num in this url
 
         content = Http.get_content(url)
         page_num = self.parse_max_page(content)
 
-        print u"page_num???" + str(page_num)
         for item in range(int(page_num)):
             url = target_url + '?page={}'.format(str(item+1))
-            print u"wtf url???" + str(url)
             content = Http.get_content(url)
             parser = CnblogsAuthorParser(content)
             article_url_list = parser.get_article_list()
-            print "article_url_list???" + str(article_url_list)
             for item in article_url_list:
                 self.work_set.add(item)
         return

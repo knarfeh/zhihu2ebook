@@ -4,7 +4,6 @@ CREATE TABLE csdnblog_info (
   creator_name VARCHAR(255)  NOT NULL    DEFAULT '',
   creator_sign VARCHAR(2000) NOT NULL    DEFAULT '',
   creator_logo VARCHAR(255)  NOT NULL    DEFAULT '',
-
   description  VARCHAR(3000) NOT NULL    DEFAULT '',
   article_num  INT(20)       NOT NULL    DEFAULT 0,
   follower     INT(20)       NOT NULL    DEFAULT 0,

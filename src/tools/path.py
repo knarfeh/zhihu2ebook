@@ -85,7 +85,7 @@ class Path(object):
     def copy(src, dst):
         if not os.path.exists(src):
             from src.tools.debug import Debug
-            Debug.logger.debug('{}does not exist，skip it'.format(src))
+            Debug.logger.debug('Copying file... {} does not exist，skip it'.format(src))
             return
         if os.path.isdir(src):
             shutil.copytree(src, dst)

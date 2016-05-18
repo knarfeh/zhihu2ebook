@@ -49,7 +49,7 @@ class CnblogArticle(ParserTools):
         self.info['title'] = str(title)
 
     def parse_answer_content(self):
-        content = self.dom.select('div#cnblogs_post_body')
+        content = self.dom.select('div#cnblogs_post_body')[0]
         self.info['content'] = str(content)
 
     def parse_publish_date(self):

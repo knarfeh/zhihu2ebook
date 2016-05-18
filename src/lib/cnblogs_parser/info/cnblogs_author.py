@@ -37,6 +37,7 @@ class CnblogsAuthorInfo(ParserTools):
         self.parse_creator_name()
         # self.parse_description()
         self.parse_article_count()
+        self.parse_title()
 
     def parse_creator_id(self):
         u"""
@@ -62,3 +63,5 @@ class CnblogsAuthorInfo(ParserTools):
     def parse_description(self):
         self.info['description'] = 'description'
 
+    def parse_title(self):
+        self.info['title'] = self.info['creator_name']

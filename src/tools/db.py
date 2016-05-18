@@ -29,8 +29,6 @@ class DB(object):
         sql = "replace into {table_name} ({columns}) values ({items})".format(table_name=table_name,
                                                                               columns=','.join(data.keys()),
                                                                               items=(',?' * len(data.keys()))[1:])
-        print u"sql???" + sql
-        print u"data???" + str(data.values())
         DB.cursor.execute(sql, tuple(data.values()))
         return
 
@@ -58,6 +56,14 @@ class DB(object):
         :return:
         """
         template = {
+            Type.cnblogs_author_info: (
+                'creator_id', 'creator_hash', 'creator_name', 'creator_sign', 'title',
+                'description', 'article_num', 'follower',
+            ),
+            Type.cnblogs_article: (
+                'article_id', 'author_name', 'author_id', 'href', 'title',
+                'content', 'comment', 'agree', 'publish_date',
+            ),
             # csdnblog
             Type.csdnblog_info: (
                 'creator_id', 'creator_hash', 'creator_name', 'creator_sign', 'creator_logo',

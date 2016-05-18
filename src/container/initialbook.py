@@ -140,6 +140,9 @@ class InitialBook(object):
         if self.kind == Type.csdnblog_author:
             self.epub.title = u'csdn博客作者_{}({})文章集锦'.format(info['creator_name'], info['creator_id'])
             self.epub.id = info['creator_id']
+        elif self.kind == Type.cnblogs_author:
+            self.epub.title = u'cnblogs作者_{}({})文章集锦'.format(info['creator_name'], info['creator_id'])
+            self.epub.id = info['creator_id']
         elif self.kind == Type.jianshu_author:              # 该博客所有的博文
             self.epub.title = u'简书作者_{}({})文章集锦'.format(info['creator_name'], info['creator_id'])
             self.epub.id = info['creator_id']
@@ -241,6 +244,8 @@ class InitialBook(object):
             article_list = [DB.wrap(Type.sinablog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         elif self.kind == Type.csdnblog_author:
             article_list = [DB.wrap(Type.csdnblog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
+        elif self.kind == Type.cnblogs_author:
+            article_list = [DB.wrap(Type.cnblogs_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         else:
             article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         article_list = [add_property(x) for x in article_list]
@@ -248,15 +253,8 @@ class InitialBook(object):
 
     def set_article_list(self, article_list):
         self.clear_property()
-        if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks]:      # jianshu类型
-            for article in article_list:
-                self.epub.answer_count += article['answer_count']
-                self.epub.char_count += article['char_count']
-        elif self.kind == Type.sinablog_author:      # sinablog类型
-            for article in article_list:
-                self.epub.answer_count += article['answer_count']
-                self.epub.char_count += article['char_count']
-        elif self.kind == Type.csdnblog_author:
+        if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks,
+                         Type.cnblogs_author, Type.sinablog_author, Type.csdnblog_author]:      # jianshu类型
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.char_count += article['char_count']

@@ -237,8 +237,10 @@ class UrlParser(object):
             task.kind = 'cnblogs_author'
             task.spider.href = 'http://www.cnblogs.com/{}/'.format(cnblogs_author_id)
             task.book.kind = 'cnblogs_author'
-            task.book.sql.info_extra = 'creator_id = "{}"'.format(cnblogs_author_id)
-            task.book.sql.article_extra = 'author_id = "{}"'.format(cnblogs_author_id)
+            task.book.sql.info = 'select * from cnblogs_author_info where creator_id = "{}"'.format(cnblogs_author_id)
+            task.book.sql.answer = 'select * from cnblogs_article where author_id = "{}"'.format(cnblogs_author_id)
+            # task.book.sql.info_extra = 'creator_id = "{}"'.format(cnblogs_author_id)
+            # task.book.sql.article_extra = 'author_id = "{}"'.format(cnblogs_author_id)
             task.book.author_id = cnblogs_author_id
             return task
 

@@ -180,7 +180,6 @@ class JianshuNotebooksWorker(PageWorker):
         self.task_complete_set.add(target_url)
         notebooks_id = self.info_list[0]['notebooks_id']
         page_num = self.parse_max_page(content)
-        print u"page_num???" + str(page_num)
         for page in range(page_num):
             url = 'http://www.jianshu.com/notebooks/627726/latest?page={}'.format(page+1)
             content = Http.get_content(url)

@@ -44,9 +44,9 @@ class Type(object):
     # cnblogs
     cnblogs_article = 'cnblogs_article'
     cnblogs_author = 'cnblogs_author'
-    cnblogs_info = 'cnblogs_info'
+    cnblogs_author_info = 'cnblogs_author_info'
 
-    cnblogs = [cnblogs_article, cnblogs_author, cnblogs_info]
+    cnblogs = [cnblogs_article, cnblogs_author, cnblogs_author_info]
 
     # jianshu
     jianshu_article = 'jianshu_article'     # TODO: 单篇文章
@@ -93,6 +93,8 @@ class Type(object):
         author: author_info,
         collection: collection_info,
         topic: topic_info,
+
+        cnblogs_author: cnblogs_author_info,
 
         jianshu_collection: jianshu_collection_info,
         jianshu_notebooks: jianshu_notebooks_info,

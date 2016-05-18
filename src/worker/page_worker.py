@@ -76,10 +76,8 @@ class PageWorker(object):
         return
 
     def save(self):
-        print "sava???"
         self.clear_index()
         save_config = self.create_save_config()
-        print u"save_config" + str(save_config)
         for key in save_config:
             for item in save_config[key]:
                 if item:

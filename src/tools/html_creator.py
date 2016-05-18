@@ -21,7 +21,7 @@ class HtmlCreator(object):
     def fix_image(self, content, recipe):
         content = Match.fix_html(content=content, recipe_kind=recipe)
         for img in re.findall(r'<img[^>]*', content):
-            if recipe is not Type.sinablog_author:
+            if recipe not in [Type.sinablog_author, Type.cnblogs_author]:
                 # fix img
                 if img[-1] == '/':
                     img = img[:-1]
@@ -62,6 +62,8 @@ class HtmlCreator(object):
                 new_image = new_image.replace('//zhstatic.zhihu.com/assets/zhihu/ztext/whitedot.jpg',
                                               '../images/{}'.format(filename))
                 new_image += '</img>'
+            elif recipe in Type.cnblogs:
+                pass
             content = content.replace(img, '<div class="duokan-image-single">{}</div>'.format(new_image))
 
         return content
@@ -134,7 +136,7 @@ class HtmlCreator(object):
         article['edit_date'] = article['publish_date']
         article['description'] = ''
         # TODO: 改掉硬编码
-        if str(recipe) in (Type.sinablog+Type.jianshu+Type.csdnblog):
+        if str(recipe) in (Type.sinablog+Type.jianshu+Type.csdnblog+Type.cnblogs):
             article['agree'] = u'暂无数据'
         result = {
             'answer': self.create_answer(article),
@@ -162,6 +164,9 @@ class HtmlCreator(object):
             result['description'] = u''   # TODO: description
         elif kind == Type.sinablog_author:
             result['title'] = u'新浪博客集锦'
+            result['description'] = u''
+        elif kind == Type.cnblogs_author:
+            result['title'] = u'csblogs文章集锦'
             result['description'] = u''
         elif kind == Type.answer:
             result['title'] = u'知乎回答集锦'
