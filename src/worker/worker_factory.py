@@ -8,7 +8,7 @@ from src.worker.jianshu_worker import JianshuAuthorWorker
 from src.worker.jianshu_worker import JianshuCollectionWorker
 from src.worker.jianshu_worker import JianshuNotebooksWorker
 from src.worker.csdnblog_worker import csdnAuthorWorker
-from src.worker.cnblogs_worker import cnblogsAuthorWorker
+from src.worker.cnblogs_worker import CnblogsAuthorWorker
 
 
 def worker_factory(task):
@@ -21,7 +21,7 @@ def worker_factory(task):
         'column': ColumnWorker,
         'article': ColumnWorker,
         'sinablog_author': sinablogAuthorWorker,
-        'cnblogs_author': cnblogsAuthorWorker,
+        'cnblogs_author': CnblogsAuthorWorker,
         'jianshu_author': JianshuAuthorWorker,
         'jianshu_collection': JianshuCollectionWorker,
         'jianshu_notebooks': JianshuNotebooksWorker,

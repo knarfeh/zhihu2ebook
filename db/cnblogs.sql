@@ -12,9 +12,7 @@ CREATE TABLE cnblogs_info (
 
 CREATE TABLE cnblogs_article (
   article_id   VARCHAR(255)  NOT NULL    DEFAULT '',
-  author_hash  VARCHAR(255)  NOT NULL    DEFAULT '',
-  author_name  VARCHAR(255)  NOT NULL    DEFAULT '',
-  author_sign  VARCHAR(2000) NOT NULL    DEFAULT '',
+  author_name  VARCHAR(255)  DEFAULT '',
 
   author_id    VARCHAR(255)  NOT NULL    DEFAULT '',
   href         VARCHAR(255)  NOT NULL    DEFAULT '',

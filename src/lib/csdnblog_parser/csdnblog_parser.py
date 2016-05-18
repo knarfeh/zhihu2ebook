@@ -8,6 +8,9 @@ from src.lib.csdnblog_parser.content.csdnblog_article import CsdnBlogArticle
 from src.lib.csdnblog_parser.info.csdnblog_author import CsdnBlogAuthorInfo
 
 
+# TODO: refactoring, change the name to csdnAuthorParser
+
+
 class CsdnBlogParser(BaseParser):
     u"""
     get the info of table csdnblog_info, csdnblog_article

@@ -4,13 +4,13 @@
 from bs4 import BeautifulSoup
 
 from src.lib.parser_tools import ParserTools
-from src.lib.jianshu_parser.content.jianshu_article import JianshuArticle
+from src.lib.cnblogs_parser.content.cnblogs_article import CnblogArticle
 
 
 class BaseParser(ParserTools):
     def __init__(self, content):
         self.dom = BeautifulSoup(content, 'lxml')
-        self.article_parser = JianshuArticle()
+        self.article_parser = CnblogArticle()
 
     def get_answer_list(self):
         answer_list = []
