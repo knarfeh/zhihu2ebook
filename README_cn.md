@@ -16,7 +16,7 @@
 | 新浪博客   | [blog.sina.com.cn](http://blog.sina.com.cn/) | **用户的所有文章：** `blog.csdn.net/{people_id}` |
 | 博客园     | [www.cnblogs.com/](http://www.cnblogs.com/) | **用户的所有文章：** `cnblogs.com/{people_id}/`  |
 | 易百教程   | [www.yiibai.com](http://www.yiibai.com/) | **某个教程的文章：** `yiibai.com/{tutorial_kind}`|
-| Talk Python To Me | [www.talkpython.fm](https://www.talkpython.fm)| **transcripts of [「Talk Python To Me」](https://www.talkpython.fm): ** `https://talkpython.fm/episodes/all`|
+| Talk Python To Me | [www.talkpython.fm](https://www.talkpython.fm)| **transcripts of [「Talk Python To Me」](https://www.talkpython.fm):** `https://talkpython.fm/episodes/all`|
 
 ## 用法
 
