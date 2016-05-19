@@ -27,7 +27,6 @@ class YiibaiWorker(PageWorker):
         self.info_url_complete_set.add(target_url)
         parser = YiibaiParser(content)
         self.info_list.append(parser.get_extra_info())
-        print u"self.info_list???" + str(self.info_list)
         return
 
     def create_save_config(self):

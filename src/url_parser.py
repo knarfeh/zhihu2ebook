@@ -276,9 +276,6 @@ class UrlParser(object):
                 if result:
                     task.author_id = result.group('subject_id')
                     task.kind = command_type
-            print u"parse_generic, task.kind??" + str(task.kind)
-            print u"command: " + str(command)
-            print u"parse_generic, author_id???" + str(task.author_id)
 
             task.spider.href = command
             task.book.kind = task.kind

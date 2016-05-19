@@ -78,7 +78,6 @@ class InitialBook(object):
             else:
                 info = DB.cursor.execute(self.sql.info).fetchone()
                 info = DB.wrap(Type.info_table[self.kind], info)
-        print u"set_info???" + str(info)
         self.set_info(info)
         return
 
@@ -255,7 +254,6 @@ class InitialBook(object):
             article_list = [DB.wrap(Type.generic_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         else:
             article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
-        print u"article_????" + str(article_list[1])
         article_list = [add_property(x) for x in article_list]
         return article_list
 

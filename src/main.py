@@ -116,22 +116,6 @@ class EEBook(object):
         Debug.logger.info(u"Analyzes {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
 
-        from src.tools.type import Type
-        Debug.logger.info(u"task_package的book_list的长度为:" + str(len(task_package.book_list)))
-        Debug.logger.info(u"task_package:" + str(task_package))
-        Debug.logger.info(u"task_package.work_list:" + str(task_package.work_list))
-        Debug.logger.info(u"task_package.book_list.kind:" + str((task_package.book_list[Type.yiibai][0]).kind))
-        Debug.logger.info(u"task_package.book_list.info:" + str((task_package.book_list[Type.yiibai][0]).info))
-        Debug.logger.info(u"task_package.book_list.article_list:" + str((task_package.book_list[Type.yiibai][0]).article_list))
-        Debug.logger.info(u"task_package.book_list.page_list:" + str((task_package.book_list[Type.yiibai][0]).page_list))
-        Debug.logger.info(u"task_package.book_list.sql.question:" + str((task_package.book_list[Type.yiibai][0]).sql.question))
-        Debug.logger.info(u"task_package.book_list.sql.answer:" + str((task_package.book_list[Type.yiibai][0]).sql.answer))
-        Debug.logger.info(u"task_package.book_list.sql.info:" + str((task_package.book_list[Type.yiibai][0]).sql.info))
-        Debug.logger.info(u"task_package.book_list.epub.article_count:" + str((task_package.book_list[Type.yiibai][0]).epub.article_count))
-        Debug.logger.info(u"task_package.book_list.epub.answer_count:" + str((task_package.book_list[Type.yiibai][0]).epub.answer_count))
-        Debug.logger.info(u"task_package.book_list.epub.agree_count:" + str((task_package.book_list[Type.yiibai][0]).epub.agree_count))
-        Debug.logger.info(u"task_package.book_list.epub.title:" + str((task_package.book_list[Type.yiibai][0]).epub.title))
-
         if not task_package.is_work_list_empty():
             worker_factory(task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"Complete fetching from web")
