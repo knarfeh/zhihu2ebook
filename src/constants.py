@@ -60,7 +60,7 @@ sinablog = {
     'supported_type': u"""用户的所有文章: blog.sina.com.cn/u/{people_id}"""
 }
 
-csdnblog_info = {
+csdnblog = {
     'website': 'http://blog.csdn.net/',
     'title': u'csdn博客',
     'desc': u"""""",
@@ -68,16 +68,36 @@ csdnblog_info = {
     'supported_type': u"""用户的所有文章: blog.csdn.net/{people_id}"""
 }
 
+cnblogs = {
+    'website': 'http://www.cnblogs.com',
+    'title': u'博客园',
+    'desc': u"""""",
+    'need_login': u'否',
+    'supported_type': u"""用户的所有文章: cnblogs.com/{people_id}/"""
+}
+
+yiibai = {
+    'website': 'http://www.yiibai.com',
+    'title': u'易百',
+    'desc': u"""让一切容易学会""",
+    'need_login': u'否',
+    'supported_type': u"""某个主题的教程: yiibai.com/{subject_id}/"""
+}
+
 zhihu_info = info_meta.format(**zhihu)
 jianshu_info = info_meta.format(**jianshu)
 sinablog_info = info_meta.format(**sinablog)
-csdnblog_info = info_meta.format(**csdnblog_info)
+csdnblog_info = info_meta.format(**csdnblog)
+cnblogs_info = info_meta.format(**cnblogs)
+yiibai_info = info_meta.format(**yiibai)
 
 url_info = {
     'zhihu': zhihu_info,
     'jianshu': jianshu_info,
     'sinablog': sinablog_info,
     'csdnblog': csdnblog_info,
+    'cnblogs': cnblogs_info,
+    'yiibai': yiibai_info
 }
 
 _plat = sys.platform.lower()

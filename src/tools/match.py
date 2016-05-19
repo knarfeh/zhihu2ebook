@@ -123,6 +123,16 @@ class Match(object):
         """
         return re.search(r'(?<=blog\.csdn\.net/)(?P<csdnblog_author_id>[^/\n\r]*)', content)
 
+    # generic
+    @staticmethod
+    def yiibai(content=''):
+        u"""
+
+        :param content: yiibai , http://www.yiibai.com,
+        :return:
+        """
+        return re.search(r'(?<=yiibai\.com/)(?P<subject_id>[^/\n\r]*)(/)', content)
+
     @staticmethod
     def fix_filename(filename):
         illegal = {
@@ -198,7 +208,7 @@ class Match(object):
         return kind
 
     @staticmethod
-    def get_recipe_kind(url):
+    def get_website_kind(url):
         u"""
 
         :param url: one line
@@ -208,11 +218,12 @@ class Match(object):
         split_url = split_url.split('$')[0]     # the first one determine type
         url_type = Match.detect_recipe_kind(split_url)
 
-        recipe_kind = 'Unsupport type'
+        website_kind = 'Unsupport type'
         for website in Type.website_type.keys():
             if url_type in getattr(Type, website):
-                recipe_kind = website
-        return recipe_kind
+                website_kind = website
+
+        return website_kind
 
     @staticmethod
     def replace_words(text, word_dic):

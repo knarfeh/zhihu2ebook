@@ -263,6 +263,30 @@ class UrlParser(object):
             task.book.author_id = csdnblog_author_id
             return task
 
+        def parse_generic(command):
+            u"""
+
+            :param command:
+            :return:
+            """
+            from src.tools.type import Type
+            task = SingleTask()
+            for command_type in Type.type_list:
+                result = getattr(Match, command_type)(command)
+                if result:
+                    task.author_id = result.group('subject_id')
+                    task.kind = command_type
+            print u"parse_generic, task.kind??" + str(task.kind)
+            print u"command: " + str(command)
+            print u"parse_generic, author_id???" + str(task.author_id)
+
+            task.spider.href = command
+            task.book.kind = task.kind
+            task.book.sql.info = 'select * from generic_info where creator_id = "{}"'.format(command)
+            task.book.sql.answer = 'select * from generic_article where author_id = "{}"'.format(command)
+            task.book.author_id = task.spider.href
+            return task
+
         def parse_error(command):
             if command:
                 Debug.logger.info(u"""Could not analysis:{}, please check it out and try again。""".format(command))
@@ -282,6 +306,7 @@ class UrlParser(object):
             'jianshu_collection': parse_jianshu_collection,
             'jianshu_notebooks': parse_jianshu_notebooks,
             'csdnblog_author': parse_csdnblog_author,
+            'yiibai': parse_generic,
             'unknown': parse_error,
         }
 

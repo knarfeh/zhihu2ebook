@@ -91,7 +91,7 @@ def main():
             sys.exit()
         elif option in ('-u', '--url'):
             url = args
-            recipe_kind = Match.get_recipe_kind(url)
+            recipe_kind = Match.get_website_kind(url)
             if recipe_kind == 'Unsupport type':
                 print("Unsupported type!\n Please try again.")
                 sys.exit()
@@ -116,7 +116,7 @@ def main():
                 with open(file_name, 'r') as read_list:
                     read_list = read_list.readlines()
                     line = read_list[0]
-                    recipe_kind = Match.get_recipe_kind(line)
+                    recipe_kind = Match.get_website_kind(line)
                     counter += 1
                     if recipe_kind == 'Unsupport type':
                         print('Unsupported website or url type. \nPlease check url.')
@@ -159,7 +159,7 @@ def main():
         with open(file_name, 'r') as read_list:
             read_list = read_list.readlines()
             line = read_list[0]
-            recipe_kind = Match.get_recipe_kind(line)
+            recipe_kind = Match.get_website_kind(line)
             counter += 1
             if recipe_kind == 'Unsupport type':
                 print('Unsupported website or url type. \nPlease check url.')

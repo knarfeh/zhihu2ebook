@@ -103,7 +103,7 @@ class Path(object):
         初始化路径,不需要实例化 Path 就能执行
         :return:
         """
-        Path.cwd_path = Path.get_pwd()    # TODO 删掉Path这个函数
+        Path.cwd_path = Path.get_pwd()    # TODO 删掉Path.get_pwd这个函数
 
         Path.www_css = Path.in_base_path + str(u'/www/css')
         Path.www_image = Path.in_base_path + str(u'/www/images')
@@ -128,6 +128,10 @@ class Path(object):
             Path.config_path = Path.in_base_path + str(u'/config/csdn_config.json')
             Path.sql_path = Path.in_base_path + str(u'/db/csdnblog.sql')
             Path.db_path = Path.cwd_path + str(u'/db/csdn_db_001.sqlite')
+        else:
+            Path.config_path = Path.in_base_path + str(u'/config/generic.json')
+            Path.sql_path = Path.in_base_path + str(u'/db/generic.sql')
+            Path.db_path = Path.cwd_path + str(u'/db/generic_db_001.sqlite')
 
         Path.html_pool_path = Path.cwd_path + str(u'/e-books_tmp_source/html')
         Path.image_pool_path = Path.cwd_path + str(u'/e-books_tmp_source/picture')

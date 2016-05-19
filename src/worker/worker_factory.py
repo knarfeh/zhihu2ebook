@@ -9,6 +9,7 @@ from src.worker.jianshu_worker import JianshuCollectionWorker
 from src.worker.jianshu_worker import JianshuNotebooksWorker
 from src.worker.csdnblog_worker import csdnAuthorWorker
 from src.worker.cnblogs_worker import CnblogsAuthorWorker
+from src.worker.yiibai_worker import YiibaiWorker
 
 
 def worker_factory(task):
@@ -25,7 +26,8 @@ def worker_factory(task):
         'jianshu_author': JianshuAuthorWorker,
         'jianshu_collection': JianshuCollectionWorker,
         'jianshu_notebooks': JianshuNotebooksWorker,
-        'csdnblog_author': csdnAuthorWorker
+        'csdnblog_author': csdnAuthorWorker,
+        'yiibai': YiibaiWorker,
     }
     for key in task:
         worker = type_list[key](task[key])

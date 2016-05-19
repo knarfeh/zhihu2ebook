@@ -74,6 +74,14 @@ class Type(object):
     csdnblog_article_type_list = ['csdn']
     csdnblog = [csdnblog_author, csdnblog_article, csdnblog_info]
 
+    # generic
+
+    yiibai = 'yiibai'
+
+    generic = [
+        yiibai,
+    ]
+
     article_type_list = [
         'article',
         'column',
@@ -82,8 +90,10 @@ class Type(object):
         'jianshu_author',
         'jianshu_collection',
         'jianshu_notebooks',
-        'csdnblog_author'
+        'csdnblog_author',
     ]
+
+    article_type_list = generic + article_type_list
 
     # 文章必须放在专栏之前（否则检测类别的时候就一律检测为专栏了） TODO how's that?
     type_list = question_type_list + article_type_list
@@ -106,6 +116,7 @@ class Type(object):
         'sinablog': sinablog,
         'csdnblog': csdnblog,
         'cnblogs': cnblogs,
+        'yiibai': yiibai
     }
 
     # for --info option
@@ -113,5 +124,7 @@ class Type(object):
         'zhihu.com': 'zhihu',
         'jianshu.com': 'jianshu',
         'blog.sina.com.cn': 'sinablog',
-        'blog.csdn.net': 'csdnblog'
+        'blog.csdn.net': 'csdnblog',
+        'cnblogs.com': 'cnblogs',
+        'yiibai.com': 'yiibai',
     }
