@@ -81,7 +81,15 @@ yiibai = {
     'title': u'易百',
     'desc': u"""让一切容易学会""",
     'need_login': u'否',
-    'supported_type': u"""某个主题的教程: yiibai.com/{subject_id}/"""
+    'supported_type': u"""某个主题的教程: http://www.yiibai.com/{subject_id}/"""
+}
+
+talkpython = {
+    'website': 'http://talkpython.fm/',
+    'title': u'Talk Python To Me',
+    'desc': u"""A podcast on Python and related technologies""",
+    'need_login': u'否',
+    'supported_type': u"""transcripts of 「Talk Python To Me」: https://talkpython.fm/episodes/all"""
 }
 
 zhihu_info = info_meta.format(**zhihu)
@@ -90,6 +98,7 @@ sinablog_info = info_meta.format(**sinablog)
 csdnblog_info = info_meta.format(**csdnblog)
 cnblogs_info = info_meta.format(**cnblogs)
 yiibai_info = info_meta.format(**yiibai)
+talkpython_info = info_meta.format(**talkpython)
 
 url_info = {
     'zhihu': zhihu_info,
@@ -97,7 +106,9 @@ url_info = {
     'sinablog': sinablog_info,
     'csdnblog': csdnblog_info,
     'cnblogs': cnblogs_info,
-    'yiibai': yiibai_info
+    'yiibai': yiibai_info,
+    'talkpython': talkpython_info,
+
 }
 
 _plat = sys.platform.lower()

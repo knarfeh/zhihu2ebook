@@ -128,7 +128,7 @@ class Path(object):
             Path.config_path = Path.in_base_path + str(u'/config/csdn_config.json')
             Path.sql_path = Path.in_base_path + str(u'/db/csdnblog.sql')
             Path.db_path = Path.cwd_path + str(u'/db/csdn_db_001.sqlite')
-        else:
+        else:   # generic type
             Path.config_path = Path.in_base_path + str(u'/config/generic.json')
             Path.sql_path = Path.in_base_path + str(u'/db/generic.sql')
             Path.db_path = Path.cwd_path + str(u'/db/generic_db_001.sqlite')

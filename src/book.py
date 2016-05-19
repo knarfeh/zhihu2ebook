@@ -117,7 +117,7 @@ class Book(object):
         book_package.image_container.set_save_path(Path.image_pool_path)
         book_package.image_container.start_download()
         title = book_package.get_title()
-        Debug.logger.debug(u"电子书的名称是:" + str(title))
+        Debug.logger.debug(u"title of the e-book:" + str(title))
         if not title:
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧

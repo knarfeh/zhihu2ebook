@@ -121,7 +121,7 @@ class Epub(object):
                 epub.write(parent + '/' + filename, compress_type=zipfile.ZIP_STORED)
         epub.close()
 
-        print u'\n\n', u'e-book', epub_name, u"build successfully!"
+        print u'\n\n', u'e-book', epub_name, u"has been built successfully!"
         return
 
     def create_chapter(self, src, title):

@@ -185,6 +185,9 @@ class InitialBook(object):
         elif self.kind == Type.yiibai:
             self.epub.title = u'易百教程_{}'.format(info['title'])
             self.epub.id = info['creator_id']
+        elif self.kind == Type.talkpython:
+            self.epub.title = u'TalkPythonToMe'
+            self.epub.id = info['creator_id']
 
         from src.html5lib.constants import entities_reverse
         self.epub.title = Match.replace_words(self.epub.title, entities_reverse)
@@ -250,7 +253,7 @@ class InitialBook(object):
             article_list = [DB.wrap(Type.csdnblog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         elif self.kind == Type.cnblogs_author:
             article_list = [DB.wrap(Type.cnblogs_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
-        elif self.kind == Type.yiibai:
+        elif self.kind in Type.generic:
             article_list = [DB.wrap(Type.generic_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         else:
             article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
@@ -260,7 +263,8 @@ class InitialBook(object):
     def set_article_list(self, article_list):
         self.clear_property()
         if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks,
-                         Type.cnblogs_author, Type.sinablog_author, Type.csdnblog_author, Type.yiibai]:      # jianshu类型
+                         Type.cnblogs_author, Type.sinablog_author, Type.csdnblog_author,
+                         Type.yiibai, Type.talkpython]:
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.char_count += article['char_count']
@@ -297,7 +301,7 @@ class InitialBook(object):
         return
 
     def sort_article(self):
-        self.article_list.sort(key=lambda x: (x['author_id'], x[Config.article_order_by]), reverse=Config.article_order_by_desc)
+        self.article_list.sort(key=lambda x: (x['author_id'], x[Config.article_order_by], x['title']), reverse=Config.article_order_by_desc)
         return
 
     def sort_question(self):

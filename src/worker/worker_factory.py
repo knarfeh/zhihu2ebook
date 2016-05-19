@@ -10,6 +10,7 @@ from src.worker.jianshu_worker import JianshuNotebooksWorker
 from src.worker.csdnblog_worker import csdnAuthorWorker
 from src.worker.cnblogs_worker import CnblogsAuthorWorker
 from src.worker.yiibai_worker import YiibaiWorker
+from src.worker.talkpython_worker import TalkPythonWorker
 
 
 def worker_factory(task):
@@ -28,6 +29,7 @@ def worker_factory(task):
         'jianshu_notebooks': JianshuNotebooksWorker,
         'csdnblog_author': csdnAuthorWorker,
         'yiibai': YiibaiWorker,
+        'talkpython': TalkPythonWorker,
     }
     for key in task:
         worker = type_list[key](task[key])

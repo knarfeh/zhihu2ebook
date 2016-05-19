@@ -134,6 +134,15 @@ class Match(object):
         return re.search(r'(?<=yiibai\.com/)(?P<subject_id>[^/\n\r]*)(/)', content)
 
     @staticmethod
+    def talkpython(content=''):
+        u"""
+
+        :param content: http://talkpython.fm
+        :return:
+        """
+        return re.search(r'(?<=talkpython\.fm/episodes/)(?P<subject_id>[^/\n\r]*)', content)
+
+    @staticmethod
     def fix_filename(filename):
         illegal = {
             '\\': '＼',

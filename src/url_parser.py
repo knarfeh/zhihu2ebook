@@ -276,7 +276,6 @@ class UrlParser(object):
                 if result:
                     task.author_id = result.group('subject_id')
                     task.kind = command_type
-
             task.spider.href = command
             task.book.kind = task.kind
             task.book.sql.info = 'select * from generic_info where creator_id = "{}"'.format(command)
@@ -304,6 +303,7 @@ class UrlParser(object):
             'jianshu_notebooks': parse_jianshu_notebooks,
             'csdnblog_author': parse_csdnblog_author,
             'yiibai': parse_generic,
+            'talkpython': parse_generic,
             'unknown': parse_error,
         }
 

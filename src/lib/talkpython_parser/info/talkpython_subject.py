@@ -6,9 +6,9 @@ from src.lib.parser_tools import ParserTools
 from src.tools.debug import Debug
 
 
-class YiibaiInfo(ParserTools):
+class TalkPythonInfo(ParserTools):
     u"""
-    parse page like this http://www.yiibai.com/python/, get base info
+    parse page like this https://talkpython.fm/episodes/all, get base info
     """
     def __init__(self, dom=None):
         self.set_dom(dom)
@@ -26,7 +26,7 @@ class YiibaiInfo(ParserTools):
         return self.info
 
     def parse_info(self):
-        Debug.logger.debug(u"Getting yiibai info...")
+        Debug.logger.debug(u"Getting talkpython info...")
         self.parse_base_info()         # basic user info: id, name, logo, description, article_num
         # self.parse_detail_info()     # detail_info, 博客等级, 积分, 访问, 关注人气
         return self.info
@@ -43,24 +43,23 @@ class YiibaiInfo(ParserTools):
 
         :return:
         """
-        creator_id = self.get_attr(self.dom.select('div.row div.col-md-12 a')[2], 'href')
-        creator_id = 'http://www.yiibai.com' + creator_id
-        self.info['creator_id'] = creator_id
+        self.info['creator_id'] = 'https://talkpython.fm/episodes/all/'
 
     def parse_article_count(self):
+        # # *TODO*
         u"""
 
         :return:
         """
-        article_num = 1
+        article_num = -1
         self.info['article_num'] = int(article_num)
 
     def parse_creator_name(self):
         self.info['creator_name'] = self.info['creator_id']
 
     def parse_description(self):
+        # # *TODO*
         self.info['description'] = 'description'
 
     def parse_title(self):
-        title = self.dom.select("div.single-post-title h1")[0].get_text()
-        self.info['title'] = title
+        self.info['title'] = 'Talk Python To Me'

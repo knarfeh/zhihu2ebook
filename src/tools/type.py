@@ -77,12 +77,14 @@ class Type(object):
     # generic
 
     yiibai = 'yiibai'
+    talkpython = 'talkpython'
 
     generic_info = 'generic_info'
     generic_article = 'generic_article'
 
     generic = [
         yiibai,
+        talkpython,
     ]
 
     article_type_list = [
@@ -112,7 +114,8 @@ class Type(object):
         jianshu_collection: jianshu_collection_info,
         jianshu_notebooks: jianshu_notebooks_info,
 
-        yiibai: generic_info
+        yiibai: generic_info,
+        talkpython: generic_info
     }
 
     website_type = {
@@ -121,7 +124,8 @@ class Type(object):
         'sinablog': sinablog,
         'csdnblog': csdnblog,
         'cnblogs': cnblogs,
-        'yiibai': yiibai
+        'yiibai': yiibai,
+        'talkpython': talkpython,
     }
 
     # for --info option
@@ -132,4 +136,5 @@ class Type(object):
         'blog.csdn.net': 'csdnblog',
         'cnblogs.com': 'cnblogs',
         'yiibai.com': 'yiibai',
+        'talkpython.fm': 'talkpython'
     }

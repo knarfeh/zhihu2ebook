@@ -4,7 +4,7 @@
     "sql_extend_answer_filter": "",
     "max_blog": 10,
     "max_answer": 600,
-    "timeout_download_html": 50,
+    "timeout_download_html": 10,
     "timeout_download_picture": 10,
     "debug": false,
     "max_try": 5,
