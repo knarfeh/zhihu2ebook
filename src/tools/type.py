@@ -78,6 +78,9 @@ class Type(object):
 
     yiibai = 'yiibai'
 
+    generic_info = 'generic_info'
+    generic_article = 'generic_article'
+
     generic = [
         yiibai,
     ]
@@ -108,6 +111,8 @@ class Type(object):
 
         jianshu_collection: jianshu_collection_info,
         jianshu_notebooks: jianshu_notebooks_info,
+
+        yiibai: generic_info
     }
 
     website_type = {

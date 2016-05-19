@@ -137,14 +137,14 @@ class EEBook(object):
             Debug.logger.info(u"Complete fetching from web")
 
         file_name_set = None
-        # if not task_package.is_book_list_empty():
-        #     Debug.logger.info(u"Start generating e-book from the database")
-        #     book = Book(task_package.book_list)
-        #     file_name_set = book.create()
-        # if file_name_set is not None:
-        #     file_name_set2list = list(file_name_set)
-        #     file_name = '-'.join(file_name_set2list[0:3])
-        #     return file_name
+        if not task_package.is_book_list_empty():
+            Debug.logger.info(u"Start generating e-book from the database")
+            book = Book(task_package.book_list)
+            file_name_set = book.create()
+        if file_name_set is not None:
+            file_name_set2list = list(file_name_set)
+            file_name = '-'.join(file_name_set2list[0:3])
+            return file_name
         return u"Oops! no epub file produced"
 
     @staticmethod

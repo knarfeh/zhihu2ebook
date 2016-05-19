@@ -100,6 +100,12 @@ class DB(object):
                 'article_id', 'author_hash', 'author_name', 'author_sign', 'author_id',
                 'href', 'title', 'content', 'comment', 'publish_date'
             ),
+            Type.generic_info: (
+                'creator_id', 'creator_name', 'title', 'description',
+            ),
+            Type.generic_article: (
+                'article_id', 'author_name', 'author_id', 'title', 'content', 'comment', 'agree', 'publish_date',
+            ),
             # zhihu
             Type.answer: (
                 'author_id', 'author_sign', 'author_logo', 'author_name', 'agree',

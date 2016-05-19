@@ -38,4 +38,6 @@ class TemplateConfig(object):
     front_page_csdnblog_author_uri = front_page_info_template_path + u'/csdnblog_author.html'
     front_page_cnblogs_author_uri = front_page_info_template_path + u'/cnblogs_author.html'
 
+    front_page_yiibai_uri = front_page_info_template_path + u'/generic.html'
+
     front_page_base_uri = front_page_template_path + u'/base.html'

@@ -78,6 +78,7 @@ class InitialBook(object):
             else:
                 info = DB.cursor.execute(self.sql.info).fetchone()
                 info = DB.wrap(Type.info_table[self.kind], info)
+        print u"set_info???" + str(info)
         self.set_info(info)
         return
 
@@ -182,6 +183,9 @@ class InitialBook(object):
         elif self.kind == Type.column:
             self.epub.title = u'知乎专栏_{}({})'.format(info['name'], info['column_id'])
             self.epub.id = info['column_id']
+        elif self.kind == Type.yiibai:
+            self.epub.title = u'易百教程_{}'.format(info['title'])
+            self.epub.id = info['creator_id']
 
         from src.html5lib.constants import entities_reverse
         self.epub.title = Match.replace_words(self.epub.title, entities_reverse)
@@ -229,7 +233,7 @@ class InitialBook(object):
             article['answer_count'] = 1
             # TODO
             if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks,
-                             Type.sinablog_author, Type.csdnblog_author]:
+                             Type.sinablog_author, Type.csdnblog_author, Type.yiibai]:
                 article['agree_count'] = "没有赞同数"     # article['agree']
             else:
                 article['agree_count'] = article['agree']
@@ -238,6 +242,7 @@ class InitialBook(object):
 
             return article
 
+        # TODO: 下面的代码可以精简
         if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks]:
             article_list = [DB.wrap(Type.jianshu_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         elif self.kind == Type.sinablog_author:
@@ -246,15 +251,18 @@ class InitialBook(object):
             article_list = [DB.wrap(Type.csdnblog_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         elif self.kind == Type.cnblogs_author:
             article_list = [DB.wrap(Type.cnblogs_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
+        elif self.kind == Type.yiibai:
+            article_list = [DB.wrap(Type.generic_article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
         else:
             article_list = [DB.wrap(Type.article, x) for x in DB.get_result_list(self.sql.get_answer_sql())]
+        print u"article_????" + str(article_list[1])
         article_list = [add_property(x) for x in article_list]
         return article_list
 
     def set_article_list(self, article_list):
         self.clear_property()
         if self.kind in [Type.jianshu_author, Type.jianshu_collection, Type.jianshu_notebooks,
-                         Type.cnblogs_author, Type.sinablog_author, Type.csdnblog_author]:      # jianshu类型
+                         Type.cnblogs_author, Type.sinablog_author, Type.csdnblog_author, Type.yiibai]:      # jianshu类型
             for article in article_list:
                 self.epub.answer_count += article['answer_count']
                 self.epub.char_count += article['char_count']

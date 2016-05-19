@@ -38,10 +38,8 @@ class YiibaiWorker(PageWorker):
         return config
 
     def parse_content(self, content):
-        print u"work.set????" + str(self.work_set)
         parser = YiibaiParser(content)
         self.answer_list += parser.get_answer_list()
-        # print u"self.answer_list:" + str(self.answer_list)
 
     def create_work_set(self, target_url):
         if target_url in self.task_complete_set:

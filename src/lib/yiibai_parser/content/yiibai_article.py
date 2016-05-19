@@ -41,7 +41,7 @@ class YiibaiArticle(ParserTools):
 
     def parse_article_id(self):
         article_id = self.dom.select("div.single-post-title h1")[0].get_text()
-        self.info['article_id'] = str(article_id)
+        self.info['article_id'] = str(article_id).replace('/', 'and')
 
     def parse_author_name(self):
         self.info['author_name'] = self.info['author_id']

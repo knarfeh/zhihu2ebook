@@ -43,6 +43,8 @@ class HtmlCreator(object):
                     # fix zhuanlan image href
                     src_download = src_download.split('.')[0]
                     filename = self.image_container.add('https://pic2.zhimg.com/'+src_download+'_b.jpg')
+                elif recipe in Type.generic:
+                    filename = ''    # TODO
                 else:
                     filename = self.image_container.add(src_download)
             else:
