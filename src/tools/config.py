@@ -18,7 +18,7 @@ class Config(object):
     login_with_previously_config = True  # 是否通过之前的登陆记录进行登陆
 
     account = 'zhihu2ebook@hotmail.com'  # 默认账号密码
-    password = 'Zhihu2Ebook'
+    # password = 'Zhihu2Ebook'
     remember_account_set = False    # 是否使用已有密码
     max_thread = 10             # 最大线程数
     picture_quality = 1         # 图片质量（0/1/2，无图/标清/原图）
