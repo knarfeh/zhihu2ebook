@@ -242,3 +242,7 @@ test.html
 unit/
 
 config_back/
+
+ENV/
+
+ZHIHUTOKEN.pkl

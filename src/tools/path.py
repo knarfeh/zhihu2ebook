@@ -9,7 +9,7 @@ class Path(object):
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数
     不能在开头from src.tools.debug import Debug
     """
-    cwd_path = unicode(os.getcwd())    # 执行命令的路径
+    pwd_path = unicode(os.getcwd())    # 执行命令的路径
     in_base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))  # 项目路径
 
     config_path = u''     # 根据recipe_kind确定config_path
@@ -19,12 +19,13 @@ class Path(object):
     html_pool_path = u''
     result_path = u''
     www_css = u''
+    ZHIHUTOKEN = u''
 
-    read_list_path = cwd_path + '/ReadList.txt'
+    read_list_path = pwd_path + '/ReadList.txt'
 
     @staticmethod
     def reset_path():
-        Path.chdir(Path.cwd_path)
+        Path.chdir(Path.pwd_path)
         return
 
     @staticmethod
@@ -103,39 +104,40 @@ class Path(object):
         初始化路径,不需要实例化 Path 就能执行
         :return:
         """
-        Path.cwd_path = Path.get_pwd()    # TODO 删掉Path.get_pwd这个函数
+        Path.pwd_path = Path.get_pwd()    # TODO 删掉Path.get_pwd这个函数
 
         Path.www_css = Path.in_base_path + str(u'/www/css')
         Path.www_image = Path.in_base_path + str(u'/www/images')
 
-        if recipe_kind == 'jianshu':    # TODO: 用循环解决
+        if recipe_kind == 'jianshu':    # TODO: 用字典映射比较好
             Path.config_path = Path.in_base_path + str(u'/config/jianshu_config.json')
             Path.sql_path = Path.in_base_path + str(u'/db/jianshu.sql')
-            Path.db_path = Path.cwd_path + str(u'/db/jianshu_db_002.sqlite')
+            Path.db_path = Path.pwd_path + str(u'/db/jianshu_db_002.sqlite')
         elif recipe_kind == 'zhihu':
             Path.config_path = Path.in_base_path + str(u'/config/zhihu_config.json')
             Path.sql_path = Path.in_base_path + str(u'/db/zhihuhelp.sql')
-            Path.db_path = Path.cwd_path + str(u'/db/zhihuDB_173.sqlite')
+            Path.db_path = Path.pwd_path + str(u'/db/zhihuDB_173.sqlite')
+            Path.ZHIHUTOKEN = Path.pwd_path + str(u'/ZHIHUTOKEN.pkl')
         elif recipe_kind == 'sinablog':
             Path.config_path = Path.in_base_path + str(u'/config/sinablog_config.json')
             Path.sql_path = Path.in_base_path + str(u'/db/sinablog.sql')
-            Path.db_path = Path.cwd_path + str(u'/db/sinablog_db_001.sqlite')
+            Path.db_path = Path.pwd_path + str(u'/db/sinablog_db_001.sqlite')
         elif recipe_kind == 'cnblogs':
             Path.config_path = Path.in_base_path + str(u'/config/cnblogs_config.json')
             Path.sql_path = Path.in_base_path + str(u'/db/cnblogs.sql')
-            Path.db_path = Path.cwd_path + str(u'/db/cnblogs_db_001.sqlite')
+            Path.db_path = Path.pwd_path + str(u'/db/cnblogs_db_001.sqlite')
         elif recipe_kind == 'csdnblog':
             Path.config_path = Path.in_base_path + str(u'/config/csdn_config.json')
             Path.sql_path = Path.in_base_path + str(u'/db/csdnblog.sql')
-            Path.db_path = Path.cwd_path + str(u'/db/csdn_db_001.sqlite')
+            Path.db_path = Path.pwd_path + str(u'/db/csdn_db_001.sqlite')
         else:   # generic type
             Path.config_path = Path.in_base_path + str(u'/config/generic.json')
             Path.sql_path = Path.in_base_path + str(u'/db/generic.sql')
-            Path.db_path = Path.cwd_path + str(u'/db/generic_db_001.sqlite')
+            Path.db_path = Path.pwd_path + str(u'/db/generic_db_001.sqlite')
 
-        Path.html_pool_path = Path.cwd_path + str(u'/e-books_tmp_source/html')
-        Path.image_pool_path = Path.cwd_path + str(u'/e-books_tmp_source/picture')
-        Path.result_path = Path.cwd_path + str(u'/e-books_produced')
+        Path.html_pool_path = Path.pwd_path + str(u'/e-books_tmp_source/html')
+        Path.image_pool_path = Path.pwd_path + str(u'/e-books_tmp_source/picture')
+        Path.result_path = Path.pwd_path + str(u'/e-books_produced')
         return
 
     @staticmethod

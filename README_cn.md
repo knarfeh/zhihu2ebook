@@ -16,19 +16,19 @@
 | 新浪博客   | [blog.sina.com.cn](http://blog.sina.com.cn/) | **用户的所有文章：** `blog.csdn.net/{people_id}` |
 | 博客园     | [www.cnblogs.com/](http://www.cnblogs.com/) | **用户的所有文章：** `cnblogs.com/{people_id}/`  |
 | 易百教程   | [www.yiibai.com](http://www.yiibai.com/) | **某个教程的文章：** `yiibai.com/{tutorial_kind}`|
-| Talk Python To Me | [www.talkpython.fm](https://www.talkpython.fm)| **transcripts of [「Talk Python To Me」](https://www.talkpython.fm):** `https://talkpython.fm/episodes/all`|
+| Talk Python To Me | [www.talkpython.fm](https://www.talkpython.fm)| **[「Talk Python To Me」](https://www.talkpython.fm)的文稿:** `https://talkpython.fm/episodes/all`|
 
 ## 用法
 
 获得帮助信息:  
 
-```console
+```bash
 $ python ee-book -h
 ```
 
 举个例子:  
 
-```console
+```bash
 $ python ee-book -u jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
@@ -50,7 +50,8 @@ $ python ee-book -u jianshu.com/users/b1dd2b2c87a8/latest_articles
 
 ### 建立 EE-Book 的开发环境
 
-```Console
+
+```bash
 $ pip install -r requirements.txt
 ```
 

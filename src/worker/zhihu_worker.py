@@ -3,6 +3,8 @@
 
 import json
 
+from zhihu_oauth import ZhihuClient
+
 from src.tools.db import DB
 from src.tools.http import Http
 from src.tools.match import Match
@@ -12,6 +14,10 @@ from src.lib.zhihu_parser.collection import CollectionParser
 from src.lib.zhihu_parser.question import QuestionParser
 from src.lib.zhihu_parser.topic import TopicParser
 from src.worker.page_worker import PageWorker
+from src.tools.path import Path
+
+client = ZhihuClient()
+client.load_token(Path.ZHIHUTOKEN)
 
 
 class QuestionWorker(PageWorker):
@@ -23,6 +29,7 @@ class QuestionWorker(PageWorker):
 
 
 class AuthorWorker(PageWorker):
+
     def parse_content(self, content):
         parser = AuthorParser(content)
         self.question_list += parser.get_question_info_list()
@@ -54,7 +61,11 @@ class AuthorWorker(PageWorker):
         return
 
     def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'AuthorInfo': self.info_list, }
+        config = {
+            'Answer': self.answer_list,
+            'Question': self.question_list,
+            'AuthorInfo': self.info_list,
+        }
         return config
 
 

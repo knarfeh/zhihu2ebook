@@ -24,13 +24,13 @@
 
 get help info:  
 
-```console
+```bash
 $ python ee-book -h
 ```
 
 for example:  
 
-```console
+```bash
 $ python ee-book -u jianshu.com/users/b1dd2b2c87a8/latest_articles
 ```
 
@@ -52,7 +52,7 @@ after a while, you will get the e-book:
 
 ### Setting up a development environment for EE-Book 
 
-```Console
+```bash
 $ pip install -r requirements.txt
 ```
 

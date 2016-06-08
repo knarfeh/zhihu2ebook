@@ -53,24 +53,13 @@ class EEBook(object):
         # !!!!!发布的时候把Config.remember_account改成false!!!!!,第一次需要登录,之后用cookie即可
         # 登陆成功了,自动记录账户
         if Config.remember_account_set:
-            Debug.logger.info(u'检测到有设置文件，直接使用之前的设置')
-            # if raw_input():
-            # login.start()
-            # Config.picture_quality = guide.set_picture_quality()
+            Debug.logger.info(u'Detected settings file，use it.')
             Config.picture_quality = 1
-            # else:
-            try:
-                Http.set_cookie()   # sinablog, jianshu: DontNeed
-            except TypeError:
-                print u"没有找到登录成功的cookie记录, 请重新登录"
-                login.start()
         else:
             log.warning_log(u"Please login...")
             login.start()
-            # Config.picture_quality = guide.set_picture_quality()
             Config.picture_quality = 1
             Config.remember_account_set = True
-        # save config
         Config._save()
         return
 
@@ -115,7 +104,6 @@ class EEBook(object):
         Debug.logger.info(u"Ready to make No.{} e-book".format(counter))
         Debug.logger.info(u"Analyzes {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
-
         if not task_package.is_work_list_empty():
             worker_factory(task_package.work_list)  # 执行抓取程序
             Debug.logger.info(u"Complete fetching from web")

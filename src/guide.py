@@ -3,10 +3,8 @@ import re
 
 from getpass import getpass
 
-from src.utils import log
 
-
-
+# 删掉?
 def set_account(recipe_kind):
     u"""
     different login process, depending on the type
