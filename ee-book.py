@@ -21,7 +21,7 @@ sys.setdefaultencoding('utf-8')
 sys.setrecursionlimit(100000)  # 为BS解析知乎上的长答案增加递归深度限制
 
 short_options = 'Vhgu:r:i:l:c:d'
-long_options = ['version', 'help', 'url', 'gui', 'info', 'login', 'cookies', 'debug']
+long_options = ['version', 'help', 'url=', 'gui', 'info', 'login=', 'cookies=', 'debug', 'file=']
 
 
 help_info = 'Usage: ee-book [OPTION]... [URL]... \n\n'
@@ -83,7 +83,7 @@ def main():
             url = args
             recipe_kind = Match.get_url_kind(url)
             if recipe_kind != 'zhihu':
-                print("Unsupport type! Only zhihu are supported now.\n Please try again.")
+                print("Unsupport type! Only zhihu are supported now.\nPlease try again.")
                 sys.exit()
             zhihu = EEBook(recipe_kind=recipe_kind)    # Init path, e.g. config, only zhihu are supported now
             login = Login(recipe_kind=recipe_kind)
