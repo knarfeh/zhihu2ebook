@@ -3,13 +3,9 @@
 
 import re
 
-from bs4 import BeautifulSoup
-
 from src.tools.http import Http
-from src.tools.match import Match
 from src.worker.page_worker import PageWorker
 
-from src.lib.parser_tools import ParserTools
 from src.lib.cnblogs_parser.author import CnblogsAuthorParser
 
 

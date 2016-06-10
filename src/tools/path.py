@@ -6,7 +6,7 @@ import locale
 
 class Path(object):
     u"""
-    定义资源,生成的文件等的路径,以及关于路径操作的一些函数
+    定义资源,生成的文件等的路径,以及关于路径操作的一些函数,TODO: 这部分应该用运行时环境变量
     不能在开头from src.tools.debug import Debug
     """
     pwd_path = unicode(os.getcwd())    # 执行命令的路径

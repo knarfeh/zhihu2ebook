@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import datetime
 
 from zhihu_oauth import ZhihuClient
 
@@ -9,56 +10,102 @@ from src.tools.db import DB
 from src.tools.http import Http
 from src.tools.match import Match
 
-from src.lib.zhihu_parser.author import AuthorParser
-from src.lib.zhihu_parser.collection import CollectionParser
-from src.lib.zhihu_parser.question import QuestionParser
-from src.lib.zhihu_parser.topic import TopicParser
 from src.worker.page_worker import PageWorker
 from src.tools.path import Path
 
 client = ZhihuClient()
-client.load_token(Path.ZHIHUTOKEN)
+client.load_token(Path.pwd_path + str(u'/ZHIHUTOKEN.pkl'))
+
+
+def get_answer_dict(answer={}, item=None):
+    answer['author_id'] = 'from *** worker, this is a bug'    # 如果用 item.author.id, 存的是 hash 值
+    answer['author_sign'] = item.author.headline
+    answer['author_logo'] = item.author.avatar_url
+    answer['author_name'] = item.author.name
+    answer['agree'] = item.voteup_count
+    answer['content'] = u"<p>" + str(item.content) + u"</p>"
+    answer['question_id'] = item.question.id
+    answer['answer_id'] = item.id
+    answer['commit_date'] = datetime.datetime.utcfromtimestamp(item.created_time).strftime("%Y-%m-%d")
+    answer['edit_date'] = datetime.datetime.utcfromtimestamp(item.updated_time).strftime("%Y-%m-%d")
+    answer['comment'] = item.comment_count
+    answer['no_record_flag'] = 0   # TOD
+    answer['href'] = u"https://www.zhihu.com/question/{0}/answer/{1}".format(answer['question_id'],
+                                                                             answer['answer_id'])
 
 
 class QuestionWorker(PageWorker):
-    def parse_content(self, content):
-        parser = QuestionParser(content)
-        self.question_list += parser.get_question_info_list()
-        self.answer_list += parser.get_answer_list()
-        return
-
-
-class AuthorWorker(PageWorker):
-
-    def parse_content(self, content):
-        parser = AuthorParser(content)
-        self.question_list += parser.get_question_info_list()
-        self.answer_list += parser.get_answer_list()
-        return
-
-    def create_work_set(self, target_url):
-        if target_url in self.task_complete_set:
-            return
-        content = Http.get_content(target_url + '/answers?order_by=vote_num')
-        if not content:
-            return
-        self.task_complete_set.add(target_url)
-        max_page = self.parse_max_page(content)
-        for page in range(max_page):
-            url = '{}/answers?order_by=vote_num&page={}'.format(target_url, page + 1)
-            self.work_set.add(url)
-        return
+    question_id = None
+    question_oauth = None
 
     def catch_info(self, target_url):
         if target_url in self.info_url_complete_set:
             return
-        content = Http.get_content(target_url + '/about')
-        if not content:
-            return
+        self.question_id = Match.question(target_url).group('question_id')
         self.info_url_complete_set.add(target_url)
-        parser = AuthorParser(content)
-        self.info_list.append(parser.get_extra_info())
+        self.catch_content()
+
+    def catch_content(self):
+        self.question_oauth = client.question(int(self.question_id))
+        question = dict()
+        question['question_id'] = self.question_oauth.id
+        question['title'] = self.question_oauth.title
+
+        self.question_list += [question]
+
+        for item in self.question_oauth.answers:
+            answer = dict()
+            # 如果用 item.author.id, 存的是 hash 值, 需要改 zhihu-oauth 的源码解决
+            get_answer_dict(answer=answer, item=item)
+            self.answer_list += [answer]
+
+    def create_work_set(self, target_url):
+        pass
+
+
+class AuthorWorker(PageWorker):
+
+    author_id = None
+    people_oauth = None
+
+    def catch_info(self, target_url):
+        if target_url in self.info_url_complete_set:
+            return
+        self.author_id = Match.author(target_url).group('author_id')
+        self.people_oauth = client.people(self.author_id)
+        info = dict()
+        info['author_id'] = self.author_id   # 这里需要改 zhihu-oauth 源代码才能解决
+        # info['hash'] = self.people_oauth.id
+        info['name'] = self.people_oauth.name
+        info['sign'] = self.people_oauth.headline
+        info['logo'] = self.people_oauth.avatar_url
+        info['description'] = self.people_oauth.description
+        info['weibo'] = self.people_oauth.sina_weibo_url
+        info['gender'] = self.people_oauth.gender
+        info['asks'] = self.people_oauth.question_count
+        info['answers'] = self.people_oauth.answer_count
+        info['posts'] = self.people_oauth.articles_count
+        info['agree'] = self.people_oauth.voteup_count
+        info['thanks'] = self.people_oauth.thanked_count
+        info['followee'] = self.people_oauth.following_count
+        info['follower'] = self.people_oauth.follower_count
+        info['followed_column'] = self.people_oauth.following_column_count
+        info['followed_topic'] = self.people_oauth.following_topic_count
+        self.info_list.append(info)
+        self.info_url_complete_set.add(target_url)
+
+        self.catch_content()
         return
+
+    def catch_content(self):
+        for item in self.people_oauth.answers:
+            answer = dict()
+            question = dict()
+            get_answer_dict(answer=answer, item=item)
+            question['question_id'] = item.question.id
+            question['title'] = item.question.title
+            self.answer_list += [answer]
+            self.question_list += [question]
 
     def create_save_config(self):
         config = {
@@ -68,44 +115,44 @@ class AuthorWorker(PageWorker):
         }
         return config
 
+    def create_work_set(self, target_url):
+        pass
+
 
 class CollectionWorker(PageWorker):
-    def add_property(self):
-        self.collection_index_list = []
-        return
-
-    def create_work_set(self, target_url):
-        if target_url in self.task_complete_set:
-            return
-        content = Http.get_content(target_url)
-        if not content:
-            return
-        self.task_complete_set.add(target_url)
-        max_page = self.parse_max_page(content)
-        for page in range(max_page):
-            url = '{}?page={}'.format(target_url, page + 1)
-            self.work_set.add(url)
-        return
+    collection_index_list = []
+    collection_id = None
+    collection_oauth = None
 
     def catch_info(self, target_url):
         if target_url in self.info_url_complete_set:
             return
-        content = Http.get_content(target_url)
-        if not content:
-            return
+
+        self.collection_id = Match.collection(target_url).group('collection_id')
+        self.collection_oauth = client.collection(int(self.collection_id))
+        info = dict()
+        info['title'] = self.collection_oauth.title
+        info['collection_id'] = self.collection_oauth.id
+        info['follower'] = self.collection_oauth.follower_count
+        info['description'] = self.collection_oauth.description
+        info['comment'] = self.collection_oauth.comment_count
+
+        self.info_list.append(info)
         self.info_url_complete_set.add(target_url)
-        parser = CollectionParser(content)
-        self.info_list.append(parser.get_extra_info())
+        self.catch_content()
         return
 
-    def parse_content(self, content):
-        parser = CollectionParser(content)
-        self.question_list += parser.get_question_info_list()
-        self.answer_list += parser.get_answer_list()
+    def catch_content(self):
+        for item in self.collection_oauth.answers:
+            answer = dict()
+            question = dict()
+            get_answer_dict(answer=answer, item=item)
+            question['question_id'] = item.question.id
+            question['title'] = item.question.title
+            self.answer_list += [answer]
+            self.question_list += [question]
 
-        collection_info = parser.get_extra_info()
-        self.add_collection_index(collection_info['collection_id'], parser.get_answer_list())
-        return
+        self.add_collection_index(self.info_list[0]['collection_id'], self.answer_list)
 
     def add_collection_index(self, collection_id, answer_list):
         for answer in answer_list:
@@ -125,55 +172,72 @@ class CollectionWorker(PageWorker):
         }
         return config
 
+    def create_work_set(self, target_url):
+        pass
+
+    def clear_index(self):
+        collection_id_tuple = tuple(set(x['collection_id'] for x in self.collection_index_list))
+        sql = 'DELETE from CollectionIndex where collection_id in ({})'.format((' ?,' * len(collection_id_tuple))[:-1])
+        DB.cursor.execute(sql, collection_id_tuple)
+        DB.commit()
+        return
+
 
 class TopicWorker(PageWorker):
-    def add_property(self):
-        self.topic_index_list = []
-        return
+    topic_index_list = []
+    topic_id = None
+    topic_oauth = None
 
     def create_work_set(self, target_url):
-        if target_url in self.task_complete_set:
-            return
-        content = Http.get_content(target_url + '/top-answers')
-        if not content:
-            return
-        self.task_complete_set.add(target_url)
-        max_page = self.parse_max_page(content)
-        for page in range(max_page):
-            url = '{}/top-answers?page={}'.format(target_url, page + 1)
-            self.work_set.add(url)
-        return
+        pass
 
     def catch_info(self, target_url):
         if target_url in self.info_url_complete_set:
             return
-        content = Http.get_content(target_url + '/top-answers')
-        if not content:
-            return
+        self.topic_id = Match.topic(target_url).group('topic_id')
+        self.topic_oauth = client.topic(int(self.topic_id))
+
+        info = dict()
+
+        info['title'] = self.topic_oauth.name
+        info['topic_id'] = self.topic_oauth.id
+        info['logo'] = self.topic_oauth.avatar_url
+        info['follower'] = self.topic_oauth.follower_count
+        info['description'] = self.topic_oauth.introduction
+
+        self.info_list.append(info)
         self.info_url_complete_set.add(target_url)
-        parser = TopicParser(content)
-        self.info_list.append(parser.get_extra_info())
+        self.catch_content()
         return
 
-    def parse_content(self, content):
-        parser = TopicParser(content)
-        self.question_list += parser.get_question_info_list()
-        self.answer_list += parser.get_answer_list()
+    def catch_content(self):
+        for item in self.topic_oauth.best_answers:
+            answer = dict()
+            question = dict()
+            get_answer_dict(answer=answer, item=item)
+            question['question_id'] = item.question.id
+            question['title'] = item.question.title
+            self.answer_list += [answer]
+            self.question_list += [question]
 
-        topic_info = parser.get_extra_info()
-        self.add_topic_index(topic_info['topic_id'], parser.get_answer_list())
-
-        return
+        self.add_topic_index(self.info_list[0]['topic_id'], self.answer_list)
 
     def add_topic_index(self, topic_id, answer_list):
         for answer in answer_list:
-            data = {'href': answer['href'], 'topic_id': topic_id, }
+            data = {
+                'href': answer['href'],
+                'topic_id': topic_id,
+            }
             self.topic_index_list.append(data)
         return
 
     def create_save_config(self):
-        config = {'Answer': self.answer_list, 'Question': self.question_list, 'TopicInfo': self.info_list,
-                  'TopicIndex': self.topic_index_list, }
+        config = {
+            'Answer': self.answer_list,
+            'Question': self.question_list,
+            'TopicInfo': self.info_list,
+            'TopicIndex': self.topic_index_list,
+        }
         return config
 
     def clear_index(self):
@@ -189,9 +253,6 @@ class ColumnWorker(PageWorker):
     专栏没有Parser, 因为有api
     """
     column_id = None
-
-    def catch_info(self, target_url):
-        return
 
     def create_work_set(self, target_url):
         if target_url in self.task_complete_set:
@@ -250,5 +311,8 @@ class ColumnWorker(PageWorker):
         return
 
     def create_save_config(self):
-        config = {'ColumnInfo': self.info_list, 'Article': self.answer_list}
+        config = {
+            'ColumnInfo': self.info_list,
+            'Article': self.answer_list
+        }
         return config

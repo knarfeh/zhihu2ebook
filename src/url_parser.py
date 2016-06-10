@@ -124,7 +124,7 @@ class UrlParser(object):
             task.spider.href = 'https://www.zhihu.com/topic/{}'.format(topic_id)
             task.book.kind = 'topic'
             task.book.sql.info = 'select * from TopicInfo where topic_id = "{}"'.format(topic_id)
-            task.book.sql.question = 'select * from Question where question_id in (select question_id from' + \
+            task.book.sql.question = 'select * from Question where question_id in (select question_id from ' + \
                 'Answer where href in (select href from TopicIndex where topic_id = "{}"))'.format(topic_id)
             task.book.sql.answer = 'select * from Answer where href in (select href from ' + \
                 'TopicIndex where topic_id = "{}")'.format(topic_id)

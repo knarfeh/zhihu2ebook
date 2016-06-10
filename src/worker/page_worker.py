@@ -1,17 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json  # 用于JsonWorker
-import re
-
 from src.tools.controler import Control
 from src.tools.db import DB
 from src.tools.debug import Debug
 from src.tools.http import Http
 from src.tools.match import Match
-from src.tools.config import Config
-
-from src.lib.zhihu_parser.question import QuestionParser
 
 
 class PageWorker(object):
@@ -32,13 +26,6 @@ class PageWorker(object):
 
         # 添加扩展属性
         self.add_property()
-        Config._load()          # TODO: 可能对性能有影响,改成运行时的环境变量?
-        if Config.need_account:
-            Debug.logger.debug("Need cookie")
-            Http.set_cookie()
-        else:
-            Debug.logger.debug("Don't need cookie")
-            Http.set_cookie('DontNeed')
 
     def add_property(self):
 
@@ -137,9 +124,6 @@ class PageWorker(object):
         return
 
     def parse_content(self, content):
-        parser = QuestionParser(content)
-        self.question_list += parser.get_question_info_list()
-        self.answer_list += parser.get_answer_list()
         return
 
     def start_worker(self):

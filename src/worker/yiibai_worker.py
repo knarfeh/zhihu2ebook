@@ -1,15 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import re
-
-from bs4 import BeautifulSoup
-
 from src.tools.http import Http
-from src.tools.match import Match
 from src.worker.page_worker import PageWorker
-
-from src.lib.parser_tools import ParserTools
 from src.lib.yiibai_parser.yiibai import YiibaiParser
 
 

@@ -6,7 +6,6 @@ from src.tools.path import Path
 from src.book import Book
 from src.tools.config import Config
 from src.tools.debug import Debug
-from src.tools.http import Http             # 用于检查更新
 from src.tools.db import DB
 from login import Login
 from src.url_parser import UrlParser
