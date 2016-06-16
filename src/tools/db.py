@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.tools.type import Type
+from type import Type
 
 
 class DB(object):

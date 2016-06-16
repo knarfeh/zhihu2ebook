@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from src.tools.http import Http
-from src.worker.page_worker import PageWorker
-from src.lib.yiibai_parser.yiibai import YiibaiParser
+from ..tools.http import Http
+from ..lib.yiibai_parser.yiibai import YiibaiParser
+from page_worker import PageWorker
 
 
 class YiibaiWorker(PageWorker):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
-from src.tools.extra_tools import ExtraTools
+from ..tools.extra_tools import ExtraTools
 
 
 class ParserTools(object):

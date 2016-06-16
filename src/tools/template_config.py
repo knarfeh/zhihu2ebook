@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.tools.path import Path
+from path import Path
 
 
 class TemplateConfig(object):

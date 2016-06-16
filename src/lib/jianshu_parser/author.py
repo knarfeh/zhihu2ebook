@@ -1,10 +1,9 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-from bs4 import BeautifulSoup
 
-from src.lib.jianshu_parser.base import BaseParser
-from src.lib.jianshu_parser.info.jianshu_author import JianshuAuthorInfo
+from base import BaseParser
+from info.jianshu_author import JianshuAuthorInfo
 
 
 class JianshuAuthorParser(BaseParser):

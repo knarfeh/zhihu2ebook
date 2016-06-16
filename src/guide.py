@@ -11,7 +11,7 @@ def set_account(recipe_kind):
     :param recipe_kind:
     :return:
     """
-    from src.tools.debug import Debug
+    from tools.debug import Debug
     if recipe_kind == 'zhihu':
         print(u"登录知乎中...")
         print(u"请输入注册账号,回车确认")

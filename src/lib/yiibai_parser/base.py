@@ -3,8 +3,8 @@
 
 from bs4 import BeautifulSoup
 
-from src.lib.parser_tools import ParserTools
-from src.lib.yiibai_parser.content.yiibai_article import YiibaiArticle
+from ..parser_tools import ParserTools
+from content.yiibai_article import YiibaiArticle
 
 
 class BaseParser(ParserTools):

@@ -9,9 +9,9 @@ import zlib
 import cookielib  # 用于生成cookie
 import time
 
-from src.tools.config import Config
-from src.tools.db import DB
-from src.tools.debug import Debug
+from config import Config
+from db import DB
+from debug import Debug
 
 
 class Http(object):

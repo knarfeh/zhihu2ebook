@@ -6,12 +6,13 @@ import datetime
 
 from zhihu_oauth import ZhihuClient
 
-from src.tools.db import DB
-from src.tools.http import Http
-from src.tools.match import Match
+from ..tools.db import DB
+from ..tools.http import Http
+from ..tools.match import Match
+from ..tools.path import Path
 
-from src.worker.page_worker import PageWorker
-from src.tools.path import Path
+from page_worker import PageWorker
+
 
 client = ZhihuClient()
 client.load_token(Path.pwd_path + str(u'/ZHIHUTOKEN.pkl'))

@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-from src.html5lib.constants import entities
+from ..html5lib.constants import entities
 
 html5_entities = {k.replace(';', ''): v for k, v in entities.iteritems()}
 

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 import copy
 
-from src.container.initialbook import HtmlBookPackage
-from src.container.image import ImageContainer
-from src.lib.epub.epub import Epub
-from src.tools.config import Config
-from src.tools.html_creator import HtmlCreator
-from src.tools.match import Match
-from src.tools.path import Path
-from src.tools.template_config import TemplateConfig
-from src.tools.type import Type
-from src.tools.debug import Debug
+from container.initialbook import HtmlBookPackage
+from container.image import ImageContainer
+from lib.epub.epub import Epub
+from tools.config import Config
+from tools.html_creator import HtmlCreator
+from tools.match import Match
+from tools.path import Path
+from tools.template_config import TemplateConfig
+from tools.type import Type
+from tools.debug import Debug
 
 
 class Book(object):
@@ -122,7 +122,7 @@ class Book(object):
             # 电子书题目为空时自动跳过
             # 否则会发生『rm -rf / 』的惨剧
             return
-        Path.chdir(Path.in_base_path + u'/e-books_tmp_source')
+        Path.chdir(Path.pwd_path + u'/e-books_tmp_source')
         epub = Epub(title)
         html_tmp_path = Path.html_pool_path + u'/'
         image_tmp_path = Path.image_pool_path + u'/'

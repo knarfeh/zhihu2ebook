@@ -2,7 +2,7 @@
 import json
 import os
 
-from src.tools.path import Path
+from path import Path
 
 
 class Config(object):

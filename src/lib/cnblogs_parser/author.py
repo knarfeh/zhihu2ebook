@@ -1,10 +1,9 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-from bs4 import BeautifulSoup
 
-from src.lib.cnblogs_parser.base import BaseParser
-from src.lib.cnblogs_parser.info.cnblogs_author import CnblogsAuthorInfo
+from base import BaseParser
+from info.cnblogs_author import CnblogsAuthorInfo
 
 
 class CnblogsAuthorParser(BaseParser):

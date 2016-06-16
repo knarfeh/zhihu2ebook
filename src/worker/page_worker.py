@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from src.tools.controler import Control
-from src.tools.db import DB
-from src.tools.debug import Debug
-from src.tools.http import Http
-from src.tools.match import Match
+from ..tools.controler import Control
+from ..tools.db import DB
+from ..tools.debug import Debug
+from ..tools.http import Http
+from ..tools.match import Match
 
 
 class PageWorker(object):
@@ -113,7 +113,7 @@ class PageWorker(object):
         content = Http.get_content(target_url)
         if not content:
             return
-        from src.worker.sinablog_worker import sinablogAuthorWorker
+        from sinablog_worker import sinablogAuthorWorker
         if isinstance(self, sinablogAuthorWorker):
             content = Match.fix_html(content=content, recipe_kind='sinablog_author')
         else:

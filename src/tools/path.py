@@ -50,7 +50,7 @@ class Path(object):
         try:
             os.mkdir(path)
         except OSError:
-            from src.tools.debug import Debug
+            from ..tools.debug import Debug
             Debug.logger.debug(u'directory ' + str(path) + str(u' already exists'))
             pass
         return
@@ -65,7 +65,7 @@ class Path(object):
         try:
             os.chdir(path)
         except OSError:
-            from src.tools.debug import Debug
+            from ..tools.debug import Debug
             Debug.logger.debug(u'path does not exist，creating it....')
             Path.mkdir(path)
             os.chdir(path)
@@ -85,7 +85,7 @@ class Path(object):
     @staticmethod
     def copy(src, dst):
         if not os.path.exists(src):
-            from src.tools.debug import Debug
+            from ..tools.debug import Debug
             Debug.logger.debug('Copying file... {} does not exist，skip it'.format(src))
             return
         if os.path.isdir(src):

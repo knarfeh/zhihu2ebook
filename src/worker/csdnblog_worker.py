@@ -5,12 +5,11 @@ import re
 
 from bs4 import BeautifulSoup
 
-from src.tools.http import Http
-from src.tools.match import Match
-from src.worker.page_worker import PageWorker
-from src.lib.csdnblog_parser.csdnblog_parser import CsdnBlogParser
-
-from src.lib.parser_tools import ParserTools
+from ..tools.http import Http
+from ..tools.match import Match
+from ..lib.parser_tools import ParserTools
+from ..lib.csdnblog_parser.csdnblog_parser import CsdnBlogParser
+from page_worker import PageWorker
 
 
 class csdnAuthorWorker(PageWorker):

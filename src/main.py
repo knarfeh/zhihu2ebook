@@ -2,15 +2,15 @@
 import sqlite3
 
 
-from src.tools.path import Path
-from src.book import Book
-from src.tools.config import Config
-from src.tools.debug import Debug
-from src.tools.db import DB
+from tools.path import Path
+from book import Book
+from tools.config import Config
+from tools.debug import Debug
+from tools.db import DB
 from login import Login
-from src.url_parser import UrlParser
-from src.worker.worker_factory import worker_factory
-from src.utils import log
+from url_parser import UrlParser
+from worker.worker_factory import worker_factory
+from utils import log
 
 
 class EEBook(object):

@@ -3,15 +3,15 @@
 
 from bs4 import BeautifulSoup
 
-from src.tools.http import Http
-from src.tools.match import Match
+from ..tools.http import Http
+from ..tools.match import Match
 
-from src.worker.page_worker import PageWorker
-from src.lib.jianshu_parser.author import JianshuAuthorParser
-from src.lib.jianshu_parser.collection import JianshuCollectionParser
-from src.lib.jianshu_parser.notebooks import JianshuNotebooksParser
+from page_worker import PageWorker
+from ..lib.jianshu_parser.author import JianshuAuthorParser
+from ..lib.jianshu_parser.collection import JianshuCollectionParser
+from ..lib.jianshu_parser.notebooks import JianshuNotebooksParser
 
-from src.lib.parser_tools import ParserTools
+from ..lib.parser_tools import ParserTools
 
 
 class JianshuAuthorWorker(PageWorker):

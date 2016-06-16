@@ -3,7 +3,7 @@ import logging
 import logging.handlers
 import sys
 
-from src.tools.config import Config
+from config import Config
 
 
 class Debug(object):

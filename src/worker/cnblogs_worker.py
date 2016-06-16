@@ -3,10 +3,11 @@
 
 import re
 
-from src.tools.http import Http
-from src.worker.page_worker import PageWorker
+from ..tools.http import Http
+from ..lib.cnblogs_parser.author import CnblogsAuthorParser
+from page_worker import PageWorker
 
-from src.lib.cnblogs_parser.author import CnblogsAuthorParser
+
 
 
 class CnblogsAuthorWorker(PageWorker):

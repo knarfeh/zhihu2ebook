@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from src.tools.path import Path
+from ...tools.path import Path
 from .tools.base import Base
 
 

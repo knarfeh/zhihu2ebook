@@ -9,8 +9,8 @@ from .opf import OPF
 from .toc import TOC
 from .tools.epub_config import EpubConfig
 from .tools.epub_path import EpubPath
-from src.tools.debug import Debug
-from src.tools.path import Path
+from ...tools.debug import Debug
+from ...tools.path import Path
 
 
 class Epub(object):

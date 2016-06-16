@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
-from src.tools.type import Type
+from type import Type
 
 
 class Match(object):

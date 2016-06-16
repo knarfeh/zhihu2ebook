@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from src.worker.zhihu_worker import (QuestionWorker, AuthorWorker, CollectionWorker,
+from zhihu_worker import (QuestionWorker, AuthorWorker, CollectionWorker,
                                      TopicWorker, ColumnWorker)
-from src.worker.sinablog_worker import sinablogAuthorWorker
-from src.worker.jianshu_worker import JianshuAuthorWorker
-from src.worker.jianshu_worker import JianshuCollectionWorker
-from src.worker.jianshu_worker import JianshuNotebooksWorker
-from src.worker.csdnblog_worker import csdnAuthorWorker
-from src.worker.cnblogs_worker import CnblogsAuthorWorker
-from src.worker.yiibai_worker import YiibaiWorker
-from src.worker.talkpython_worker import TalkPythonWorker
+from sinablog_worker import sinablogAuthorWorker
+from jianshu_worker import JianshuAuthorWorker
+from jianshu_worker import JianshuCollectionWorker
+from jianshu_worker import JianshuNotebooksWorker
+from csdnblog_worker import csdnAuthorWorker
+from cnblogs_worker import CnblogsAuthorWorker
+from yiibai_worker import YiibaiWorker
+from talkpython_worker import TalkPythonWorker
 
 
 def worker_factory(task):

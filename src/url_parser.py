@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from src.container.task import SingleTask, TaskPackage
-from src.tools.debug import Debug
-from src.tools.match import Match
+from container.task import SingleTask, TaskPackage
+from tools.debug import Debug
+from tools.match import Match
 
 
 class UrlParser(object):

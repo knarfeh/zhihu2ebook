@@ -3,8 +3,8 @@
 
 from bs4 import BeautifulSoup
 
-from src.lib.parser_tools import ParserTools
-from src.lib.talkpython_parser.content.talkpython_article import TalkPythonArticle
+from ..parser_tools import ParserTools
+from content.talkpython_article import TalkPythonArticle
 
 
 class BaseParser(ParserTools):

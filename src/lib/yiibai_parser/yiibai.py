@@ -1,10 +1,9 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-from bs4 import BeautifulSoup
 
-from src.lib.yiibai_parser.base import BaseParser
-from src.lib.yiibai_parser.info.yiibai_subject import YiibaiInfo
+from base import BaseParser
+from info.yiibai_subject import YiibaiInfo
 
 
 class YiibaiParser(BaseParser):
