@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from src.tools.type import Type
-from src.container.initialbook import InitialBook
+from ..tools.type import Type
+from initialbook import InitialBook
 
 
 class Spider(object):

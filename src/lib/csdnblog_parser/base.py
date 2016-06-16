@@ -3,8 +3,8 @@
 
 from bs4 import BeautifulSoup
 
-from src.lib.parser_tools import ParserTools
-from src.lib.csdnblog_parser.content.csdnblog_article import CsdnBlogArticle
+from ..parser_tools import ParserTools
+from content.csdnblog_article import CsdnBlogArticle
 
 
 class BaseParser(ParserTools):

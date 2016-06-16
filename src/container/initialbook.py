@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from src.container.image import ImageContainer
-from src.tools.config import Config
-from src.tools.db import DB
-from src.tools.match import Match
-from src.tools.type import Type
+from image import ImageContainer
+from ..tools.config import Config
+from ..tools.db import DB
+from ..tools.match import Match
+from ..tools.type import Type
 
 
 class InitialBook(object):
@@ -189,7 +189,7 @@ class InitialBook(object):
             self.epub.title = u'TalkPythonToMe'
             self.epub.id = info['creator_id']
 
-        from src.html5lib.constants import entities_reverse
+        from ..html5lib.constants import entities_reverse
         self.epub.title = Match.replace_words(self.epub.title, entities_reverse)
         return
 

@@ -3,9 +3,9 @@
 
 from bs4 import BeautifulSoup
 
-from src.lib.csdnblog_parser.base import BaseParser
-from src.lib.csdnblog_parser.content.csdnblog_article import CsdnBlogArticle
-from src.lib.csdnblog_parser.info.csdnblog_author import CsdnBlogAuthorInfo
+from base import BaseParser
+from content.csdnblog_article import CsdnBlogArticle
+from info.csdnblog_author import CsdnBlogAuthorInfo
 
 
 # TODO: refactoring, change the name to csdnAuthorParser

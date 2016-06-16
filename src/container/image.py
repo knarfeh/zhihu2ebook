@@ -2,11 +2,11 @@
 import hashlib
 import os.path
 
-from src.tools.config import Config
-from src.tools.controler import Control
-from src.tools.debug import Debug
-from src.tools.extra_tools import ExtraTools
-from src.tools.http import Http
+from ..tools.config import Config
+from ..tools.controler import Control
+from ..tools.debug import Debug
+from ..tools.extra_tools import ExtraTools
+from ..tools.http import Http
 
 
 class ImageContainer(object):

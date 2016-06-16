@@ -9,12 +9,12 @@ import zipfile
 
 from lxml import etree
 
-from BeautifulSoup import BeautifulStoneSoup
+from bs4 import BeautifulStoneSoup
 
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parentdir)
 
-from src.constants import LIBRARY_DIR    # it's ok
+from ..constants import LIBRARY_DIR    # it's ok
 
 RECOVER_PARSER = etree.XMLParser(recover=True, no_network=True)
 NAMESPACES = {

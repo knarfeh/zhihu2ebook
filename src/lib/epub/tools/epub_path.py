@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-from src.tools.path import Path
+from ....tools.path import Path
 
 
 class EpubPath(object):

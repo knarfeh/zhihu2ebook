@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
-from src.tools.http import Http
-from src.worker.page_worker import PageWorker
-from src.lib.talkpython_parser.talkpython import TalkPythonParser
+from ..tools.http import Http
+from ..lib.talkpython_parser.talkpython import TalkPythonParser
+from page_worker import PageWorker
 
 
 class TalkPythonWorker(PageWorker):

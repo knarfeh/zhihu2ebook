@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 class Type(object):
     # zhihu
     answer = 'answer'

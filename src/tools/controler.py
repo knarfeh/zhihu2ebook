@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from multiprocessing.dummy import Pool as ThreadPool  # 多线程并行库
 
-from src.tools.config import Config
+from config import Config
 
 
 class Control(object):

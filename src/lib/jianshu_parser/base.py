@@ -3,8 +3,8 @@
 
 from bs4 import BeautifulSoup
 
-from src.lib.parser_tools import ParserTools
-from src.lib.jianshu_parser.content.jianshu_article import JianshuArticle
+from ..parser_tools import ParserTools
+from content.jianshu_article import JianshuArticle
 
 
 class BaseParser(ParserTools):

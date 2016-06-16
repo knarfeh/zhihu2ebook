@@ -3,12 +3,12 @@
 
 from bs4 import BeautifulSoup
 
-from src.tools.http import Http
-from src.tools.match import Match
-from src.worker.page_worker import PageWorker
+from ..tools.http import Http
+from ..tools.match import Match
+from page_worker import PageWorker
 
-from src.lib.sinablog_parser.sinablog_parser import SinaBlogParser
-from src.lib.parser_tools import ParserTools
+from ..lib.sinablog_parser.sinablog_parser import SinaBlogParser
+from ..lib.parser_tools import ParserTools
 
 
 class sinablogAuthorWorker(PageWorker):

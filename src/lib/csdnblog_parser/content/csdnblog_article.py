@@ -1,9 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-from src.lib.parser_tools import ParserTools
-from src.tools.match import Match
-from src.tools.debug import Debug
+from ...parser_tools import ParserTools
+from ....tools.debug import Debug
 
 
 class CsdnBlogArticle(ParserTools):

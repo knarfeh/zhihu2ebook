@@ -6,8 +6,8 @@ import sys
 
 from zhihu_oauth import ZhihuClient
 from zhihu_oauth.exception import NeedLoginException
-from src.tools.extra_tools import ExtraTools
-from src.tools.path import Path
+from tools.extra_tools import ExtraTools
+from tools.path import Path
 
 
 class Login(object):

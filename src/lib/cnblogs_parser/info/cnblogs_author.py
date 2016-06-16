@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 
-from src.lib.parser_tools import ParserTools
-from src.tools.debug import Debug
+from ...parser_tools import ParserTools
+from ....tools.debug import Debug
 
 
 class CnblogsAuthorInfo(ParserTools):
