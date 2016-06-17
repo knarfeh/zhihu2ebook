@@ -5,6 +5,10 @@ from ..tools.http import Http
 from ..lib.yiibai_parser.yiibai import YiibaiParser
 from page_worker import PageWorker
 
+__all__ = [
+    "YiibaiWorker"
+]
+
 
 class YiibaiWorker(PageWorker):
     u"""

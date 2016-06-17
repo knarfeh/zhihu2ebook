@@ -9,7 +9,7 @@ from tools.debug import Debug
 from tools.db import DB
 from login import Login
 from url_parser import UrlParser
-from worker.worker_factory import worker_factory
+from worker import worker_factory
 from utils import log
 
 

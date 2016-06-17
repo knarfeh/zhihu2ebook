@@ -7,7 +7,9 @@ from ..tools.http import Http
 from ..lib.cnblogs_parser.author import CnblogsAuthorParser
 from page_worker import PageWorker
 
-
+__all__ = [
+    "CnblogsAuthorWorker"
+]
 
 
 class CnblogsAuthorWorker(PageWorker):

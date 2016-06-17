@@ -10,6 +10,10 @@ from page_worker import PageWorker
 from ..lib.sinablog_parser.sinablog_parser import SinaBlogParser
 from ..lib.parser_tools import ParserTools
 
+__all__ = [
+    "sinablogAuthorWorker"
+]
+
 
 class sinablogAuthorWorker(PageWorker):
     u"""

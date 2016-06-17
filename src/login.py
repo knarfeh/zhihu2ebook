@@ -12,10 +12,8 @@ from tools.path import Path
 
 class Login(object):
     def __init__(self, recipe_kind, from_ui=False):
+        # TODO: from_ui
         self.recipe_kind = recipe_kind
-        self.cookieJar = cookielib.LWPCookieJar()
-        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
-        urllib2.install_opener(self.opener)
         self.from_ui = from_ui
 
     def start(self):
@@ -28,12 +26,3 @@ class Login(object):
             sys.exit()
         return
 
-    def get_cookie(self):
-        filename = ExtraTools.md5(ExtraTools.get_time())
-        with open(filename, 'w') as f:
-            pass
-        self.cookieJar.save(filename)
-        with open(filename) as f:
-            content = f.read()
-        os.remove(filename)
-        return content

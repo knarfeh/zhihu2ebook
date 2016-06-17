@@ -11,6 +11,10 @@ from ..lib.parser_tools import ParserTools
 from ..lib.csdnblog_parser.csdnblog_parser import CsdnBlogParser
 from page_worker import PageWorker
 
+__all__ = [
+    "csdnAuthorWorker"
+]
+
 
 class csdnAuthorWorker(PageWorker):
     u"""

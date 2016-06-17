@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 from ..tools.http import Http
 from ..lib.talkpython_parser.talkpython import TalkPythonParser
 from page_worker import PageWorker
+
+
+__all__ = [
+    "TalkPythonWorker"
+]
 
 
 class TalkPythonWorker(PageWorker):

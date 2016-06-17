@@ -2,7 +2,7 @@
 import re
 
 from type import Type
-
+from ..exception import UnsupportTypeException
 
 class Match(object):
     # zhihu
@@ -171,7 +171,6 @@ class Match(object):
 
         # for SinaBlog
         if recipe_kind in Type.sinablog:
-            from src.tools.debug import Debug
             for item in re.findall(r'\<span class="img2"\>.*?\</span\>', content):
                 content = content.replace(item, '')
             for item in re.findall(r'\<script\>.*?\</script\>', content, re.S):
@@ -214,6 +213,8 @@ class Match(object):
         for keyword in Type.key_word_to_website_type.keys():
             if split_url.find(keyword) >= 0:
                 kind = Type.key_word_to_website_type[keyword]
+        if kind == 'Unknow type':
+            raise UnsupportTypeException('Getting website info..')
         return kind
 
     @staticmethod
@@ -231,7 +232,8 @@ class Match(object):
         for website in Type.website_type.keys():
             if url_type in getattr(Type, website):
                 website_kind = website
-
+        if website_kind == 'Unsupport type':
+            raise UnsupportTypeException('Detecting website kind...')
         return website_kind
 
     @staticmethod

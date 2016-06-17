@@ -13,6 +13,12 @@ from ..lib.jianshu_parser.notebooks import JianshuNotebooksParser
 
 from ..lib.parser_tools import ParserTools
 
+__all__ = [
+    "JianshuAuthorWorker",
+    "JianshuCollectionWorker",
+    "JianshuNotebooksWorker",
+]
+
 
 class JianshuAuthorWorker(PageWorker):
     u"""

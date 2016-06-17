@@ -18,6 +18,14 @@ from page_worker import PageWorker
 
 client = ZhihuClient()
 
+__all__ = [
+    "QuestionWorker",
+    "AuthorWorker",
+    "CollectionWorker",
+    "TopicWorker",
+    "ColumnWorker",
+]
+
 
 def _client_load_token():
     try:
