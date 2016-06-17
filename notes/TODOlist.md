@@ -5,12 +5,6 @@
 * 把验证用户名,密码的部分用 wtform 代替(思路来自 hia blog system)
 * ~~写一个个人博客的通用类型~~ 如yinwang，macshuo.com这种
 * 做到可以自动自动导入，只需要写Parser就行
-* BYVoid博客
-* [Aaron Swartz的博客](www.aaronsw.com)
-* [macshuo](http://macshuo.com/)
-* quora
-* 豆瓣日记
-* medium
 * 构建日志系统
 * 优化后台代码，使得添加模块变得简单、快捷
 * 下载管理器，对话框的形式(或Mixin?)
@@ -21,6 +15,16 @@
 * 通过选项配置知乎模块的config内容
 * 打包发布，制作mac的app程序，windows的exe程序
 * ...
+
+### 网站类型  
+
+* BYVoid博客
+* [Aaron Swartz的博客](www.aaronsw.com)
+* [macshuo](http://macshuo.com/)
+* quora
+* 豆瓣日记
+* medium
+* stackoverflow
 
 
 log:
