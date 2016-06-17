@@ -1,4 +1,10 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+
+import sys
+from zhihu_oauth import ZhihuClient
+from zhihu_oauth.exception import NeedLoginException
+from tools.path import Path
 from container.task import SingleTask, TaskPackage
 from tools.debug import Debug
 from tools.match import Match
@@ -94,10 +100,23 @@ class UrlParser(object):
             task.kind = 'author'
             task.spider.href = 'https://www.zhihu.com/people/{}'.format(author_id)
             task.book.kind = 'author'
-            task.book.sql.info = 'select * from AuthorInfo where author_id = "{}"'.format(author_id)
+
+            client = ZhihuClient()
+            try:
+                client.load_token(Path.pwd_path + str(u'/ZHIHUTOKEN.pkl'))
+            except IOError:
+                print u"没有找到登录信息文件，请先登录"
+                sys.exit()
+            except NeedLoginException:
+                print u"登录信息过期，请重新登录"
+                sys.exit()
+            people_oauth = client.people(author_id)
+            _ = people_oauth.follower_count    # zhihu-oauth, issues #4
+            author_id_hash = people_oauth.id
+            task.book.sql.info = 'select * from AuthorInfo where author_id = "{}"'.format(author_id_hash)
             task.book.sql.question = 'select * from Question where question_id in (select question_id from \
-            Answer where author_id = "{}")'.format(author_id)
-            task.book.sql.answer = 'select * from Answer where author_id = "{}"'.format(author_id)
+            Answer where author_id = "{}")'.format(author_id_hash)
+            task.book.sql.answer = 'select * from Answer where author_id = "{}"'.format(author_id_hash)
             return task
 
         def parse_collection(command):

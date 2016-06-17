@@ -31,7 +31,7 @@ def _client_load_token():
 
 
 def get_answer_dict(answer={}, item=None):
-    answer['author_id'] = 'from *** worker, this is a bug'    # 如果用 item.author.id, 存的是 hash 值
+    answer['author_id'] = item.author.id    # 如果用 item.author.id, 存的是 hash 值
     # 所以,目前 Author 部分不能用
     answer['author_sign'] = item.author.headline
     answer['author_logo'] = item.author.avatar_url
@@ -90,9 +90,10 @@ class AuthorWorker(PageWorker):
         self.author_id = Match.author(target_url).group('author_id')
         self.people_oauth = client.people(self.author_id)
         info = dict()
-        info['author_id'] = self.author_id   # 这里需要改 zhihu-oauth 源代码才能解决
+
         # info['hash'] = self.people_oauth.id
         info['name'] = self.people_oauth.name
+        info['author_id'] = self.people_oauth.id   # zhihu-oauth, issues #4
         info['sign'] = self.people_oauth.headline
         info['logo'] = self.people_oauth.avatar_url
         info['description'] = self.people_oauth.description
