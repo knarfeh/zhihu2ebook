@@ -288,7 +288,7 @@ class UrlParser(object):
             :param command:
             :return:
             """
-            from src.tools.type import Type
+            from .tools.type import Type
             task = SingleTask()
             for command_type in Type.type_list:
                 result = getattr(Match, command_type)(command)

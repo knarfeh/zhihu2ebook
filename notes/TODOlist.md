@@ -25,6 +25,7 @@
 * 豆瓣日记
 * medium
 * stackoverflow
+* gank.io
 
 
 log:

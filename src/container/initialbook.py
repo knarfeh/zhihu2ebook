@@ -37,7 +37,7 @@ class InitialBook(object):
 
     def __init__(self):
         self.kind = ''
-        self.author_id = 0                 
+        self.author_id = 0
         self.sql = InitialBook.Sql()
         self.epub = InitialBook.Epub()
         self.info = {}

@@ -34,8 +34,7 @@ class TalkPythonArticle(ParserTools):
         self.info['author_id'] = 'https://talkpython.fm/episodes/all/'
 
     def parse_article_id(self):
-
-        from src.tools.extra_tools import ExtraTools
+        from ....tools.extra_tools import ExtraTools
         article_id = ExtraTools.md5(self.info['title'])
         self.info['article_id'] = article_id
 
@@ -43,14 +42,21 @@ class TalkPythonArticle(ParserTools):
         self.info['author_name'] = self.info['author_id']
 
     def parse_article_title(self):
-        title = self.dom.select('div.col-md-12 div h1')[0].get_text().replace('  ', '').replace('\n', '').split('#')
-        title = title[1]
-        title = title.replace(' ', '_').replace(':', '')
-        self.info['title'] = title
+        try:
+            title = self.dom.select('div.col-md-12 div h1')[0].get_text().replace('  ', '').replace('\n', '').split('#')
+
+            title = title[1]
+            title = title.replace(' ', '_').replace(':', '')
+            self.info['title'] = title
+        except IndexError:
+            self.info['title'] = u"NO TITLE!!!!!!!!!"
 
     def parse_answer_content(self):
-        content = self.dom.select('div.transcript-main div.large-content-text')[0]
-        self.info['content'] = str(content)
+        try:
+            content = self.dom.select('div.transcript-main div.large-content-text')[0]
+            self.info['content'] = str(content)
+        except IndexError:
+            self.info['content'] = u"NO CONTENT!!!!"
 
     def parse_publish_date(self):
         # self.info['publish_date'] = u'TODO'

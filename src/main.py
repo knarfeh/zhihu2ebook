@@ -103,9 +103,9 @@ class EEBook(object):
         Debug.logger.info(u"Ready to make No.{} e-book".format(counter))
         Debug.logger.info(u"Analyzes {} ".format(command))
         task_package = UrlParser.get_task(command)  # 分析命令
-        if not task_package.is_work_list_empty():
-            worker_factory(task_package.work_list)  # 执行抓取程序
-            Debug.logger.info(u"Complete fetching from web")
+        # if not task_package.is_work_list_empty():
+        #     worker_factory(task_package.work_list)  # 执行抓取程序
+        #     Debug.logger.info(u"Complete fetching from web")
 
         file_name_set = None
         if not task_package.is_book_list_empty():
