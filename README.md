@@ -6,7 +6,14 @@
 
 [网页版](http://ee-book.org)
 
-## 支持的网站 (正在更新中!)  
+### 目录
+* [支持的网站](#支持的网站)
+* [用法](#用法)
+* [参与进来](#参与进来)
+* [相关信息](#相关信息)
+* [License](#license)
+
+## 支持的网站
 
 | 名称 | 主页                               | 支持类型                          |
 | :------ | ---------------------------------------- | ---------------------------------------- |
@@ -39,17 +46,11 @@ $ python ee-book -u jianshu.com/users/b1dd2b2c87a8/latest_articles
 ![scheme](http://7xi5vu.com1.z0.glb.clouddn.com/2016-03-09Scheme.png)
 
 
-## 贡献代码
+## 参与进来
+
 ...当然欢迎
 
-### 解决依赖
-
- * [Beautiful Soup 4](http://www.crummy.com/software/BeautifulSoup/)
- * [lxml](http://lxml.de/)
- * ~ [PyQt4](https://www.riverbankcomputing.com/software/pyqt/download) ~
-
 ### 搭建 EE-Book 的开发环境
-
 
 ```bash
 $ pip install -r requirements.txt
@@ -57,8 +58,8 @@ $ pip install -r requirements.txt
 
 [安装 pyqt4](https://riverbankcomputing.com/software/pyqt/download/)
 
-
 ### [TODO List](./notes/TODOlist.md)
+
 
 ## 相关信息
 
