@@ -13,6 +13,7 @@
 * [Usage](#usage)
 * [Contributing](#contributing)
 * [Relevant Infomation](#relevant-infomation)
+* [thanks](#thanks)
 * [License](#license)
 
 ## Supported Sites

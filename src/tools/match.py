@@ -140,7 +140,7 @@ class Match(object):
         :param content: http://talkpython.fm
         :return:
         """
-        return re.search(r'(?<=talkpython\.fm/episodes/)(?P<subject_id>[^/\n\r]*)', content)
+        return re.search(r'(?<=talkpython\.fm/episodes/)(?P<subject_id>[^/\n\r]*)(/)', content)
 
     @staticmethod
     def fix_filename(filename):
