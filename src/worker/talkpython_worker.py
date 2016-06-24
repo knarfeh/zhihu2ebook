@@ -13,7 +13,7 @@ __all__ = [
 
 class TalkPythonWorker(PageWorker):
     u"""
-    Yiibai author worker
+    TalkPython worker
     """
 
     def catch_info(self, target_url):
@@ -24,6 +24,7 @@ class TalkPythonWorker(PageWorker):
             return
         self.info_url_complete_set.add(target_url)
         parser = TalkPythonParser(content)
+
         self.info_list.append(parser.get_extra_info())
         return
 

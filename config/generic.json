@@ -1,6 +1,6 @@
 {
     "update_time": "2016-01-01",
-    "max_thread": 10,
+    "max_thread": 20,
     "sql_extend_answer_filter": "",
     "max_blog": 10,
     "max_answer": 600,

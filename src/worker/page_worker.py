@@ -99,7 +99,7 @@ class PageWorker(object):
     def start_create_work_list(self):
         self.clear_work_set()
         argv = {
-            'func': self.create_work_set,
+            'function': self.create_work_set,
             'iterable': self.task_set,
         }
         Control.control_center(argv, self.task_set)
@@ -113,11 +113,13 @@ class PageWorker(object):
         content = Http.get_content(target_url)
         if not content:
             return
+
         from sinablog_worker import sinablogAuthorWorker
         if isinstance(self, sinablogAuthorWorker):
             content = Match.fix_html(content=content, recipe_kind='sinablog_author')
         else:
             content = Match.fix_html(content=content)  # 需要修正其中的<br>标签，避免爆栈
+
         self.content_list.append(content)
         Debug.logger.debug(u'{}的内容抓取完成'.format(target_url))
         self.work_complete_set.add(target_url)
@@ -131,11 +133,11 @@ class PageWorker(object):
         work_set是所有的需要抓取的页面(单篇的文章)
         :return:
         """
-        work_wet_list = list(self.work_set)
-        work_wet_list.sort()
+        work_set_list = list(self.work_set)
+        work_set_list.sort()
         argv = {
-            'func': self.worker,  # 所有待存入数据库中的数据都应当是list
-            'iterable': work_wet_list,
+            'function': self.worker,  # 所有待存入数据库中的数据都应当是list
+            'iterable': work_set_list,
         }
         Control.control_center(argv, self.work_set)
         Debug.logger.info(u"所有内容抓取完毕，开始对页面进行解析")
@@ -152,8 +154,8 @@ class PageWorker(object):
 
     def start_catch_info(self):
         argv = {
-            'func': self.catch_info,
-            'iterable': self.info_url_set,
+            'function': self.catch_info,
+            'iterable': list(self.info_url_set),
         }
         Control.control_center(argv, self.info_url_set)
         return
