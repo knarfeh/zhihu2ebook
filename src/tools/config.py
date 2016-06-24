@@ -12,7 +12,7 @@ class Config(object):
     # 全局变量
     update_time = '2016-03-07'  # 更新日期
 
-    debug = True
+    debug = False
 
     need_account = True        # 是否需要账号密码
     login_with_previously_config = True  # 是否通过之前的登陆记录进行登陆
@@ -20,7 +20,7 @@ class Config(object):
     account = 'zhihu2ebook@hotmail.com'  # 默认账号密码
     # password = 'Zhihu2Ebook'
     remember_account_set = False    # 是否使用已有密码
-    max_thread = 10             # 最大线程数
+    max_thread = 20             # 最大线程数
     picture_quality = 1         # 图片质量（0/1/2，无图/标清/原图）
     max_question = 100          # 每本电子书中最多可以放多少个问题
     max_answer = 600            # 每本电子书中最多可以放多少个回答

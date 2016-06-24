@@ -26,7 +26,7 @@ class TalkPythonInfo(ParserTools):
         return self.info
 
     def parse_info(self):
-        Debug.logger.debug(u"Getting talkpython info...")
+        # Debug.logger.debug(u"Getting talkpython info...")
         self.parse_base_info()         # basic user info: id, name, logo, description, article_num
         # self.parse_detail_info()     # detail_info, 博客等级, 积分, 访问, 关注人气
         return self.info
