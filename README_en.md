@@ -6,15 +6,17 @@
  
 [EE-Book](https://github.com/knarfeh/EE-Book) is a command-line utility to downlaod text from the Web, and make it a e-book.  
 
-[Web version](http://ee-book.org)
+Web version →_→ [ee-book.org](http://ee-book.org)
 
-### 目录
+### toc
 * [Supported Sites](#supported-sites)
 * [Usage](#usage)
 * [Contributing](#contributing)
 * [Relevant Infomation](#relevant-infomation)
 * [thanks](#thanks)
 * [License](#license)
+
+---
 
 ## Supported Sites
 
@@ -24,9 +26,9 @@
 | 简书      | [www.jianshu.com](http://www.jianshu.com) | **用户的所有文章：** `jianshu.com/users/{people_id}/latest_articles`<br/>**专题：** `jianshu.com/collection/{collection_id}`<br/>**文集：** `jianshu.com/notebooks/{notebooks_id}/latest` or `jianshu.com/notebooks/{notebooks_id}/top` |
 | csdn博客  | [blog.csdn.net](http://blog.csdn.net)    | **用户的所有文章：** `blog.sina.com.cn/u/{people_id}` |
 | 新浪博客   | [blog.sina.com.cn](http://blog.sina.com.cn/) | **用户的所有文章：** `blog.csdn.net/{people_id}` |
-| 博客园     | [www.cnblogs.com/](http://www.cnblogs.com/) | **用户的所有文章：** `cnblogs.com/{people_id}/`  |
+| 博客园     | [www.cnblogs.com](http://www.cnblogs.com/) | **用户的所有文章：** `cnblogs.com/{people_id}/`  |
 | 易百教程   | [www.yiibai.com](http://www.yiibai.com/) | **某个教程的文章：** `yiibai.com/{tutorial_kind}`|
-| Talk Python To Me | [www.talkpython.fm](https://www.talkpython.fm)| **transcripts of [「Talk Python To Me」](https://www.talkpython.fm):** `https://talkpython.fm/episodes/all/`|
+| Talk Python To Me | [www.talkpython.fm](https://www.talkpython.fm)| **transcripts :** `https://talkpython.fm/episodes/all/`|
 
 ## Usage
 

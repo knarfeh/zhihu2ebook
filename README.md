@@ -4,7 +4,7 @@
 
 [EE-Book](https://github.com/knarfeh/EE-Book) 是一个命令行程序，它可以从网络上爬取内容制作成EPub格式电子书。  
 
-[网页版](http://ee-book.org)
+网页版 →_→ [ee-book.org](http://ee-book.org)
 
 ### 目录
 * [支持的网站](#支持的网站)
@@ -14,6 +14,8 @@
 * [感谢](#感谢)
 * [License](#license)
 
+---
+
 ## 支持的网站
 
 | 名称 | 主页                               | 支持类型                          |
@@ -22,9 +24,9 @@
 | 简书      | [www.jianshu.com](http://www.jianshu.com) | **用户的所有文章：** `jianshu.com/users/{people_id}/latest_articles`<br/>**专题：** `jianshu.com/collection/{collection_id}`<br/>**文集：** `jianshu.com/notebooks/{notebooks_id}/latest` or `jianshu.com/notebooks/{notebooks_id}/top` |
 | csdn博客  | [blog.csdn.net](http://blog.csdn.net)    | **用户的所有文章：** `blog.sina.com.cn/u/{people_id}` |
 | 新浪博客   | [blog.sina.com.cn](http://blog.sina.com.cn/) | **用户的所有文章：** `blog.csdn.net/{people_id}` |
-| 博客园     | [www.cnblogs.com/](http://www.cnblogs.com/) | **用户的所有文章：** `cnblogs.com/{people_id}/`  |
+| 博客园     | [www.cnblogs.com](http://www.cnblogs.com/) | **用户的所有文章：** `cnblogs.com/{people_id}/`  |
 | 易百教程   | [www.yiibai.com](http://www.yiibai.com/) | **某个教程的文章：** `yiibai.com/{tutorial_kind}`|
-| Talk Python To Me | [www.talkpython.fm](https://www.talkpython.fm)| **[「Talk Python To Me」](https://www.talkpython.fm)的文稿:** `https://talkpython.fm/episodes/all/`|
+| Talk Python To Me | [www.talkpython.fm](https://www.talkpython.fm)| **文稿:** `https://talkpython.fm/episodes/all/`|
 
 ## 用法
 
