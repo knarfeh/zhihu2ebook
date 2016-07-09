@@ -170,12 +170,14 @@ def main():
                 print('Unsupported website or url type. \nPlease check url.')
                 sys.exit()
     except IOError as e:
-        Debug.logger.debug(u"\nCreating " + file_name + "...")
+        print(u"\nOops! No " + file_name + ". creating " + file_name + "...")
         with open(file_name, 'w') as read_list:
             read_list.close()
-    if 1 == counter:
-        print(u"\nOops! No content in " + file_name + u". Please check it out.")
         sys.exit()
+    except IndexError:
+        if 1 == counter:
+            print(u"\nOops! No content in " + file_name + u". Please check it out.")
+            sys.exit()
 
     print(u"website type:" + str(recipe_kind))
     game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)

@@ -141,9 +141,7 @@ class PageWorker(object):
         }
         Control.control_center(argv, self.work_set)
         Debug.logger.info(u"所有内容抓取完毕，开始对页面进行解析")
-        i = 0
-        for content in self.content_list:
-            i += 1
+        for i, content in enumerate(self.content_list):
             Debug.print_in_single_line(u"正在解析第{}/{}张页面".format(i, self.content_list.__len__()))
             self.parse_content(content)
         Debug.logger.info(u"网页内容解析完毕")

@@ -25,7 +25,7 @@
  
 * 专栏单篇文章
 * [知乎助手 Issues](https://github.com/YaoZeyuan/ZhihuHelp/issues)
-
+* zhihuhot, 看知乎，今日热门，昨日最新，历史精华
 
 ### 新浪博客
 
