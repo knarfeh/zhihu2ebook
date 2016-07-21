@@ -58,7 +58,7 @@ class CnblogsAuthorInfo(ParserTools):
 
     def parse_creator_name(self):
         creator_name = self.dom.find('a', class_='headermaintitle').get_text()
-        self.info['creator_name'] = creator_name
+        self.info['creator_name'] = str(creator_name)
 
     def parse_description(self):
         self.info['description'] = 'description'
