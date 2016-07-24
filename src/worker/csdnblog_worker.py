@@ -27,7 +27,7 @@ class csdnAuthorWorker(PageWorker):
         :return: max page
         """
         max_page = 1
-        match_object = re.search(r'条数据  共(?P<page_num>[^/\n\r]*)页', content)
+        match_object = re.search(r'共(?P<page_num>[^/\n\r]*)页', content)
         if match_object is not None:
             max_page = match_object.group('page_num')
         else:

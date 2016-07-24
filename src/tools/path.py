@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import shutil
-import locale
 
 
 class Path(object):
@@ -9,7 +8,7 @@ class Path(object):
     定义资源,生成的文件等的路径,以及关于路径操作的一些函数,TODO: 这部分应该用运行时环境变量
     不能在开头from src.tools.debug import Debug
     """
-    pwd_path = unicode(os.getcwd())    # 执行命令的路径
+    pwd_path = os.getcwd()    # 执行命令的路径
     in_base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))  # 项目路径
 
     config_path = u''     # 根据recipe_kind确定config_path
@@ -34,15 +33,15 @@ class Path(object):
         输出绝对路径
         :return:
         """
-        print os.path.realpath('.')
+        print(os.path.realpath('.'))
         return
 
     @staticmethod
     def get_pwd():
         u"""
-        :return: 绝对路径
+        :return: absolute path，note changes of 26/07/2016，path contains Chinese？
         """
-        path = unicode(os.path.abspath('.').decode(locale.getpreferredencoding()))
+        path = os.path.abspath('.')
         return path
 
     @staticmethod
