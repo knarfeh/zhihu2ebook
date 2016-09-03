@@ -3,14 +3,15 @@
 ### 总体
 
 * 日志系统，将爬虫的出错信息记录在日志文件中，便于用户反馈bug
-* 把验证用户名,密码的部分用 wtform 代替(思路来自 hia blog system)
-* ~~写一个个人博客的通用类型~~ 如yinwang，macshuo.com这种
+* 把验证用户名，密码的部分用 wtform 代替(思路来自 hia blog system)
+* ~~写一个个人博客的通用类型~~ 如 yinwang，macshuo.com 这种
 * 做到可以自动自动导入，只需要写Parser就行
 * 优化后台代码，使得添加模块变得简单、快捷
 * 图片按照网站分类
 * 处理登录令牌过期的问题
 * Move to Python3
-* Dockerize
+* Dockerize, 完善 ee-book.org，做一个微信公众号
+* 数据库改为用 postgres
 
 ### 网站类型  
 
@@ -23,6 +24,8 @@
 * medium
 * stackoverflow
 * gank.io
+* [gawk manual](https://www.gnu.org/software/gawk/manual/gawk.html)
+* [玉伯的博客](https://github.com/lifesinger/blog)，包括评论，可以用 github 的 api
 
 ### 知乎
  
