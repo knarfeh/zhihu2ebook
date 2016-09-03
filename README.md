@@ -1,5 +1,7 @@
 # EE-Book
 
+[![Join the chat at https://gitter.im/knarfeh/EE-Book](https://badges.gitter.im/knarfeh/EE-Book.svg)](https://gitter.im/knarfeh/EE-Book?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [中文](./README.md) | [English](./README_en.md)   
 
 [EE-Book](https://github.com/knarfeh/EE-Book) 是一个命令行程序，它可以从网络上爬取内容制作成EPub格式电子书。  
