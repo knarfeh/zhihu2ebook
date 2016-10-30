@@ -8,9 +8,10 @@
 * 做到可以自动自动导入，只需要写Parser就行
 * 优化后台代码，使得添加模块变得简单、快捷
 * 图片按照网站分类
+* 处理登录令牌过期的问题
+* Move to Python3
+* Dockerize, 完善 ee-book.org，做一个微信公众号
 * 数据库改为用 postgres
-* 用 Dockerize ，完善 ee-book.org，做一个微信公众号？
-* `from __future__ import unicode_literals`
 
 ### 网站类型  
 
