@@ -40,6 +40,7 @@
 *** CSDN 博客
 **** 单篇文章类型
 **** 支持分类, 存档类型
+*** blog of golang https://blog.golang.org/index CC 3.0 协议
 ** 客户端 GUI
 *** 下载管理器，对话框的形式(或Mixin?)
 *** 图标(暂时不改了)
