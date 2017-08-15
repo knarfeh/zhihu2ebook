@@ -5,9 +5,9 @@ import getopt
 import sys  # 修改默认编码
 import os   # 添加系统路径
 
-from src.exception import UnsupportTypeException
-from src.main import EEBook
-from src.tools.debug import Debug
+from .src.exception import UnsupportTypeException
+from .src.main import EEBook
+from .src.tools.debug import Debug
 from src.constants import __version__
 from src.utils import log
 from src.tools.match import Match
@@ -17,9 +17,7 @@ from src.constants import url_info
 reload(sys)
 base_path = unicode(os.getcwd())
 
-# Python早期版本可以直接用sys.setdefaultencoding('utf-8')，新版本需要先reload一下
 sys.setdefaultencoding('utf-8')
-sys.setrecursionlimit(100000)  # 为BS解析知乎上的长答案增加递归深度限制
 
 short_options = 'Vhgu:r:i:l:c:d'
 long_options = ['version', 'help', 'url=', 'gui', 'info', 'login=', 'cookies=', 'debug', 'file=']
@@ -187,9 +185,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
