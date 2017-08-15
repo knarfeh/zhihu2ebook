@@ -110,50 +110,6 @@ def main():
                 info = url_info[url_kind]
                 print(info)
             sys.exit()
-        elif option in('-r', '--file'):
-            file_name = args
-            log.print_log(u'read from %s' % file_name)
-
-            counter = 1
-            try:
-                with open(file_name, 'r') as read_list:
-                    read_list = read_list.readlines()
-                    line = read_list[0]
-                    recipe_kind = Match.get_website_kind(line)
-                    counter += 1
-                    if recipe_kind == 'Unsupport type':
-                        print('Unsupported website or url type. \nPlease check url.')
-                        sys.exit()
-            except IOError as e:
-                Debug.logger.debug(u"\nCreating " + file_name + "...")
-                with open(file_name, 'w') as read_list:
-                    read_list.close()
-            if 1 == counter:
-                print(u"\nOops! No content in " + file_name + u". Please check it out.")
-                sys.exit()
-
-            print(u"website type:" + str(recipe_kind))
-            game = EEBook(recipe_kind=recipe_kind, url=None, read_list=file_name)
-            game.begin()
-            sys.exit()
-        elif option in('-c', '--cookies'):
-            cookie_file = args
-            print("Cookie_file:" + cookie_file)
-            print("TODO: read from cookie to login")
-            # with open(cookie_file) as f:
-            #     content = f.read()
-            # game = EEBook(recipe_kind='zhihu')
-            # from src.tools.db import DB
-            # from src.tools.extra_tools import ExtraTools
-            # DB.execute('delete from LoginRecord')  # 登陆成功后清除数据库中原有的登录记录，避免下次登陆时取到旧记录
-            # data = dict()
-            # data['account'] = 'zhihu2ebook@hotmail.com'
-            # data['password'] = 'Zhihu2Ebook'
-            # data['recordDate'] = ExtraTools.get_today()
-            # data['cookieStr'] = content
-            # DB.save(data, 'LoginRecord')
-            # DB.commit()
-            sys.exit()
     file_name = 'ReadList.txt'
     log.print_log(u'read from %s' % file_name)
 

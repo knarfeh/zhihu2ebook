@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+  elasticsearch:
+    build: ./dockerfiles/dev/elasticsearch/
+    volumes:
+      - ./dockerfiles/dev/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - zhihueebook
+
+  kibana:
+    build: ./dockerfiles/dev/kibana/
+    volumes:
+      - ./dockerfiles/dev/kibana/config/:/usr/share/kibana/config
+    ports:
+      - "5601:5601"
+    networks:
+      - zhihueebook
+    depends_on:
+      - elasticsearch
+
+  zhihueebook_sh:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/dev/Dockerfile
+    entrypoint: [sh]
+    volumes:
+      - .:/src
+    tty: true
+    env_file:
+      - envs/local.env
+    environment:
+      - ENV="development"
+
+networks:
+  zhihueebook:
+    driver: bridge
+
