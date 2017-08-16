@@ -35,7 +35,8 @@ services:
     env_file:
       - envs/local.env
     environment:
-      - ENV="development"
+      - DYNACONF_DEBUG="true"
+      - DYNACONF_MAXTRY="3"
 
 networks:
   zhihueebook:
