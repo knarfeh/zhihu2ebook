@@ -9,7 +9,7 @@ from elasticsearch import helpers
 
 
 class QuestionWorker(Base):
-    es = Elasticsearch()
+    es = Elasticsearch(['http://192.168.199.121:9200'])
 
     def catch_content(self):
         question_id = Match.question(self.url).group('question_id')
