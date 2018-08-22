@@ -1,33 +1,9 @@
 version: '2'
 
 services:
-  elasticsearch:
-    build: ./dockerfiles/dev/elasticsearch/
-    volumes:
-      - ./dockerfiles/dev/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-    networks:
-      - zhihueebook
-
-  kibana:
-    build: ./dockerfiles/dev/kibana/
-    volumes:
-      - ./dockerfiles/dev/kibana/config/:/usr/share/kibana/config
-    ports:
-      - "5601:5601"
-    networks:
-      - zhihueebook
-    depends_on:
-      - elasticsearch
-
-  zhihueebook_sh:
+  zhihu2ebook:
     build:
       context: .
-      dockerfile: ./dockerfiles/dev/Dockerfile
     entrypoint: [sh]
     volumes:
       - .:/src
@@ -35,6 +11,9 @@ services:
     env_file:
       - envs/local.env
     environment:
+      - URL=https://zhuanlan.zhihu.com/ethereum
+      - DAY_TIME_STAMP=2018-08-22
+      - ES_HOST_PORT=http://192.168.199.121:9200
       - DYNACONF_DEBUG="true"
       - DYNACONF_MAXTRY="3"
 

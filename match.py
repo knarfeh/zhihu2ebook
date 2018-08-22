@@ -44,3 +44,14 @@ class Match(object):
     @staticmethod
     def html_body(content=''):
         return re.search('(?<=<body>).*(?=</body>)', content, re.S).group(0)
+
+def get_url_type(url):
+    type_regex_dict = {
+        "question": "(?<=zhihu\.com/)question/(?P<question_id>\d{8})",
+        "column": "(?<=zhuanlan\.zhihu\.com/)(?P<column_id>[^/\n\r]*)",
+    }
+    for k, v in type_regex_dict.items():
+        search_result = re.search(v, url)
+        if search_result is not None:
+            return k
+    return 'unknown'
