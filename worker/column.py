@@ -33,19 +33,27 @@ class ColumnWorker(Base):
         }
 
         r = requests.get(
-            url="https://zhuanlan.zhihu.com/api/columns/ethereum",
+            url="https://zhuanlan.zhihu.com/api/columns/{}".format(column_id),
             headers=headers
         )
         columns_info = json.loads(r.text)
-        print("Got column info: {}".format(columns_info["intro"]))
+        print("Got column info: {}".format(columns_info["intro"] if columns_info["intro"] != '' else 'None'))
 
-        r = requests.get(
-            url="https://zhuanlan.zhihu.com/api/columns/ethereum/posts?offset=0&limit=100",
-            headers=headers
-        )
+        offset = 0
+        for offset in range(0, int(columns_info["postsCount"]), 50):
+            self.send_bulk(headers, column_id, offset, 50, columns_info)
+        self.send_bulk(headers, column_id, offset, columns_info["postsCount"]-offset, columns_info)
+
+    def send_bulk(self, headers, column_id, offset, limit, columns_info):
+        url = "https://zhuanlan.zhihu.com/api/columns/{}/posts?offset={}&limit={}".format(
+            column_id, str(offset), str(limit))
+        print("Send bulk with data from {}".format(url))
+        r = requests.get(url=url, headers=headers)
         article_list = json.loads(r.text)
+
         bulk_data = list()
         for article in article_list:
+            print("Article title: {}".format(article["title"]))
             content = self.replace_img_url(article["content"])
             source_doc = {
                 "author": article['author']['name'],
