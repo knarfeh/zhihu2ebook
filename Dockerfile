@@ -5,15 +5,15 @@ MAINTAINER He Jun knarfeh@outlook.com
 RUN apk --update add --no-cache openssl ca-certificates
 
 # build pkgs
-RUN apk add --no-cache gcc g++ python3-dev musl-dev make
+RUN apk add --no-cache gcc g++ libxslt-dev python3-dev musl-dev make
 
 # dev pkgs
 RUN apk add curl
 
-COPY requirements /requirements
-RUN pip3 install -U pip \
-    && pip install -i https://pypi.douban.com/simple -r requirements/dev.txt
 COPY . /src/
+RUN pip3 install -U pip \
+    && pip install -r /src/requirements/dev.txt
+
 WORKDIR /src
 
 CMD ["python", "main.py"]
