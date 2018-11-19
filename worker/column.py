@@ -78,7 +78,7 @@ class ColumnWorker(Base):
             '_source': {
                 'doc': {
                     'type': 'zhihu',
-                    'title': "zhihu_column" + '-' + columns_info["name"] + '-zhihu2ebook-' + DAY_TIME_STAMP,
+                    'title': "zhihu_column" + '-' + columns_info["name"] + '-zhihu2ebook',
                     'book_desp': columns_info["intro"],
                     'created_by': 'knarfeh',
                     'query': {

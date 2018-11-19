@@ -14,7 +14,7 @@ from worker import worker_factory
 
 client = ZhihuClient()
 
-URL = os.getenv('URL', 'https://github.com/lifesinger/blog/issues')
+URL = os.getenv('URL', 'https://zhuanlan.zhihu.com/newsql')
 
 
 def _get_token():
