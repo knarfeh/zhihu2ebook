@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  zhihu2ebook:
+    build:
+      context: .
+    entrypoint: [sh]
+    volumes:
+      - .:/src
+    tty: true
+    env_file:
+      - envs/local.env
+    environment:
+      - URL=https://zhuanlan.zhihu.com/ethereum
+      - DAY_TIME_STAMP=2018-08-23
+      - ES_HOST_PORT=http://192.168.199.121:9200
+      - DYNACONF_DEBUG="true"
+      - DYNACONF_MAXTRY="3"
+
+networks:
+  zhihu2ebook:
+    driver: bridge
+
