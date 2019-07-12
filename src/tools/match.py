@@ -15,11 +15,11 @@ class Match(object):
 
     @staticmethod
     def answer(content=''):
-        return re.search(r'(?<=zhihu\.com/)question/(?P<question_id>\d{8})/answer/(?P<answer_id>\d{8})', content)
+        return re.search(r'(?<=zhihu\.com/)question/(?P<question_id>\d+)/answer/(?P<answer_id>\d{8})', content)
 
     @staticmethod
     def question(content=''):
-        return re.search(r'(?<=zhihu\.com/)question/(?P<question_id>\d{8})', content)
+        return re.search(r'(?<=zhihu\.com/)question/(?P<question_id>\d+)', content)
 
     @staticmethod
     def author(content=''):
